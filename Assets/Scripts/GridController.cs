@@ -17,9 +17,10 @@ public class GridController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown("space"))
         {
             InitializeFlowField();
+            Debug.Log("flowfield created");
         }
     }
 }
