@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     public int[] weaknesses = { 0, 0, 0 }; // damage multiplier based on attack type
     public Rigidbody2D target;
     public bool enabled;
-    public float moveSpeed = .1;
+    public float moveSpeed = .1f;
     public double currentHP;
     public double maximumHP;
     
