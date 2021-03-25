@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         controls.Disable();
+
     }
 
 
