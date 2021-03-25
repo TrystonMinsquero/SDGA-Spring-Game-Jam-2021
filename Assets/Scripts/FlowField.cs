@@ -30,4 +30,22 @@ public class FlowField
             }
         }
     }
+
+    public void CreateCostField()
+    {
+        Vector3 cellHalfExtends = Vector3.one * cellRadius;
+        int terrainMask = LayerMask.GetMask("Wall");
+        foreach (Cell c in grid)
+        {
+            Collider[] obstacles = Physics.OverlapBox(curCell.worldPos, cellHalfExtends, Quaternion.identity, terrainMask);
+            foreach (Collider col in obstacles)
+            {
+                if (col.gameObject.layer == 8)
+                {
+                    curCell.IncreaseCost(255);
+                    continue;
+                }
+            }
+        }
+    }
 }
