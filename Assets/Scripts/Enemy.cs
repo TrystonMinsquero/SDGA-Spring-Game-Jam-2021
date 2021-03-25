@@ -5,19 +5,22 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private Rigidbody2D rb;
-    public Transform target;
+    public int[] weaknesses = { 0, 0, 0 }; // damage multiplier based on attack type
+    public Rigidbody2D target;
     public bool enabled;
-
+    public float moveSpeed = .1f;
+    public double currentHP;
+    public double maximumHP;
+    
     // Start is called before the first frame update
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    void FixedUpdate()
     {
-        Vector3 dir = target.position - transform.position;
-        Debug.Log(dir);
+        
     }
 }
