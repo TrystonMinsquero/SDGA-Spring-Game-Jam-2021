@@ -11,17 +11,7 @@ public class Player : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody2D>();
         controls = new Controls();
-    }
-
-    private void OnEnable()
-    {
         controls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        controls.Disable();
-
     }
 
 
@@ -29,6 +19,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.position = rb.position + moveSpeed * controls.Gameplay.Movement.ReadValue<Vector2>() * Time.fixedDeltaTime;
+        rb.velocity = rb.position + moveSpeed * controls.Gameplay.Movement.ReadValue<Vector2>() * Time.fixedDeltaTime;
     }
 }
