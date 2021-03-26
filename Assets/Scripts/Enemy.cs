@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     public int type; // 1 = melee 2 = ranged
     public float currentHP;
     public float maximumHP;
-    public float forceVal = 2000f
+    public float forceVal = 2000f;
 
     
     
