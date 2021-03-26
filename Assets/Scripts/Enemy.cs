@@ -66,21 +66,8 @@ public class Enemy : MonoBehaviour
                 {
                     lastAttack = Time.time;
                     float slope, yPos, xPos, c;
-                    slope = (transform.position.y - target.gameObject.transform.position.y)/(transform.position.x - target.gameObject.transform.position.x);
-                    if (target.gameObject.transform.position.x > transform.position.x) {
-                        xPos = target.gameObject.transform.position.x + 5;
-                        c = transform.position.y - slope * transform.position.x;
-                        yPos = slope * xPos + c;
-                    } else {
-                        xPos = target.gameObject.transform.position.x - 5;
-                        c = transform.position.y - slope * transform.position.x;
-                        yPos = slope * xPos + c;
-                    }
-                    Debug.Log(slope);
-                    Debug.Log(yPos);
-                    Debug.Log(xPos);
-                    Debug.Log(c);
-                    transform.DOMove(new Vector3(xPos,yPos,0), 2);
+                    Vector3 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * 15f;
+                    transform.DOMove(targetPos, 3);
                 }
                 break;
 
