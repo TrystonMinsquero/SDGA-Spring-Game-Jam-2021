@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
         if (col.gameObject.name == "Player Temp" && !attackDebounce) {
             transform.position = Vector3.MoveTowards(transform.position, col.gameObject.transform.position, moveVal);
             attackDebounce = true;
+            Debug.Log("aja");
             Sleep(2);
             attackDebounce = false;
         }
