@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log("OnCollisionEnter2D");
+        var force = transform.position - col.transform.position;
+        force.Normalize();
+        rb.AddForce(force * -200);
     }
 }
