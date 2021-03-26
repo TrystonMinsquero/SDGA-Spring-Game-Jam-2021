@@ -18,8 +18,24 @@ public class Player : MonoBehaviour
 
     public void Attack()
     {
+        switch (weaponSelected)
+        {
+            case Weapon_Type.SWORD:
+                Debug.Log("SWORD!");
+                break;
+            case Weapon_Type.BLUNT:
+                Debug.Log("BLUNT!");
+                break;
+            case Weapon_Type.DISCUS:
+                Debug.Log("DISCUS!");
+                break;
+        }
     }
 
+    public void changeWeapon(int change)
+    {
+
+    }
 
     // Update is called once per frame
     void FixedUpdate()
