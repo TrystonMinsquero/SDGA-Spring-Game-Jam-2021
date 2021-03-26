@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     public int max_health = 3;
     private int current_health;
     public int moveSpeed;
-    public float attackDamage = 30f;
+    public int attackDamage = 30;
     private float attackRange;
     [SerializeField]
     public float swordRange = 1;
@@ -150,8 +150,9 @@ public class Player : MonoBehaviour
 
         foreach(Collider2D enemy in collidersHit)
         {
-            Debug.Log("Hit Something!");
-            //enemy.GetComponent<Enemy>().takeDamage(WeaponSelected, attackDamage);
+            if(enemy == enemy.GetComponent<Enemy>().hitbox)
+                enemy.GetComponent<Enemy>().takeDamage(weaponSelected, attackDamage);
+                Debug.Log("Hit Something!");
         }
     }
 
@@ -207,7 +208,7 @@ public class Player : MonoBehaviour
     private void changeDirection()
     {
         
-        changeToSword();
+        changeWeapon(0);
 
         //change animation
 
