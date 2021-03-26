@@ -5,7 +5,6 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
-    private bool attackDebounce;
     public Rigidbody2D rb;
     public float[] weaknesses; // damage multiplier based on attack type
     public BoxCollider2D hitbox;
@@ -13,7 +12,7 @@ public class Enemy : MonoBehaviour
     public float currentHP;
     public float maximumHP;
     public float forceVal = 2000f;
-    private int attackCooldown = 2;
+    private float lastAttack;
     
     
     // Start is called before the first frame update
@@ -21,25 +20,17 @@ public class Enemy : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        attackDebounce = false;
     }
 
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerStay2D(Collider2D col)
     {
-        
-        if (col.gameObject.name == "Player Temp" && !attackDebounce) {
-            attackDebounce = true;
+        if (col.gameObject.name == "Player Temp" && (Time.time - lastAttack) > 2) {
+            lastAttack = Time.time;
+            col.gameObject.GetComponent<Player>().takeDamage();
             Vector3 moveDir = transform.position - col.gameObject.transform.position;
             rb.AddForce(moveDir * 2000f);
-            Debug.Log("attack");
-            StartCoroutine(Sleep());
-            attackDebounce = false;
         }
-    }
-
-    IEnumerator Sleep() {
-        yield return new WaitForSeconds(5);
     }
 
     public void takeDamage(Weapon_Type weapon, int damage)
