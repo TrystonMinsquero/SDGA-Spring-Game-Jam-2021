@@ -3,6 +3,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int moveSpeed;
+    public Weapon_Type weaponSelected;
+
 
     Rigidbody2D rb;
     Controls controls;
@@ -14,6 +16,9 @@ public class Player : MonoBehaviour
         controls.Enable();
     }
 
+    public void Attack()
+    {
+    }
 
 
     // Update is called once per frame
@@ -24,6 +29,5 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(collision.gameObject);
     }
 }
