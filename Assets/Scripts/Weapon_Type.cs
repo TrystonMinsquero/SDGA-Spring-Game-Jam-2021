@@ -1,6 +1,6 @@
 public enum Weapon_Type
 {
-    SWORD, 
-    BLUNT, 
-    DISCUS
+    SWORD = 0, 
+    BLUNT = 1, 
+    DISCUS = 2
 }
