@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Enemy : MonoBehaviour
 {
@@ -27,17 +28,20 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.name == "Player Temp" && (Time.time - lastAttack) > attackCooldown)
+        if (col.gameObject.name == "Player Temp")
         {
             switch (type)
             {
                 case 1:
-                    lastAttack = Time.time;
-                    col.gameObject.GetComponent<Player>().takeDamage();
-                    Vector3 moveDir = transform.position - col.gameObject.transform.position;
-                    rb.AddForce(moveDir * forceVal);
+                    if ((Time.time - lastAttack) > attackCooldown) {
+                        lastAttack = Time.time;
+                        col.gameObject.GetComponent<Player>().takeDamage();
+                        Vector3 moveDir = transform.position - col.gameObject.transform.position;
+                        rb.AddForce(moveDir * forceVal);
+                    }
                     break;
                 case 2:
+                    Debug.Log("hit playa");
                     col.gameObject.GetComponent<Player>().takeDamage();
                     break;
             } 
@@ -57,8 +61,8 @@ public class Enemy : MonoBehaviour
                 {
                     lastAttack = Time.time;
                     Debug.Log("attack");
-                    Vector3 moveDir = transform.position - target.gameObject.transform.position;
-                    rb.AddForce(moveDir * -1 * forceVal);
+                    
+                    transform.DOMove(target.gameObject.transform.position, 2);
                 }
                 break;
 
