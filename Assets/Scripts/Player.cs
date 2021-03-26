@@ -62,6 +62,7 @@ public class Player : MonoBehaviour
                 break;
             case Weapon_Type.BLUNT:
                 Debug.Log("BLUNT!");
+                BluntAttack();
                 break;
             case Weapon_Type.DISCUS:
                 Debug.Log("DISCUS!");
