@@ -8,11 +8,11 @@ public class Enemy : MonoBehaviour
     public Rigidbody2D rb;
     public float[] weaknesses; // damage multiplier based on attack type
     public BoxCollider2D hitbox;
-    public int type; // 1 = melee 2 = ranged
     public float currentHP;
     public float maximumHP;
-    public float forceVal = 2000f;
+    public float forceVal = 3000f;
     private float lastAttack;
+    public Rigidbody2D target;
     
     
     // Start is called before the first frame update
@@ -25,16 +25,26 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.name == "Player Temp" && (Time.time - lastAttack) > 2) {
+        if (col.gameObject.name == "Player Temp" && (Time.time - lastAttack) > 5) {
             lastAttack = Time.time;
             col.gameObject.GetComponent<Player>().takeDamage();
             Vector3 moveDir = transform.position - col.gameObject.transform.position;
-            rb.AddForce(moveDir * 2000f);
+            rb.AddForce(moveDir * forceVal);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (currentHP <= 0)
+        {
+            Destroy(this.gameObject);
         }
     }
 
     public void takeDamage(Weapon_Type weapon, int damage)
     {
         currentHP -= damage * weaknesses[(int)weapon];
+        Vector3 moveDir = transform.position - target.gameObject.transform.position;
+        rb.AddForce(moveDir * forceVal * 3);
     }
 }
