@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public int max_health = 3;
     private int current_health;
     public int moveSpeed;
+    public float attackDelay = 1f;
     public Weapon_Type weaponSelected;
     private float attackRange;
 
@@ -27,8 +28,8 @@ public class Player : MonoBehaviour
     [Header("Discus")]
     public int discusDamage = 25;
     public float discusRadius = 3f;
-    public float discusDistance = 10;
-    public float discusInitVelocity = 10;
+    public float discusDistance = 8;
+    public float discusAcceleration = 10;
 
     private Discus disc = null;
 
@@ -67,15 +68,12 @@ public class Player : MonoBehaviour
         {
 
             case Weapon_Type.SWORD:
-                Debug.Log("SWORD!");
                 SwordAttack();
                 break;
             case Weapon_Type.BLUNT:
-                Debug.Log("BLUNT!");
                 BluntAttack();
                 break;
             case Weapon_Type.DISCUS:
-                Debug.Log("DISCUS!");
                 DiscusAttack();
                 break;
         }
@@ -218,10 +216,10 @@ public class Player : MonoBehaviour
         disc.throwDisc();
     }
 
-
     public void catchDiscus()
     {
         disc = null;
+        changeWeapon(0);
     }
 
     private void Update()
@@ -232,7 +230,6 @@ public class Player : MonoBehaviour
 
         if (controls.Gameplay.SwitchWeapon.triggered && disc==null)
         {
-            Debug.Log("Changing by " + (int)controls.Gameplay.SwitchWeapon.ReadValue<float>());
             changeWeapon((int)controls.Gameplay.SwitchWeapon.ReadValue<float>());
         }
     }

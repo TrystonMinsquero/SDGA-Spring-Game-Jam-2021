@@ -9,6 +9,9 @@ public class Discus : MonoBehaviour
 
     Rigidbody2D rb;
     ConstantForce2D force;
+
+    public float enemyHitDelay = 1f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,10 +41,25 @@ public class Discus : MonoBehaviour
     void Update()
     {
         Collider2D[] collidersHit = Physics2D.OverlapCircleAll(transform.position, player.discusRadius, player.enemyLayer);
+        Dictionary<Enemy, float> enemyHitTimes = new Dictionary<Enemy, float>();
 
         foreach (Collider2D enemy in collidersHit)
             if (enemy == enemy.GetComponent<Enemy>().hitbox)
-                enemy.GetComponent<Enemy>().takeDamage(Weapon_Type.DISCUS, player.discusDamage);
+            {
+                if(enemyHitTimes.ContainsKey(enemy.GetComponent<Enemy>()))
+                {
+                    if(enemyHitTimes[enemy.GetComponent<Enemy>()] > Time.time)
+                    {
+                        enemy.GetComponent<Enemy>().takeDamage(Weapon_Type.DISCUS, player.discusDamage);
+                        enemyHitTimes[enemy.GetComponent<Enemy>()] = Time.time + enemyHitDelay;
+                    }
+                }
+                else
+                {
+                    enemy.GetComponent<Enemy>().takeDamage(Weapon_Type.DISCUS, player.discusDamage);
+                    enemyHitTimes[enemy.GetComponent<Enemy>()] = Time.time + enemyHitDelay;
+                }
+            }
 
         FixPosition();
     }
@@ -49,24 +67,24 @@ public class Discus : MonoBehaviour
     public void throwDisc()
     {
 
-        float acceleration = Mathf.Pow(player.discusInitVelocity, 2) / (2 * player.discusDistance);
+        float initVelocity = Mathf.Sqrt(2 * player.discusDistance * player.discusAcceleration);
         switch (directionThrown)
         {
             case Direction.UP:
-                rb.velocity = Vector2.up * player.discusInitVelocity;
-                force.force = Vector2.down * acceleration;
+                rb.velocity = Vector2.up * initVelocity;
+                force.force = Vector2.down * player.discusAcceleration;
                 break;
             case Direction.DOWN:
-                rb.velocity = Vector2.down * player.discusInitVelocity;
-                force.force = Vector2.up * acceleration;
+                rb.velocity = Vector2.down * initVelocity;
+                force.force = Vector2.up * player.discusAcceleration;
                 break;
             case Direction.LEFT:
-                rb.velocity = Vector2.left * player.discusInitVelocity;
-                force.force = Vector2.right * acceleration;
+                rb.velocity = Vector2.left * initVelocity;
+                force.force = Vector2.right * player.discusAcceleration;
                 break;
             case Direction.RIGHT:
-                rb.velocity = Vector2.right * player.discusInitVelocity;
-                force.force = Vector2.left * acceleration;
+                rb.velocity = Vector2.right * initVelocity;
+                force.force = Vector2.left * player.discusAcceleration;
                 break;
         }
     }
@@ -83,25 +101,31 @@ public class Discus : MonoBehaviour
         switch (directionThrown)
         {
             case Direction.UP:
-                if (transform.position.y <= player.transform.position.y)
+                if (transform.position.y < player.transform.position.y)
                     catchDiscus();
                 transform.position = new Vector3(player.transform.position.x, transform.position.y);
                 break;
             case Direction.DOWN:
-                if (transform.position.y >= player.transform.position.y)
+                if (transform.position.y > player.transform.position.y)
                     catchDiscus();
                 transform.position = new Vector3(player.transform.position.x, transform.position.y);
                 break;
             case Direction.LEFT:
-                if (transform.position.x >= player.transform.position.x)
+                if (transform.position.x > player.transform.position.x)
                     catchDiscus();
                 transform.position = new Vector3(transform.position.x, player.transform.position.y);
                 break;
             case Direction.RIGHT:
-                if (transform.position.x <= player.transform.position.x)
+                if (transform.position.x < player.transform.position.x)
                     catchDiscus();
                 transform.position = new Vector3(transform.position.x, player.transform.position.y);
                 break;
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (transform != null)
+            Gizmos.DrawWireSphere(transform.position, player.discusRadius);
     }
 }
