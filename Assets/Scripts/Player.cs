@@ -13,10 +13,10 @@ public class Player : MonoBehaviour
     [Header("Globals")]
     public LayerMask enemyLayer;
 
-    public Transform attackPoint;
+    Transform attackPoint;
 
     private int health;
-    private Direction facing;
+    private Direction facing = Direction.DOWN;
 
     Rigidbody2D rb;
     Controls controls;
@@ -26,6 +26,10 @@ public class Player : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
         controls = new Controls();
         controls.Enable();
+        GameObject atkPoint = new GameObject("Attack Point");
+        atkPoint.transform.parent = this.transform;
+        attackPoint = atkPoint.transform;
+        changeWeapon(0);
     }
 
     public void Attack()
@@ -70,7 +74,6 @@ public class Player : MonoBehaviour
     private void changeToSword()
     {
         weaponSelected = Weapon_Type.SWORD;
-        attackRange = 1;
         switch (facing)
         {
             case Direction.UP:
