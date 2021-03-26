@@ -7,15 +7,25 @@ public class Player : MonoBehaviour
     public int max_health = 3;
     private int current_health;
     public int moveSpeed;
-    public int swordDamage = 30;
-    public int bluntDamage = 35;
-    public int discusDamage = 25;
-    private float attackRange;
-    [SerializeField]
-    public float swordRange = 1;
-    [SerializeField]
-    public float bluntRange = .5f;
     public Weapon_Type weaponSelected;
+    private float attackRange;
+
+    [Header("Sword")]
+    public int swordDamage = 30;
+    [SerializeField]
+    public float swordRange = .85f;
+    [SerializeField]
+    public float swordDistance = .5f;
+
+    [Header("Blunt")]
+    public int bluntDamage = 35;
+    [SerializeField]
+    public float bluntRange = .6f;
+    [SerializeField]
+    public float bluntDistance = .65f;
+
+    [Header("Discus")]
+    public int discusDamage = 25;
 
     [Header("Globals")]
     public LayerMask enemyLayer;
@@ -123,7 +133,7 @@ public class Player : MonoBehaviour
     {
         weaponSelected = Weapon_Type.BLUNT;
         attackRange = bluntRange;
-        float distance = .65f;
+        float distance = .75f;
         switch (facing)
         {
             case Direction.UP:
@@ -153,13 +163,8 @@ public class Player : MonoBehaviour
         Collider2D[] collidersHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
 
         foreach(Collider2D enemy in collidersHit)
-        {
             if(enemy == enemy.GetComponent<Enemy>().hitbox)
-            {
                 enemy.GetComponent<Enemy>().takeDamage(weaponSelected, swordDamage);
-                Debug.Log("Hit Something!");
-            }
-        }
     }
 
     private void BluntAttack()
@@ -167,11 +172,8 @@ public class Player : MonoBehaviour
         Collider2D[] collidersHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
         
         foreach (Collider2D enemy in collidersHit)
-        {
             if (enemy == enemy.GetComponent<Enemy>().hitbox)
                 enemy.GetComponent<Enemy>().takeDamage(weaponSelected, bluntDamage);
-            Debug.Log("Hit Something!");
-        }
     }
     
     private void DiscusAttack()
