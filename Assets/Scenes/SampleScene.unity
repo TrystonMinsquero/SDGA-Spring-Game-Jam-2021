@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 453420470}
   - component: {fileID: 453420471}
   - component: {fileID: 453420472}
+  - component: {fileID: 453420473}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -185,8 +186,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 453420464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.7567, y: -1.0133, z: 1.3374394}
-  m_LocalScale: {x: 0.9733, y: 1.0267, z: 0.5}
+  m_LocalPosition: {x: 8.6203, y: -0.9303, z: 1.3374394}
+  m_LocalScale: {x: 0.9539313, y: 1.065304, z: 0.5}
   m_Children: []
   m_Father: {fileID: 286843699}
   m_RootOrder: 0
@@ -358,9 +359,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae1decc1e955814f954e3b7b02829a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponCollider: {fileID: 0}
-  weaknesses: 000000000000000000000000
+  weaknesses: []
   target: {fileID: 1224121063}
+  hitbox: {fileID: 453420470}
   type: 0
   currentHP: 0
   maximumHP: 0
@@ -378,7 +379,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1}
+  m_Offset: {x: 0, y: 0.44666284}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -389,8 +390,29 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.5}
+  m_Size: {x: 1, y: 0.3933257}
   m_EdgeRadius: 0
+--- !u!50 &453420473
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453420464}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &457143450
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAACQn+v0RsuhTQIAAPIEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1z2jAQ/SuMzqUDrgOht9YhpIeETGgnF1+EtMYaZMmjjwDJ8N+7km3s0OmJZd/b3bcf8gcRytbAnDYrI/ij5kC+j0iwyZdRDz7Ake602oh36DivgrsykGjkvFAnNPqnIczqCpwR7IfayUCeoNMrUWhTLfkOMm2dRXdBpQWEjHYhWqHrY0SO+DNehJATWsk8WO9oLSajM5oMlAPTUztiR2tYXjFJqxp4kNyTv13SNjSFzbSMIJxpKYVtlRB3qmOnGa2txz6QwAXFzmL5wC9B7EoX0g2D10VhwbWSDD3dCYMDarKSn7qZWkXtvtH1RqUPdZKbWdTUJH38Bx9PI1wYXT10daeTUMOVgu1f6IlR6wZjHbrvPgv36kDlnm4lvJagnvTKaK84gs74EOotJHf930trWQls3/sbqVdOX/9/OaGHc+z+mElRbQP0NW0cG6njvOPqweBmfqHgeBi2TYHeoOKPhd90N7ygFrgXxjqE2i5VkLfV3gQqWcaZhW68y7RREN2t6BoUle70jGnc9QqvsEHZK+SehrfSFm+x7glchUR3z59MrqBnfbgsy5b68Ai2XHsnhYJedACecE6ZVqq5sOFMurCNNwVlg7CdF/zzaZFkNinms/R2kfI0TWc340VSzOcLNgeYpozdJiTenlDYJ5XPjdB2PLg11SdXeGfdJ2S0MrSO184NPazEe6UHIxeq0BtmANS6yXARDgaL4KvkSy5wQBtwTqi4b/KRE6nZHnh+SZTHTpdHZ2jeZ8lJLd60C56cZPGbkZMzOf8FUEsDBBQAAAgIAACQn+sb+rD8bQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM01VFQSi9KLMgoBooYgjilmSkgdrSSkZlBmrmZiYWlSYqJiYmZqa6lUZq5uWWyeWqqoUlysoWRUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAACQn+v0RsuhTQIAAPIEAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAACQn+sb+rD8bQAAAHgAAAAJACQAAAAAAAAAAAAAAJoCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAUgMAAAAA
+    dataString: UEsDBBQAAAgIAACQn+s9j6vhSAIAAPMEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1z2jAQ/SuMzqUDjAOht9YQ0gOBCe3k4ouQ1liDLHn0ET4y/PeuZBsTOjkh9r1dvbe78gcRylbAnDYLI/hScyA/eiScybdeBz7Dke602ogztJw3wV0RSDRyXqkTGuPDkGZ1Cc4I9lPtZCAPMOiVyLUp53wHqbbOYjin0gJCRruQrTD00SNH/OlPQ8oJT6NJOJ3xNB30LnhkoByYjtoSW1rN8opJWlbAg+SOPG7ZSU1TaKZhjEJtLaWwjRLiTlV0mtLKevSBBC4oOovXB6MFiF3h7pNXeW7BNZIMPc2EwQbVVckvXXetpHZf63qn0kcBD+OoqS66/A/vDyOcG10+t/cOB+EOVwi2f6UnRq27aettePZZuFcHKvd0K+GtAPWiF0Z7xRF0xodUb2E06/5eraUFsH0Xr6XeBX319XCCh0t0f0ylKLcB+p7UgY3Usd9x9GBwMr9RcFwM25TAaFDx18IfurvdoAZ4EsY6hBqXKsjbam8Clcxjz4Ib71JtFJjbChUoKt1pjXXc/QzvsK+znmh4LM3tDda+gbuUGO74g8EdtNaH67RsoQ9LsMXKOykUdK0OwAs2KtVK1St2a6lN23iTU3aTtvOCf94tMhoP8sk4eZwmPEmS8UN/OsonkymbAAwTxh5HJC6fUOiTynUttGkPjk11xRUuWvsN6S0MreK6c0MPC3Eute2YQuV6wwyAWtUVrsLB4CX4LPmcC2zQBpwTKg6cfGREarYHnl0LZdHp/OgMzboqGanEu3YhkpE0fjQyciGXf1BLAwQUAAAICAAAkJ/rG/qw/G0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNVRUEovSizIKAaKGII4pZkpIHa0kpGZQZq5mYmFpUmKiYmJmamupVGaubllsnlqqqFJcrKFkVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAkJ/rPY+r4UgCAADzBAAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAkJ/rG/qw/G0AAAB4AAAACQAkAAAAAAAAAAAAAACVAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAE0DAAAAAA==
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -905,7 +927,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max_health: 3
   moveSpeed: 5
-  attackRange: 0.59
+  attackDamage: 30
+  swordRange: 1
+  bluntRange: 0.5
   weaponSelected: 0
   enemyLayer:
     serializedVersion: 2

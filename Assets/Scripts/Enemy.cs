@@ -6,9 +6,9 @@ public class Enemy : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private bool attackDebounce;
-    public BoxCollider2D weaponCollider;
     public float[] weaknesses = { 0, 0, 0 }; // damage multiplier based on attack type
     public Rigidbody2D target;
+    public BoxCollider2D hitbox;
     public int type; // 1 = melee 2 = ranged
     public float currentHP;
     public float maximumHP;
