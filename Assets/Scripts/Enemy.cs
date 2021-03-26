@@ -7,10 +7,11 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     public int[] weaknesses = { 0, 0, 0 }; // damage multiplier based on attack type
     public Rigidbody2D target;
-    public bool enabled;
-    public float moveSpeed = .1f;
+    public int type; // 1 = melee 2 = ranged
     public double currentHP;
     public double maximumHP;
+
+    
     
     // Start is called before the first frame update
     void Start()
@@ -18,9 +19,7 @@ public class Enemy : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
     }
 
-
-    void FixedUpdate()
-    {
-        
+    void OnColliderEnter2D(Collider2D col) {
+        Destroy(col.gameObject);
     }
 }
