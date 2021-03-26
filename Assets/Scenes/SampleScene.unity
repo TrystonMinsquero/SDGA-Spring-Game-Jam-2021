@@ -359,13 +359,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae1decc1e955814f954e3b7b02829a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaknesses: []
-  target: {fileID: 1224121063}
+  rb: {fileID: 453420473}
+  weaknesses:
+  - 1
+  - 1
+  - 1
   hitbox: {fileID: 453420470}
   type: 0
   currentHP: 0
   maximumHP: 0
-  moveVal: 0.1
+  forceVal: 2000
 --- !u!61 &453420472
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -400,14 +403,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 453420464}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
