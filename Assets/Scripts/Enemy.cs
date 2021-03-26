@@ -6,13 +6,13 @@ public class Enemy : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private bool attackDebounce;
+    public Rigidbody2D rb;
     public float[] weaknesses = { 0, 0, 0 }; // damage multiplier based on attack type
-    public Rigidbody2D target;
     public BoxCollider2D hitbox;
     public int type; // 1 = melee 2 = ranged
     public float currentHP;
     public float maximumHP;
-    public float moveVal = 0.1f;
+    public float forceVal = 2000f
 
     
     
@@ -26,7 +26,12 @@ public class Enemy : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.name == "Player Temp" && !attackDebounce) {
-            
+            attackDebounce = true;
+            Vector3 moveDir = transform.position - col.gameObject.transform.position;
+            rb.AddForce(moveDir * 2000f);
+            Debug.Log("attack");
+            Sleep(2);
+            attackDebounce = false;
         }
     }
 
@@ -36,17 +41,6 @@ public class Enemy : MonoBehaviour
 
     public void takeDamage(Weapon_Type weapon, int damage)
     {
-        switch(weapon)
-        {
-            case Weapon_Type.SWORD:
-                currentHP -= damage * weaknesses[0];
-                break;
-            case Weapon_Type.BLUNT:
-                currentHP -= damage * weaknesses[1];
-                break;
-            case Weapon_Type.DISCUS:
-                currentHP -= damage * weaknesses[2];
-                break;
-        }
+        currentHP -= damage * weaknesses[(int)weapon];
     }
 }
