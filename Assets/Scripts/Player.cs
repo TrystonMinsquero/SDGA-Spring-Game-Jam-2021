@@ -26,14 +26,19 @@ public class Player : MonoBehaviour
 
     [Header("Discus")]
     public int discusDamage = 25;
+    public float discusRadius = 3f;
+    public float discusDistance = 10;
+    public float discusInitVelocity = 10;
+
+    private Discus disc = null;
 
     [Header("Globals")]
     public LayerMask enemyLayer;
+    public Sprite discSprite;
 
     Transform attackPoint;
 
-    private int health;
-    private Direction facing = Direction.DOWN;
+    Direction facing = Direction.DOWN;
 
     Rigidbody2D rb;
     Controls controls;
@@ -43,10 +48,15 @@ public class Player : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
         controls = new Controls();
         controls.Enable();
+
+        //Attack Point Setup
         GameObject atkPoint = new GameObject("Attack Point");
         atkPoint.transform.parent = this.transform;
         attackPoint = atkPoint.transform;
+
+
         current_health = max_health;
+
 
         changeWeapon(0);
     }
@@ -66,6 +76,7 @@ public class Player : MonoBehaviour
                 break;
             case Weapon_Type.DISCUS:
                 Debug.Log("DISCUS!");
+                DiscusAttack();
                 break;
         }
     }
@@ -82,7 +93,7 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        Destroy(this);
+        Debug.Log("Death");
     }
 
     public void changeWeapon(int change)
@@ -103,16 +114,16 @@ public class Player : MonoBehaviour
                 Debug.Log("changed to BLUNT!");
                 break;
             case Weapon_Type.DISCUS:
+                changeToDiscus();
                 Debug.Log("changed to DISCUS!");
                 break;
         }
-        showWeapon();
     }
     private void changeToSword()
     {
         weaponSelected = Weapon_Type.SWORD;
         attackRange = swordRange;
-        float distance = .5f;
+        float distance = swordDistance;
         switch (facing)
         {
             case Direction.UP:
@@ -128,13 +139,15 @@ public class Player : MonoBehaviour
                 attackPoint.position = transform.position + new Vector3(distance, 0, 0);
                 break;
         }
+
+        //update animation
     }
 
     private void changeToBlunt()
     {
         weaponSelected = Weapon_Type.BLUNT;
         attackRange = bluntRange;
-        float distance = .75f;
+        float distance = bluntDistance;
         switch (facing)
         {
             case Direction.UP:
@@ -151,12 +164,33 @@ public class Player : MonoBehaviour
                 break;
         }
 
+        //update animation
+
     }
 
     private void changeToDiscus()
     {
         weaponSelected = Weapon_Type.DISCUS;
-        attackRange = 0;
+        attackRange = discusRadius;
+        float distance = .5f;
+
+        switch (facing)
+        {
+            case Direction.UP:
+                attackPoint.position = transform.position + new Vector3(0, distance, 0);
+                break;
+            case Direction.DOWN:
+                attackPoint.position = transform.position + new Vector3(0, -distance, 0);
+                break;
+            case Direction.LEFT:
+                attackPoint.position = transform.position + new Vector3(-distance, 0, 0);
+                break;
+            case Direction.RIGHT:
+                attackPoint.position = transform.position + new Vector3(distance, 0, 0);
+                break;
+        }
+
+        //update animation
     }
 
     private void SwordAttack()
@@ -179,16 +213,24 @@ public class Player : MonoBehaviour
     
     private void DiscusAttack()
     {
-        Debug.Log("Attack with Discus");
+
+        disc = Discus.create(this, facing);
+        disc.throwDisc();
+    }
+
+
+    public void catchDiscus()
+    {
+        disc = null;
     }
 
     private void Update()
     {
 
-        if (controls.Gameplay.Attack.triggered)
+        if (controls.Gameplay.Attack.triggered && disc==null)
             Attack();
 
-        if (controls.Gameplay.SwitchWeapon.triggered)
+        if (controls.Gameplay.SwitchWeapon.triggered && disc==null)
         {
             Debug.Log("Changing by " + (int)controls.Gameplay.SwitchWeapon.ReadValue<float>());
             changeWeapon((int)controls.Gameplay.SwitchWeapon.ReadValue<float>());
@@ -202,6 +244,7 @@ public class Player : MonoBehaviour
         rb.position = rb.position + moveSpeed * direction * Time.fixedDeltaTime;
         rb.velocity = Vector2.zero;
         Direction dir = facing;
+
         //update direction
         if (direction.y > 0)
             facing = Direction.UP;
@@ -212,7 +255,6 @@ public class Player : MonoBehaviour
         if (direction.x < 0)
             facing = Direction.LEFT;
 
-        
         if (dir != facing)
             changeDirection();
     }
@@ -277,7 +319,7 @@ public class Player : MonoBehaviour
 }
 
 
-enum Direction
+public enum Direction
 {
     UP,
     DOWN,
