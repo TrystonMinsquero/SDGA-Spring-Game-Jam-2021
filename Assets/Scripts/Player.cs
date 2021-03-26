@@ -7,7 +7,9 @@ public class Player : MonoBehaviour
     public int max_health = 3;
     private int current_health;
     public int moveSpeed;
-    public int attackDamage = 30;
+    public int swordDamage = 30;
+    public int bluntDamage = 35;
+    public int discusDamage = 25;
     private float attackRange;
     [SerializeField]
     public float swordRange = 1;
@@ -99,19 +101,20 @@ public class Player : MonoBehaviour
     {
         weaponSelected = Weapon_Type.SWORD;
         attackRange = swordRange;
+        float distance = .5f;
         switch (facing)
         {
             case Direction.UP:
-                attackPoint.position = transform.position + new Vector3(0,.5f,0);
+                attackPoint.position = transform.position + new Vector3(0, distance, 0);
                 break;
             case Direction.DOWN:
-                attackPoint.position = transform.position + new Vector3(0, -.5f, 0);
+                attackPoint.position = transform.position + new Vector3(0, -distance, 0);
                 break;
             case Direction.LEFT:
-                attackPoint.position = transform.position + new Vector3(-.5f, 0, 0);
+                attackPoint.position = transform.position + new Vector3(-distance, 0, 0);
                 break;
             case Direction.RIGHT:
-                attackPoint.position = transform.position + new Vector3(.5f, 0, 0);
+                attackPoint.position = transform.position + new Vector3(distance, 0, 0);
                 break;
         }
     }
@@ -120,19 +123,20 @@ public class Player : MonoBehaviour
     {
         weaponSelected = Weapon_Type.BLUNT;
         attackRange = bluntRange;
+        float distance = .65f;
         switch (facing)
         {
             case Direction.UP:
-                attackPoint.position = transform.position + new Vector3(0, .5f, 0);
+                attackPoint.position = transform.position + new Vector3(0, distance, 0);
                 break;
             case Direction.DOWN:
-                attackPoint.position = transform.position + new Vector3(0, -.5f, 0);
+                attackPoint.position = transform.position + new Vector3(0, -distance, 0);
                 break;
             case Direction.LEFT:
-                attackPoint.position = transform.position + new Vector3(-.5f, 0, 0);
+                attackPoint.position = transform.position + new Vector3(-distance, 0, 0);
                 break;
             case Direction.RIGHT:
-                attackPoint.position = transform.position + new Vector3(.5f, 0, 0);
+                attackPoint.position = transform.position + new Vector3(distance, 0, 0);
                 break;
         }
 
@@ -151,14 +155,23 @@ public class Player : MonoBehaviour
         foreach(Collider2D enemy in collidersHit)
         {
             if(enemy == enemy.GetComponent<Enemy>().hitbox)
-                enemy.GetComponent<Enemy>().takeDamage(weaponSelected, attackDamage);
+            {
+                enemy.GetComponent<Enemy>().takeDamage(weaponSelected, swordDamage);
                 Debug.Log("Hit Something!");
+            }
         }
     }
 
     private void BluntAttack()
     {
-        Debug.Log("Attack with Blunt");
+        Collider2D[] collidersHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+        
+        foreach (Collider2D enemy in collidersHit)
+        {
+            if (enemy == enemy.GetComponent<Enemy>().hitbox)
+                enemy.GetComponent<Enemy>().takeDamage(weaponSelected, bluntDamage);
+            Debug.Log("Hit Something!");
+        }
     }
     
     private void DiscusAttack()
@@ -184,7 +197,7 @@ public class Player : MonoBehaviour
     {
         Vector2 direction = controls.Gameplay.Movement.ReadValue<Vector2>();
         rb.position = rb.position + moveSpeed * direction * Time.fixedDeltaTime;
-
+        rb.velocity = Vector2.zero;
         Direction dir = facing;
         //update direction
         if (direction.y > 0)
@@ -196,11 +209,9 @@ public class Player : MonoBehaviour
         if (direction.x < 0)
             facing = Direction.LEFT;
 
-        /*
+        
         if (dir != facing)
-            showDirection();
-        */    
-        changeDirection();
+            changeDirection();
     }
 
 

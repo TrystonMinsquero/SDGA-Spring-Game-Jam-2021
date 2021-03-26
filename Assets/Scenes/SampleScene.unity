@@ -163,12 +163,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 453420465}
+  - component: {fileID: 453420471}
   - component: {fileID: 453420467}
   - component: {fileID: 453420469}
   - component: {fileID: 453420468}
   - component: {fileID: 453420466}
   - component: {fileID: 453420470}
-  - component: {fileID: 453420471}
   - component: {fileID: 453420472}
   - component: {fileID: 453420473}
   m_Layer: 7
@@ -930,7 +930,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max_health: 3
   moveSpeed: 5
-  attackDamage: 30
+  swordDamage: 30
+  bluntDamage: 35
+  discusDamage: 25
   swordRange: 1
   bluntRange: 0.5
   weaponSelected: 0
