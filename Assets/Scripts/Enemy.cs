@@ -19,7 +19,8 @@ public class Enemy : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
     }
 
-    void OnColliderEnter2D(Collider2D col) {
-        Destroy(col.gameObject);
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        Debug.Log("OnCollisionEnter2D");
     }
 }
