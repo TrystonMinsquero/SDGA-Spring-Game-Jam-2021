@@ -5,9 +5,14 @@ public class Player : MonoBehaviour
 
     [Header("Attributes")]
     public int max_health = 3;
+    private int current_health;
     public int moveSpeed;
+    public float attackDamage = 30f;
+    private float attackRange;
     [SerializeField]
-    public float attackRange;
+    public float swordRange = 1;
+    [SerializeField]
+    public float bluntRange = .5f;
     public Weapon_Type weaponSelected;
 
     [Header("Globals")]
@@ -29,6 +34,8 @@ public class Player : MonoBehaviour
         GameObject atkPoint = new GameObject("Attack Point");
         atkPoint.transform.parent = this.transform;
         attackPoint = atkPoint.transform;
+        current_health = max_health;
+
         changeWeapon(0);
     }
 
@@ -50,6 +57,21 @@ public class Player : MonoBehaviour
         }
     }
 
+
+
+
+    public void takeDamage()
+    {
+        current_health--;
+        if (current_health <= 0)
+            Die();
+    }
+
+    private void Die()
+    {
+        Destroy(this);
+    }
+
     public void changeWeapon(int change)
     {
         weaponSelected += change;
@@ -64,16 +86,19 @@ public class Player : MonoBehaviour
                 Debug.Log("changed to SWORD!");
                 break;
             case Weapon_Type.BLUNT:
+                changeToBlunt();
                 Debug.Log("changed to BLUNT!");
                 break;
             case Weapon_Type.DISCUS:
                 Debug.Log("changed to DISCUS!");
                 break;
         }
+        showWeapon();
     }
     private void changeToSword()
     {
         weaponSelected = Weapon_Type.SWORD;
+        attackRange = swordRange;
         switch (facing)
         {
             case Direction.UP:
@@ -91,6 +116,34 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void changeToBlunt()
+    {
+        weaponSelected = Weapon_Type.BLUNT;
+        attackRange = bluntRange;
+        switch (facing)
+        {
+            case Direction.UP:
+                attackPoint.position = transform.position + new Vector3(0, .5f, 0);
+                break;
+            case Direction.DOWN:
+                attackPoint.position = transform.position + new Vector3(0, -.5f, 0);
+                break;
+            case Direction.LEFT:
+                attackPoint.position = transform.position + new Vector3(-.5f, 0, 0);
+                break;
+            case Direction.RIGHT:
+                attackPoint.position = transform.position + new Vector3(.5f, 0, 0);
+                break;
+        }
+
+    }
+
+    private void changeToDiscus()
+    {
+        weaponSelected = Weapon_Type.DISCUS;
+        attackRange = 0;
+    }
+
     private void SwordAttack()
     {
         Collider2D[] collidersHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
@@ -98,6 +151,7 @@ public class Player : MonoBehaviour
         foreach(Collider2D enemy in collidersHit)
         {
             Debug.Log("Hit Something!");
+            //enemy.GetComponent<Enemy>().takeDamage(WeaponSelected, attackDamage);
         }
     }
 
@@ -118,7 +172,10 @@ public class Player : MonoBehaviour
             Attack();
 
         if (controls.Gameplay.SwitchWeapon.triggered)
+        {
+            Debug.Log("Changing by " + (int)controls.Gameplay.SwitchWeapon.ReadValue<float>());
             changeWeapon((int)controls.Gameplay.SwitchWeapon.ReadValue<float>());
+        }
     }
 
     // Update is called once per frame
@@ -138,9 +195,10 @@ public class Player : MonoBehaviour
         if (direction.x < 0)
             facing = Direction.LEFT;
 
+        /*
         if (dir != facing)
             showDirection();
-            
+        */    
         changeDirection();
     }
 
@@ -153,6 +211,23 @@ public class Player : MonoBehaviour
 
         //change animation
 
+    }
+
+    private void showWeapon()
+    {
+        switch (weaponSelected)
+        {
+            case Weapon_Type.SWORD:
+                changeToSword();
+                Debug.Log("SWORD: " + (int)Weapon_Type.SWORD);
+                break;
+            case Weapon_Type.BLUNT:
+                Debug.Log("BLUNT: " + (int)Weapon_Type.BLUNT);
+                break;
+            case Weapon_Type.DISCUS:
+                Debug.Log("DISCUS: " + (int)Weapon_Type.DISCUS);
+                break;
+        }
     }
 
     private void showDirection()
