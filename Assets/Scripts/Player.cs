@@ -22,8 +22,8 @@ public class Player : MonoBehaviour
         rb.position = rb.position + moveSpeed * controls.Gameplay.Movement.ReadValue<Vector2>() * Time.fixedDeltaTime;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Hit!");
+        Destroy(collision.gameObject);
     }
 }
