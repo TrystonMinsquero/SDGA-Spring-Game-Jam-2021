@@ -207,7 +207,7 @@ public class Player : MonoBehaviour
     private void changeDirection()
     {
         
-        changeToSword();
+        changeWeapon(0);
 
         //change animation
 
