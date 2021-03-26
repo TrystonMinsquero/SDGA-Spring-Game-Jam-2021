@@ -29,7 +29,7 @@ public class @Controls : IInputActionCollection, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""2D Vector"",
+                    ""name"": ""WASD"",
                     ""id"": ""072bae1b-a40a-40d0-b013-82eb5ce75b44"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
@@ -76,6 +76,61 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""name"": ""right"",
                     ""id"": ""a5057b08-fd84-459c-82d0-cab3e62555b8"",
                     ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Arrow Keys"",
+                    ""id"": ""f007223f-8ae1-479b-acd2-2e15fa67c7e5"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""58d84cb7-d077-435b-9a78-93177b6c7c91"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""edbc03c0-12d0-4fb3-b456-4711a98f7aa1"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""615ac5ee-925a-4945-9f6a-805c848fa873"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""b6460de8-2ab4-406e-9ef8-b55cc745222a"",
+                    ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
