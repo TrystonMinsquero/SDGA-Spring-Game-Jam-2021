@@ -4,25 +4,37 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
+    private bool attackDebounce;
+    public BoxCollider2D weaponCollider;
     public int[] weaknesses = { 0, 0, 0 }; // damage multiplier based on attack type
     public Rigidbody2D target;
     public int type; // 1 = melee 2 = ranged
     public double currentHP;
     public double maximumHP;
+    public float moveVal = 0.1f;
 
     
     
     // Start is called before the first frame update
     void Start()
     {
-        rb = this.GetComponent<Rigidbody2D>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        attackDebounce = false;
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        var force = transform.position - col.transform.position;
-        force.Normalize();
-        rb.AddForce(force * -200);
+        if (col.gameObject.name == "Player Temp" && !attackDebounce) {
+            transform.position = Vector3.MoveTowards(transform.position, col.gameObject.transform.position, moveVal);
+            attackDebounce = true;
+            Debug.Log("done");
+            Sleep(1);
+            attackDebounce = false;
+        }
+    }
+
+    IEnumerator Sleep(int time) {
+        yield return new WaitForSeconds(time);
     }
 }
