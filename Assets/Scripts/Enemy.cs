@@ -65,7 +65,6 @@ public class Enemy : MonoBehaviour
                 if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.gameObject.transform.position).magnitude < 5) 
                 {
                     lastAttack = Time.time;
-                    float slope, yPos, xPos, c;
                     Vector3 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * 15f;
                     transform.DOMove(targetPos, 3);
                 }
