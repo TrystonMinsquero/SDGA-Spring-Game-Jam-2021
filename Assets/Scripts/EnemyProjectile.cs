@@ -12,12 +12,13 @@ public class EnemyProjectile : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D col) {
-        Debug.Log(col.gameObject.layer);
-        if (col.gameObject.name == "Player Temp")
+        if (col.gameObject.tag == "Player")
         {
             col.gameObject.GetComponent<Player>().takeDamage();
+            DOTween.Kill(transform);
+            Destroy(this.gameObject);
         }
-        else if (col.gameObject.layer == 8) {
+        if (col.gameObject.tag == "Wall") {
             DOTween.Kill(transform);
             Destroy(this.gameObject);
         }
