@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
+        anim = this.GetComponent<Animator>();
         controls = new Controls();
         controls.Enable();
 
@@ -288,14 +289,41 @@ public class Player : MonoBehaviour
                         gameObject.transform.localScale = new Vector3(-1, 1, 1);
                         if (moving) anim.Play("Player_Sun_Walk_Left");
                         break;
-
                 }
                 break;
             case Weapon_Type.BLUNT:
-
+                switch (facing)
+                {
+                    case Direction.UP:
+                        break;
+                    case Direction.DOWN:
+                        break;
+                    case Direction.LEFT:
+                        gameObject.transform.localScale = new Vector3(1, 1, 1);
+                        if (moving) anim.Play("Player_Sun_Walk_Left");
+                        break;
+                    case Direction.RIGHT:
+                        gameObject.transform.localScale = new Vector3(-1, 1, 1);
+                        if (moving) anim.Play("Player_Sun_Walk_Left");
+                        break;
+                }
                 break;
             case Weapon_Type.DISCUS:
-
+                switch (facing)
+                {
+                    case Direction.UP:
+                        break;
+                    case Direction.DOWN:
+                        break;
+                    case Direction.LEFT:
+                        gameObject.transform.localScale = new Vector3(1, 1, 1);
+                        if (moving) anim.Play("Player_Sun_Walk_Left");
+                        break;
+                    case Direction.RIGHT:
+                        gameObject.transform.localScale = new Vector3(-1, 1, 1);
+                        if (moving) anim.Play("Player_Sun_Walk_Left");
+                        break;
+                }
                 break;
         }
     }
