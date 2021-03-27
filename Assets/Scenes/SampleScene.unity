@@ -1418,7 +1418,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 925504fc65795344485eaee2434ca115, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1466,6 +1466,7 @@ MonoBehaviour:
   bluntDamage: 35
   bluntRange: 0.6
   bluntDistance: 0.65
+  discusPrefab: {fileID: 8388145215925351127, guid: 5bfede004371e5649b159e8452bfa550, type: 3}
   discusDamage: 20
   discusRadius: 1
   discusDistance: 8
@@ -1542,7 +1543,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

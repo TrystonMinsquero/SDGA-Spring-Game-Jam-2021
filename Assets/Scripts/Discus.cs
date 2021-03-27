@@ -10,62 +10,25 @@ public class Discus : MonoBehaviour
     Rigidbody2D rb;
     ConstantForce2D force;
 
-    public float enemyHitDelay = 2f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
     public static Discus create(Player player, Direction directionThrown)
     {
-        GameObject disc = new GameObject("Disc");
-        disc.AddComponent<SpriteRenderer>();
-        disc.GetComponent<SpriteRenderer>().sprite = player.discSprite;
-        disc.GetComponent<SpriteRenderer>().enabled = true;
-        disc.AddComponent<Rigidbody2D>();
-        disc.GetComponent<Rigidbody2D>().gravityScale = 0;
-        disc.AddComponent<ConstantForce2D>();
-        disc.AddComponent<CircleCollider2D>();
-        disc.GetComponent<CircleCollider2D>().isTrigger = true;
-        disc.AddComponent<Discus>();
-        disc.GetComponent<Discus>().player = player;
-        disc.GetComponent<Discus>().directionThrown = directionThrown;
-        disc.GetComponent<Discus>().rb = disc.GetComponent<Rigidbody2D>();
-        disc.GetComponent<Discus>().force = disc.GetComponent<ConstantForce2D>();
 
-        disc.transform.position = player.transform.position;
+        GameObject discus = Instantiate(player.discusPrefab ,player.transform, true);
 
-        return disc.GetComponent<Discus>();
+        discus.transform.position = player.transform.position;
+
+        discus.GetComponent<Discus>().player = player;
+        discus.GetComponent<Discus>().directionThrown = directionThrown;
+        discus.GetComponent<Discus>().rb = discus.GetComponent<Rigidbody2D>();
+        discus.GetComponent<Discus>().force = discus.GetComponent<ConstantForce2D>();
+
+
+        return discus.GetComponent<Discus>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*
-        Collider2D[] collidersHit = Physics2D.OverlapCircleAll(transform.position, player.discusRadius, player.enemyLayer);
-        Dictionary<Enemy, float> enemyHitTimes = new Dictionary<Enemy, float>();
-
-        foreach (Collider2D enemy in collidersHit)
-            if (enemy == enemy.GetComponent<Enemy>().hitbox)
-            {
-                if(enemyHitTimes.ContainsKey(enemy.GetComponent<Enemy>()))
-                {
-                    if(enemyHitTimes[enemy.GetComponent<Enemy>()] > Time.time)
-                    {
-                        enemy.GetComponent<Enemy>().takeDamage(Weapon_Type.DISCUS, player.discusDamage);
-                        enemyHitTimes[enemy.GetComponent<Enemy>()] = Time.time + enemyHitDelay;
-                    }
-                }
-                else
-                {
-                    enemy.GetComponent<Enemy>().takeDamage(Weapon_Type.DISCUS, player.discusDamage);
-                    enemyHitTimes[enemy.GetComponent<Enemy>()] = Time.time + enemyHitDelay;
-                }
-            }
-
-        */
-
         FixPosition();
     }
 
@@ -135,14 +98,11 @@ public class Discus : MonoBehaviour
             collision.gameObject.GetComponent<Enemy>().takeDamage(Weapon_Type.DISCUS, player.discusDamage);
         }
 
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
             rb.velocity = Vector2.zero;
         }
     }
-    private void OnDrawGizmosSelected()
-    {
-        if (transform != null)
-            Gizmos.DrawWireSphere(transform.position, player.discusRadius);
-    }
+
 }
+

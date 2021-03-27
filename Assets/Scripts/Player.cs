@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     public float bluntDistance = .65f;
 
     [Header("Discus")]
+    public GameObject discusPrefab;
     public int discusDamage = 25;
     public float discusRadius = 3f;
     public float discusDistance = 8;
