@@ -10,7 +10,7 @@ public class Discus : MonoBehaviour
     Rigidbody2D rb;
     ConstantForce2D force;
 
-    public float enemyHitDelay = 1f;
+    public float enemyHitDelay = 2f;
 
     // Start is called before the first frame update
     void Start()

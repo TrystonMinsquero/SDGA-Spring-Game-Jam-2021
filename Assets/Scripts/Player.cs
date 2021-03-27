@@ -38,8 +38,10 @@ public class Player : MonoBehaviour
     public Sprite discSprite;
 
     Transform attackPoint;
+    Animator anim;
 
     Direction facing = Direction.DOWN;
+    private bool moving;
 
     Rigidbody2D rb;
     Controls controls;
@@ -66,7 +68,6 @@ public class Player : MonoBehaviour
     {
         switch (weaponSelected)
         {
-
             case Weapon_Type.SWORD:
                 SwordAttack();
                 break;
@@ -239,6 +240,7 @@ public class Player : MonoBehaviour
     {
         Vector2 direction = controls.Gameplay.Movement.ReadValue<Vector2>();
         rb.position = rb.position + moveSpeed * direction * Time.fixedDeltaTime;
+        moving = direction.magnitude > 0;
         rb.velocity = Vector2.zero;
         Direction dir = facing;
 
@@ -247,13 +249,15 @@ public class Player : MonoBehaviour
             facing = Direction.UP;
         if (direction.y < 0)
             facing = Direction.DOWN;
-        if (direction.x > 0)
-            facing = Direction.RIGHT;
         if (direction.x < 0)
             facing = Direction.LEFT;
+        if (direction.x > 0)
+            facing = Direction.RIGHT;
 
         if (dir != facing)
             changeDirection();
+
+        changeAnimationState();
     }
 
 
@@ -263,8 +267,37 @@ public class Player : MonoBehaviour
         
         changeWeapon(0);
 
-        //change animation
+    }
 
+    private void changeAnimationState()
+    {
+        switch (weaponSelected)
+        {
+            case Weapon_Type.SWORD:
+                switch (facing)
+                {
+                    case Direction.UP:
+                        break;
+                    case Direction.DOWN:
+                        break;
+                    case Direction.LEFT:
+                        gameObject.transform.localScale = new Vector3(1, 1, 1);
+                        if (moving) anim.Play("Player_Sun_Walk_Left");
+                        break;
+                    case Direction.RIGHT:
+                        gameObject.transform.localScale = new Vector3(-1, 1, 1);
+                        if (moving) anim.Play("Player_Sun_Walk_Left");
+                        break;
+
+                }
+                break;
+            case Weapon_Type.BLUNT:
+
+                break;
+            case Weapon_Type.DISCUS:
+
+                break;
+        }
     }
 
     private void showWeapon()
