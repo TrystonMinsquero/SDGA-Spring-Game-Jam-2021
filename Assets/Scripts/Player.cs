@@ -249,11 +249,11 @@ public class Player : MonoBehaviour
         //update direction
         if (direction.y > 0)
             facing = Direction.UP;
-        if (direction.y < 0)
+        else if (direction.y < 0)
             facing = Direction.DOWN;
-        if (direction.x < 0)
+        else if (direction.x < 0)
             facing = Direction.LEFT;
-        if (direction.x > 0)
+        else if (direction.x > 0)
             facing = Direction.RIGHT;
 
         if (dir != facing)
@@ -284,10 +284,10 @@ public class Player : MonoBehaviour
                         if (moving) anim.Play("SwordWalkDown"); else anim.Play("SwordIdleDown");
                         break;
                     case Direction.LEFT:
-                        gameObject.transform.localScale = new Vector3(1, 1, 1);
+                        gameObject.GetComponent<SpriteRenderer>().flipX = false;
                         break;
                     case Direction.RIGHT:
-                        gameObject.transform.localScale = new Vector3(-1, 1, 1);
+                        gameObject.GetComponent<SpriteRenderer>().flipX = true;
                         break;
                 }
                 break;
@@ -300,10 +300,10 @@ public class Player : MonoBehaviour
                         if (moving) anim.Play("HammerWalkDown"); else anim.Play("HammerIdleDown");
                         break;
                     case Direction.LEFT:
-                        gameObject.transform.localScale = new Vector3(1, 1, 1);
+                        gameObject.GetComponent<SpriteRenderer>().flipX = false;
                         break;
                     case Direction.RIGHT:
-                        gameObject.transform.localScale = new Vector3(-1, 1, 1);
+                        gameObject.GetComponent<SpriteRenderer>().flipX = true;
                         break;
                 }
                 break;
@@ -316,10 +316,10 @@ public class Player : MonoBehaviour
                         if (moving) anim.Play("DiscWalkDown"); else anim.Play("DiscIdleDown");
                         break;
                     case Direction.LEFT:
-                        gameObject.transform.localScale = new Vector3(1, 1, 1);
+                        gameObject.GetComponent<SpriteRenderer>().flipX = false;
                         break;
                     case Direction.RIGHT:
-                        gameObject.transform.localScale = new Vector3(-1, 1, 1);
+                        gameObject.GetComponent<SpriteRenderer>().flipX = true;
                         break;
                 }
                 break;
