@@ -70,7 +70,7 @@ public class Enemy : MonoBehaviour
                 if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.gameObject.transform.position).magnitude < 5) 
                 {
                     lastAttack = Time.time;
-                    Vector2 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * 15f;
+                    Vector3 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * 15f;
                     transform.DOMove(targetPos, 3);
                 }
                 break;
@@ -78,7 +78,8 @@ public class Enemy : MonoBehaviour
                 if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.gameObject.transform.position).magnitude < 5) {
                     lastAttack = Time.time;
                     GameObject projectileClone = Instantiate(type3Projectile, transform.position, Quaternion.identity) as GameObject;
-                    projectileClone.GetComponent<EnemyProjectile>().move(transform.position, target.gameObject.transform.position, 5);
+                    Vector3 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * 20f;
+                    projectileClone.GetComponent<EnemyProjectile>().move(transform.position, targetPos, 5);
                 }
                 break;
         }
