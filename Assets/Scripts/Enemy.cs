@@ -7,14 +7,14 @@ public class Enemy : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     public GameObject type3Projectile;
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
     public float[] weaknesses; // damage multiplier based on attack type
     public BoxCollider2D hitbox;
     public int type;
     public float currentHP;
     public float maximumHP;
-    public float forceVal = 3000f;
     private float lastAttack;
+    public float updateRate = 0.1f;
     public float attackCooldown;
     public Rigidbody2D target;
     
@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        InvokeRepeating("AttackCheck",1.0f, updateRate);
     }
 
 
@@ -37,8 +38,8 @@ public class Enemy : MonoBehaviour
                     if ((Time.time - lastAttack) > attackCooldown) {
                         lastAttack = Time.time;
                         col.gameObject.GetComponent<Player>().takeDamage();
-                        Vector3 moveDir = transform.position - col.gameObject.transform.position;
-                        rb.AddForce(moveDir * forceVal);
+                        Vector3 targetPos = transform.position + (col.gameObject.transform.position - transform.position).normalized * 2f;
+                        transform.DOMove(targetPos, 2f);
                     }
                     break;
                 case 2:
@@ -58,7 +59,6 @@ public class Enemy : MonoBehaviour
             DOTween.Kill(transform);
             Destroy(this.gameObject);
         }
-        AttackCheck();
     }
 
     private void AttackCheck() 
@@ -74,11 +74,13 @@ public class Enemy : MonoBehaviour
                 }
                 break;
             case 3:
-                if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.gameObject.transform.position).magnitude < 5) {
+                Quaternion rot = Quaternion.LookRotation(target.gameObject.transform.position - transform.position, transform.TransformDirection(Vector3.up));
+                transform.rotation = new Quaternion(0,0, rot.z, rot.w);
+                if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.gameObject.transform.position).magnitude < 15 && (transform.position - target.gameObject.transform.position).magnitude > 3 ) {
                     lastAttack = Time.time;
                     GameObject projectileClone = Instantiate(type3Projectile, transform.position, Quaternion.identity) as GameObject;
-                    Vector3 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * 20f;
-                    projectileClone.GetComponent<EnemyProjectile>().move(transform.position, targetPos, 5);
+                    Vector3 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * 40f;
+                    projectileClone.GetComponent<EnemyProjectile>().move(transform.position, targetPos, 10);
                 }
                 break;
         }
@@ -86,8 +88,11 @@ public class Enemy : MonoBehaviour
 
     public void takeDamage(Weapon_Type weapon, int damage)
     {
+        DOTween.Kill(transform);
         currentHP -= damage * weaknesses[(int)weapon];
-        Vector3 moveDir = transform.position - target.gameObject.transform.position;
-        rb.AddForce(moveDir * forceVal * 3);
+        if (type < 3) {
+            Vector3 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * -5f;
+            transform.DOMove(targetPos, 2f);
+        }
     }
 }
