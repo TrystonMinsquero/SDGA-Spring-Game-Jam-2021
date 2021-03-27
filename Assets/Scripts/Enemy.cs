@@ -6,6 +6,7 @@ using DG.Tweening;
 public class Enemy : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
+    public GameObject type3Projectile;
     public Rigidbody2D rb;
     public float[] weaknesses; // damage multiplier based on attack type
     public BoxCollider2D hitbox;
@@ -61,7 +62,7 @@ public class Enemy : MonoBehaviour
         AttackCheck();
     }
 
-    void AttackCheck() 
+    private void AttackCheck() 
     {
         switch (type)
         {
@@ -73,7 +74,13 @@ public class Enemy : MonoBehaviour
                     transform.DOMove(targetPos, 3);
                 }
                 break;
-
+            case 3:
+                if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.gameObject.transform.position).magnitude < 5) {
+                    lastAttack = Time.time;
+                    GameObject projectileClone = Instantiate(type3Projectile, transform.position, Quaternion.identity) as GameObject;
+                    projectileClone.GetComponent<EnemyProjectile>().move(transform.position, target.gameObject.transform.position, 5);
+                }
+                break;
         }
     }
 
