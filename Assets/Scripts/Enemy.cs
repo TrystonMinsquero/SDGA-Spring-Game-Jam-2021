@@ -46,12 +46,16 @@ public class Enemy : MonoBehaviour
                     break;
             } 
         }
+        else if (col.gameObject.layer == 8) {
+            DOTween.Kill(transform);
+        }
     }
 
     void FixedUpdate()
     {
         if (currentHP <= 0)
         {
+            DOTween.Kill(transform);
             Destroy(this.gameObject);
         }
         AttackCheck();
@@ -65,7 +69,7 @@ public class Enemy : MonoBehaviour
                 if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.gameObject.transform.position).magnitude < 5) 
                 {
                     lastAttack = Time.time;
-                    Vector3 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * 15f;
+                    Vector2 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * 15f;
                     transform.DOMove(targetPos, 3);
                 }
                 break;
