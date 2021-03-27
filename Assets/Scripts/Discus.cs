@@ -26,6 +26,8 @@ public class Discus : MonoBehaviour
         disc.AddComponent<Rigidbody2D>();
         disc.GetComponent<Rigidbody2D>().gravityScale = 0;
         disc.AddComponent<ConstantForce2D>();
+        disc.AddComponent<CircleCollider2D>();
+        disc.GetComponent<CircleCollider2D>().isTrigger = true;
         disc.AddComponent<Discus>();
         disc.GetComponent<Discus>().player = player;
         disc.GetComponent<Discus>().directionThrown = directionThrown;
@@ -40,6 +42,7 @@ public class Discus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         Collider2D[] collidersHit = Physics2D.OverlapCircleAll(transform.position, player.discusRadius, player.enemyLayer);
         Dictionary<Enemy, float> enemyHitTimes = new Dictionary<Enemy, float>();
 
@@ -60,6 +63,8 @@ public class Discus : MonoBehaviour
                     enemyHitTimes[enemy.GetComponent<Enemy>()] = Time.time + enemyHitDelay;
                 }
             }
+
+        */
 
         FixPosition();
     }
@@ -123,6 +128,18 @@ public class Discus : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            collision.gameObject.GetComponent<Enemy>().takeDamage(Weapon_Type.DISCUS, player.discusDamage);
+        }
+
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        {
+            rb.velocity = Vector2.zero;
+        }
+    }
     private void OnDrawGizmosSelected()
     {
         if (transform != null)
