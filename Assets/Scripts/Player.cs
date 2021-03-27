@@ -280,14 +280,13 @@ public class Player : MonoBehaviour
                     case Direction.UP:
                         break;
                     case Direction.DOWN:
+                        if (moving) anim.Play("SwordWalkDown"); else anim.Play("SwordIdleDown");
                         break;
                     case Direction.LEFT:
                         gameObject.transform.localScale = new Vector3(1, 1, 1);
-                        if (moving) anim.Play("Player_Sun_Walk_Left");
                         break;
                     case Direction.RIGHT:
                         gameObject.transform.localScale = new Vector3(-1, 1, 1);
-                        if (moving) anim.Play("Player_Sun_Walk_Left");
                         break;
                 }
                 break;
@@ -297,14 +296,13 @@ public class Player : MonoBehaviour
                     case Direction.UP:
                         break;
                     case Direction.DOWN:
+                        if (moving) anim.Play("HammerWalkDown"); else anim.Play("HammerIdleDown");
                         break;
                     case Direction.LEFT:
                         gameObject.transform.localScale = new Vector3(1, 1, 1);
-                        if (moving) anim.Play("Player_Sun_Walk_Left");
                         break;
                     case Direction.RIGHT:
                         gameObject.transform.localScale = new Vector3(-1, 1, 1);
-                        if (moving) anim.Play("Player_Sun_Walk_Left");
                         break;
                 }
                 break;
@@ -314,14 +312,13 @@ public class Player : MonoBehaviour
                     case Direction.UP:
                         break;
                     case Direction.DOWN:
+                        if (moving) anim.Play("DiscWalkDown"); else anim.Play("DiscIdleDown");
                         break;
                     case Direction.LEFT:
                         gameObject.transform.localScale = new Vector3(1, 1, 1);
-                        if (moving) anim.Play("Player_Sun_Walk_Left");
                         break;
                     case Direction.RIGHT:
                         gameObject.transform.localScale = new Vector3(-1, 1, 1);
-                        if (moving) anim.Play("Player_Sun_Walk_Left");
                         break;
                 }
                 break;
