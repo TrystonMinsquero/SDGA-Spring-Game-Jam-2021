@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.name == "Player Temp")
+        if (col.gameObject.tag == "Player")
         {
             switch (type)
             {
@@ -42,12 +42,11 @@ public class Enemy : MonoBehaviour
                     }
                     break;
                 case 2:
-                    Debug.Log("hit playa");
                     col.gameObject.GetComponent<Player>().takeDamage();
                     break;
             } 
         }
-        else if (col.gameObject.layer == 8) {
+        else if (col.gameObject.tag == "Wall") {
             DOTween.Kill(transform);
         }
     }
