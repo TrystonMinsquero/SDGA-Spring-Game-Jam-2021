@@ -60,7 +60,7 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  type3Projectile: {fileID: 2626693997081740996, guid: dfad1d37f4ebb054a88ac45eb9271dc3, type: 3}
+  rangedProjectile: {fileID: 0}
   hitbox: {fileID: 5920634578952837848}
   healthbar: {fileID: 6452699064851735360}
   target: {fileID: 0}
@@ -266,6 +266,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!50 &3243545473365972403
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8664078962324672679}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1001 &5920634578090178568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -375,6 +396,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c26813da0f119b743997d426fce63b30, type: 3}
+--- !u!1 &8664078962324672679 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3032800716150909103, guid: c26813da0f119b743997d426fce63b30, type: 3}
+  m_PrefabInstance: {fileID: 5920634578090178568}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2555266591083663784 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8168527702744279456, guid: c26813da0f119b743997d426fce63b30, type: 3}

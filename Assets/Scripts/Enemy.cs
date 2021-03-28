@@ -32,7 +32,6 @@ public class Enemy : MonoBehaviour
         InvokeRepeating("AttackCheck",1.0f, updateRate);
         if(healthbar != null)
             healthbar.gameObject.SetActive(false);
-
         currentHP = maximumHP;
     }
 
@@ -65,17 +64,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
-    {
-
-        if (healthbar != null && !healthbar.enabled && currentHP != maximumHP && currentHP > 0)
-        {
-            healthbar.gameObject.SetActive(true);
-            healthbar.SetHealth(currentHP / maximumHP);
-        }
-        
-    }
-
     private void AttackCheck() 
     {
         switch (type)
@@ -99,12 +87,25 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void FixedUpdate()
+    {
+        
+    }
+
     public void takeDamage(Weapon_Type weapon, int damage)
     {
         DOTween.Kill(transform);
         currentHP -= damage * weaknesses[(int)weapon];
+
         if (currentHP <= 0)
             Die();
+
+        if (healthbar.gameObject != null && !healthbar.gameObject.activeSelf)
+        {
+            healthbar.gameObject.SetActive(true);
+            healthbar.SetHealth(currentHP / maximumHP);
+        }
+
         switch (weapon)
         {
             case Weapon_Type.SWORD:
