@@ -53,8 +53,10 @@ public class Enemy : MonoBehaviour
         }
         else if (col.gameObject.tag == "Wall" || col.gameObject.tag == "Enemy") {
             DOTween.Kill(transform);
-            Vector3 targetPos = transform.position + (col.gameObject.transform.position - transform.position).normalized * -3f;
-            transform.DOMove(targetPos, 2f);
+            if (type == 2) {
+                Vector3 targetPos = transform.position + (col.gameObject.transform.position - transform.position).normalized * -3f;
+                transform.DOMove(targetPos, 2f);
+            }
         }
     }
 
@@ -101,9 +103,20 @@ public class Enemy : MonoBehaviour
     {
         DOTween.Kill(transform);
         currentHP -= damage * weaknesses[(int)weapon];
-        if (type < 3) {
-            Vector3 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * -5f;
-            transform.DOMove(targetPos, 2f);
+        switch (weapon)
+        {
+            case Weapon_Type.SWORD:
+                Vector3 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * -5f;
+                transform.DOMove(targetPos, 2f);
+                break;
+            case Weapon_Type.BLUNT:
+                Vector3 targetPos2 = transform.position + (target.gameObject.transform.position - transform.position).normalized * -10f;
+                transform.DOMove(targetPos2, 2f);
+                break;
+            default:
+                Vector3 targetPos3 = transform.position + (target.gameObject.transform.position - transform.position).normalized * -2f;
+                transform.DOMove(targetPos3, 2f);
+                break;
         }
     }
 }
