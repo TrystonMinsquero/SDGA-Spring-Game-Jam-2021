@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     public float attackCooldown;
     public Rigidbody2D target;
     public HealthBar healthbar;
+    public int difficulty;
     
     
     // Start is called before the first frame update
@@ -50,7 +51,7 @@ public class Enemy : MonoBehaviour
                     break;
             } 
         }
-        else if (col.gameObject.tag == "Wall") {
+        else if (col.gameObject.tag == "Wall" || col.gameObject.tag == "Enemy") {
             DOTween.Kill(transform);
             Vector3 targetPos = transform.position + (col.gameObject.transform.position - transform.position).normalized * -3f;
             transform.DOMove(targetPos, 2f);
@@ -86,8 +87,6 @@ public class Enemy : MonoBehaviour
                 }
                 break;
             case 3:
-                Quaternion rot = Quaternion.LookRotation(target.gameObject.transform.position - transform.position, transform.TransformDirection(Vector3.up));
-                transform.rotation = new Quaternion(0,0, rot.z, rot.w);
                 if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.gameObject.transform.position).magnitude < 15 && (transform.position - target.gameObject.transform.position).magnitude > 3 ) {
                     lastAttack = Time.time;
                     GameObject projectileClone = Instantiate(type3Projectile, transform.position, Quaternion.identity) as GameObject;
