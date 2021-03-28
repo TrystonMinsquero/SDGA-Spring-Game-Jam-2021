@@ -117,15 +117,15 @@ public class Player : MonoBehaviour
         {
             case Weapon_Type.SWORD:
                 changeToSword();
-                Debug.Log("changed to SWORD!");
+                //Debug.Log("changed to SWORD!");
                 break;
             case Weapon_Type.BLUNT:
                 changeToBlunt();
-                Debug.Log("changed to BLUNT!");
+                //Debug.Log("changed to BLUNT!");
                 break;
             case Weapon_Type.DISCUS:
                 changeToDiscus();
-                Debug.Log("changed to DISCUS!");
+                //Debug.Log("changed to DISCUS!");
                 break;
         }
 

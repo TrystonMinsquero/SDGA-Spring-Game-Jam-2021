@@ -27,7 +27,11 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        spawnPoints = SpawnPoints.GetComponentsInChildren<Transform>();
+        Transform[] tempArray = SpawnPoints.GetComponentsInChildren<Transform>();
+        //Remove inital spawnpoint transform
+        spawnPoints = new Transform[tempArray.Length - 1];
+        for (int i = 1; i < tempArray.Length; i++)
+            spawnPoints[i - 1] = tempArray[i];
         enemies = new List<Enemy>();
         SpawnEnemiesDiff(startDifficulty);
     }
