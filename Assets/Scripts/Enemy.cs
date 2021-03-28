@@ -28,9 +28,11 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("StartRan");
         rb = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         target = GameObject.Find("Player").transform;
+        Debug.Log(target);
         gameObject.GetComponent<AIDestinationSetter>().target = target;
         healthBarPos = healthBarSpot.position - transform.position;
         Destroy(healthBarSpot.gameObject);
@@ -52,16 +54,21 @@ public class Enemy : MonoBehaviour
             switch (type)
             {
                 case EnemyType.MELEE:
-                    if ((Time.time - lastAttack) > attackCooldown) {
-                        lastAttack = Time.time;
-                        col.gameObject.GetComponent<Player>().takeDamage();
-                        Vector3 targetPos = transform.position + (col.gameObject.transform.position - transform.position).normalized * 2f;
-                        transform.DOMove(targetPos, 2f);
+                    {
+                        if ((Time.time - lastAttack) > attackCooldown)
+                        {
+                            lastAttack = Time.time;
+                            col.gameObject.GetComponent<Player>().takeDamage();
+                            Vector3 targetPos = transform.position + (col.gameObject.transform.position - transform.position).normalized * 2f;
+                            transform.DOMove(targetPos, 2f);
+                        }
+                        break;
                     }
-                    break;
                 case EnemyType.CHARGE:
-                    col.gameObject.GetComponent<Player>().takeDamage();
-                    break;
+                    {
+                        col.gameObject.GetComponent<Player>().takeDamage();
+                        break;
+                    }
             } 
         }
         else if (col.gameObject.tag == "Wall" || col.gameObject.tag == "Enemy") {
@@ -75,24 +82,33 @@ public class Enemy : MonoBehaviour
 
     private void AttackCheck() 
     {
+        Debug.Log("ran attack check");
         switch (type)
         {
             case EnemyType.CHARGE:
-                if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 5) 
                 {
-                    lastAttack = Time.time;
-                    Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 15f;
-                    transform.DOMove(targetPos, 3);
+                    if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 5)
+                    {
+                        Debug.Log("charging");
+                        lastAttack = Time.time;
+                        Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 15f;
+                        Debug.Log(transform);
+                        Debug.Log(targetPos);
+                        transform.DOMove(targetPos, 3);
+                    }
+                    break;
                 }
-                break;
             case EnemyType.RANGED:
-                if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 15 && (transform.position - target.position).magnitude > 3 ) {
-                    lastAttack = Time.time;
-                    GameObject projectileClone = Instantiate(rangedProjectile, transform.position, Quaternion.identity) as GameObject;
-                    Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 40f;
-                    projectileClone.GetComponent<EnemyProjectile>().move(transform, targetPos, 10);
+                {
+                    if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 15 && (transform.position - target.position).magnitude > 3)
+                    {
+                        lastAttack = Time.time;
+                        GameObject projectileClone = Instantiate(rangedProjectile, transform.position, Quaternion.identity) as GameObject;
+                        Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 40f;
+                        projectileClone.GetComponent<EnemyProjectile>().move(transform, targetPos, 10);
+                    }
+                    break;
                 }
-                break;
         }
     }
 
