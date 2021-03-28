@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 
     [Header("Attributes")]
     public int max_health = 3;
-    private int current_health;
+    public int current_health;
     public int moveSpeed;
     public float attackDelay = 1f;
     public Weapon_Type weaponSelected;
@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Death");
+        LevelManager.StartOver();
     }
 
     public void changeWeapon(int change)
@@ -276,6 +276,16 @@ public class Player : MonoBehaviour
             changeDirection();
 
         changeAnimationState();
+    }
+
+    public void addHealth(int change)
+    {
+        current_health += change;
+    }
+
+    public void fillHealth()
+    {
+        current_health = max_health;
     }
 
     private void changeDirection()

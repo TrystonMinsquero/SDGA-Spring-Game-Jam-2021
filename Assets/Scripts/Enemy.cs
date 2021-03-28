@@ -145,8 +145,7 @@ public class Enemy : MonoBehaviour
     {
         GameObject deathParticle = Instantiate(DeathParticle, transform.position, Quaternion.identity) as GameObject;
         deathParticle.GetComponent<ParticleHandler>().emit(15, 1);
-        LevelManager.enemies.Remove(this);
-        HUD.updateEnemies(LevelManager.enemies.Count);
+        LevelManager.RemoveEnemy(this);
         Destroy(healthBar);
         Destroy(gameObject);
     }
