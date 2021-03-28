@@ -44,7 +44,9 @@ public class LevelManager : MonoBehaviour
         {
             GameObject enemyType = enemyTypes[Random.Range(0, enemyTypes.Count)];
             difficulty -= enemyType.GetComponent<Enemy>().difficulty;
-            enemies.Add(Instantiate(enemyType, spawnPoints[Random.Range(0, spawnPoints.Length)].transform, false).GetComponent<Enemy>());
+            Enemy enemy = Instantiate(enemyType).GetComponent<Enemy>();
+            enemy.transform.position = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
+            enemies.Add(enemy);
         }
     }
 

@@ -14,11 +14,14 @@ public class Enemy : MonoBehaviour
     [Header("Draggables")]
     public GameObject rangedProjectile;
     public BoxCollider2D hitbox;
-    public HealthBar healthbar;
-    public Transform target;
+    public GameObject healthBarPrefab;
+    public Transform healthBarSpot;
     
+    private Transform target;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
+    private GameObject healthBar;
+    private Vector3 healthBarPos;
     private float currentHP;
     private float lastAttack;
     
@@ -29,12 +32,18 @@ public class Enemy : MonoBehaviour
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         target = GameObject.Find("Player").transform;
         gameObject.GetComponent<AIDestinationSetter>().target = target;
+        healthBarPos = healthBarSpot.position - transform.position;
+        Destroy(healthBarSpot.gameObject);
         InvokeRepeating("AttackCheck",1.0f, updateRate);
-        if(healthbar != null)
-            healthbar.gameObject.SetActive(false);
         currentHP = maximumHP;
     }
 
+
+    private void FixedUpdate()
+    {
+        if (healthBar != null)
+            healthBar.transform.position = transform.position + healthBarPos;
+    }
 
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -87,25 +96,27 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void FixedUpdate()
-    {
-        
-    }
-
     public void takeDamage(Weapon_Type weapon, int damage)
     {
         DOTween.Kill(transform);
         currentHP -= damage * weaknesses[(int)weapon];
 
+        //Check for death
         if (currentHP <= 0) {
             Die();
             return;
         }
 
-        if (healthbar.gameObject != null && !healthbar.gameObject.activeSelf)
+        //Manage health bar
+        if (healthBar == null && healthBarPos != null)
         {
-            healthbar.gameObject.SetActive(true);
-            healthbar.SetHealth(currentHP / maximumHP);
+            healthBar = Instantiate(healthBarPrefab);
+            healthBar.transform.position = transform.position + healthBarPos;
+            healthBar.GetComponentInChildren<HealthBar>().SetHealth(currentHP / maximumHP);
+        }
+        else if(healthBar != null)
+        {
+            healthBar.GetComponentInChildren<HealthBar>().SetHealth(currentHP / maximumHP);
         }
 
         switch (weapon)
@@ -128,6 +139,7 @@ public class Enemy : MonoBehaviour
     public void Die()
     {
         LevelManager.enemies.Remove(this);
+        Destroy(healthBar);
         Destroy(gameObject);
     }
 }
