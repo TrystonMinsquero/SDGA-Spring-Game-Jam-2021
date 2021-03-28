@@ -50,20 +50,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4539b0332defc2243b179d97e898adcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type3Projectile: {fileID: 0}
+  type: 2
+  maximumHP: 50
+  updateRate: 0.02
+  attackCooldown: 5
+  difficulty: 1
   weaknesses:
   - 1
   - 1
   - 1
+  type3Projectile: {fileID: 0}
   hitbox: {fileID: 1477921881421254271}
-  type: 2
-  currentHP: 50
-  maximumHP: 50
-  updateRate: 0.02
-  attackCooldown: 5
-  target: {fileID: 0}
   healthbar: {fileID: 2244028765174706747}
-  difficulty: 0
+  target: {fileID: 0}
 --- !u!212 &1477921881421254243
 SpriteRenderer:
   m_ObjectHideFlags: 0

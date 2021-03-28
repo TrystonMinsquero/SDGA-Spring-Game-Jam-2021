@@ -5,21 +5,23 @@ using DG.Tweening;
 
 public class Enemy : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
-    public GameObject type3Projectile;
-    private Rigidbody2D rb;
-    public float[] weaknesses; // damage multiplier based on attack type
-    public BoxCollider2D hitbox;
-    public int type;
-    public float currentHP;
+    [Header("Stats")]
+    public EnemyType type;
     public float maximumHP;
-    private float lastAttack;
     public float updateRate = 0.1f;
     public float attackCooldown;
-    public Rigidbody2D target;
-    public HealthBar healthbar;
     public int difficulty;
+    public float[] weaknesses; // damage multiplier based on attack type
+    [Header("Draggables")]
+    public GameObject type3Projectile;
+    public BoxCollider2D hitbox;
+    public HealthBar healthbar;
+    public Transform target;
     
+    private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
+    private float currentHP;
+    private float lastAttack;
     
     // Start is called before the first frame update
     void Start()
@@ -29,6 +31,8 @@ public class Enemy : MonoBehaviour
         InvokeRepeating("AttackCheck",1.0f, updateRate);
         if(healthbar != null)
             healthbar.gameObject.SetActive(false);
+
+        currentHP = maximumHP;
     }
 
 
@@ -38,7 +42,7 @@ public class Enemy : MonoBehaviour
         {
             switch (type)
             {
-                case 1:
+                case EnemyType.MELEE:
                     if ((Time.time - lastAttack) > attackCooldown) {
                         lastAttack = Time.time;
                         col.gameObject.GetComponent<Player>().takeDamage();
@@ -46,14 +50,14 @@ public class Enemy : MonoBehaviour
                         transform.DOMove(targetPos, 2f);
                     }
                     break;
-                case 2:
+                case EnemyType.CHARGE:
                     col.gameObject.GetComponent<Player>().takeDamage();
                     break;
             } 
         }
         else if (col.gameObject.tag == "Wall" || col.gameObject.tag == "Enemy") {
             DOTween.Kill(transform);
-            if (type == 2) {
+            if (type == EnemyType.CHARGE) {
                 Vector3 targetPos = transform.position + (col.gameObject.transform.position - transform.position).normalized * -3f;
                 transform.DOMove(targetPos, 2f);
             }
@@ -62,13 +66,8 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (currentHP <= 0)
-        {
-            DOTween.Kill(transform);
-            Destroy(this.gameObject);
-        }
 
-        if (healthbar != null && currentHP != maximumHP && currentHP > 0)
+        if (healthbar != null && !healthbar.enabled && currentHP != maximumHP && currentHP > 0)
         {
             healthbar.gameObject.SetActive(true);
             healthbar.SetHealth(currentHP / maximumHP);
@@ -80,19 +79,19 @@ public class Enemy : MonoBehaviour
     {
         switch (type)
         {
-            case 2:
-                if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.gameObject.transform.position).magnitude < 5) 
+            case EnemyType.CHARGE:
+                if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 5) 
                 {
                     lastAttack = Time.time;
-                    Vector3 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * 15f;
+                    Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 15f;
                     transform.DOMove(targetPos, 3);
                 }
                 break;
-            case 3:
-                if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.gameObject.transform.position).magnitude < 15 && (transform.position - target.gameObject.transform.position).magnitude > 3 ) {
+            case EnemyType.RANGED:
+                if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 15 && (transform.position - target.position).magnitude > 3 ) {
                     lastAttack = Time.time;
                     GameObject projectileClone = Instantiate(type3Projectile, transform.position, Quaternion.identity) as GameObject;
-                    Vector3 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * 40f;
+                    Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 40f;
                     projectileClone.GetComponent<EnemyProjectile>().move(transform.position, targetPos, 10);
                 }
                 break;
@@ -106,17 +105,24 @@ public class Enemy : MonoBehaviour
         switch (weapon)
         {
             case Weapon_Type.SWORD:
-                Vector3 targetPos = transform.position + (target.gameObject.transform.position - transform.position).normalized * -5f;
+                Vector3 targetPos = transform.position + (target.position - transform.position).normalized * -5f;
                 transform.DOMove(targetPos, 2f);
                 break;
             case Weapon_Type.BLUNT:
-                Vector3 targetPos2 = transform.position + (target.gameObject.transform.position - transform.position).normalized * -10f;
+                Vector3 targetPos2 = transform.position + (target.position - transform.position).normalized * -10f;
                 transform.DOMove(targetPos2, 2f);
                 break;
             default:
-                Vector3 targetPos3 = transform.position + (target.gameObject.transform.position - transform.position).normalized * -2f;
+                Vector3 targetPos3 = transform.position + (target.position - transform.position).normalized * -2f;
                 transform.DOMove(targetPos3, 2f);
                 break;
         }
     }
+}
+
+public enum EnemyType
+{
+    MELEE = 1,
+    CHARGE = 2,
+    RANGED = 3,
 }
