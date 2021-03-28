@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class Discus : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class Discus : MonoBehaviour
         discus.GetComponent<Discus>().directionThrown = directionThrown;
         discus.GetComponent<Discus>().rb = discus.GetComponent<Rigidbody2D>();
         discus.GetComponent<Discus>().force = discus.GetComponent<ConstantForce2D>();
+        discus.GetComponent<Light2D>().color = player.starModeBloom;
 
 
         return discus.GetComponent<Discus>();

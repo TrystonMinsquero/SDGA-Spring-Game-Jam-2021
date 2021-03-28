@@ -26,7 +26,8 @@ public class Enemy : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         InvokeRepeating("AttackCheck",1.0f, updateRate);
-        healthbar.gameObject.SetActive(false);
+        if(healthbar != null)
+            healthbar.gameObject.SetActive(false);
     }
 
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class Player : MonoBehaviour
 {
@@ -36,7 +37,13 @@ public class Player : MonoBehaviour
 
     [Header("Globals")]
     public LayerMask enemyLayer;
-    public Sprite discSprite;
+    public Light2D glowLight;
+    [ColorUsageAttribute(true, true)]
+    public Color sunModeBloom;
+    [ColorUsageAttribute(true, true)]
+    public Color moonModeBloom;
+    [ColorUsageAttribute(true, true)]
+    public Color starModeBloom;
 
     Transform attackPoint;
     Animator anim;
@@ -44,6 +51,7 @@ public class Player : MonoBehaviour
     Direction facing = Direction.DOWN;
     private bool moving;
 
+    Material material;
     Rigidbody2D rb;
     Controls controls;
     // Start is called before the first frame update
@@ -51,6 +59,7 @@ public class Player : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody2D>();
         anim = this.GetComponent<Animator>();
+        material = this.GetComponent<SpriteRenderer>().material;
         controls = new Controls();
         controls.Enable();
 
@@ -119,9 +128,12 @@ public class Player : MonoBehaviour
                 Debug.Log("changed to DISCUS!");
                 break;
         }
+
+        glowLight.color = material.color;
     }
     private void changeToSword()
     {
+        material.color = sunModeBloom;
         weaponSelected = Weapon_Type.SWORD;
         attackRange = swordRange;
         float distance = swordDistance;
@@ -146,6 +158,7 @@ public class Player : MonoBehaviour
 
     private void changeToBlunt()
     {
+        material.color = moonModeBloom;
         weaponSelected = Weapon_Type.BLUNT;
         attackRange = bluntRange;
         float distance = bluntDistance;
@@ -171,6 +184,7 @@ public class Player : MonoBehaviour
 
     private void changeToDiscus()
     {
+        material.color = starModeBloom;
         weaponSelected = Weapon_Type.DISCUS;
         attackRange = discusRadius;
         float distance = .5f;
