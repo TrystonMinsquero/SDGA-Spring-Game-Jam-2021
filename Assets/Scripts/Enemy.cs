@@ -52,6 +52,8 @@ public class Enemy : MonoBehaviour
         }
         else if (col.gameObject.tag == "Wall") {
             DOTween.Kill(transform);
+            Vector3 targetPos = transform.position + (col.gameObject.transform.position - transform.position).normalized * -3f;
+            transform.DOMove(targetPos, 2f);
         }
     }
 
