@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
+using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
@@ -13,7 +11,7 @@ public class Enemy : MonoBehaviour
     public int difficulty;
     public float[] weaknesses; // damage multiplier based on attack type
     [Header("Draggables")]
-    public GameObject type3Projectile;
+    public GameObject rangedProjectile;
     public BoxCollider2D hitbox;
     public HealthBar healthbar;
     public Transform target;
@@ -90,7 +88,7 @@ public class Enemy : MonoBehaviour
             case EnemyType.RANGED:
                 if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 15 && (transform.position - target.position).magnitude > 3 ) {
                     lastAttack = Time.time;
-                    GameObject projectileClone = Instantiate(type3Projectile, transform.position, Quaternion.identity) as GameObject;
+                    GameObject projectileClone = Instantiate(rangedProjectile, transform.position, Quaternion.identity) as GameObject;
                     Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 40f;
                     projectileClone.GetComponent<EnemyProjectile>().move(transform, targetPos, 10);
                 }
@@ -102,6 +100,8 @@ public class Enemy : MonoBehaviour
     {
         DOTween.Kill(transform);
         currentHP -= damage * weaknesses[(int)weapon];
+        if (currentHP <= 0)
+            Die();
         switch (weapon)
         {
             case Weapon_Type.SWORD:
@@ -117,6 +117,13 @@ public class Enemy : MonoBehaviour
                 transform.DOMove(targetPos3, 2f);
                 break;
         }
+    }
+
+    public void Die()
+    {
+        DOTween.Kill(gameObject);
+        LevelManager.enemies.Remove(this);
+        Destroy(this);
     }
 }
 

@@ -62,7 +62,7 @@ MonoBehaviour:
   type3Projectile: {fileID: 0}
   hitbox: {fileID: 1477921881421254271}
   healthbar: {fileID: 2244028765174706747}
-  target: {fileID: 0}
+  target: {fileID: 2440944539561715812, guid: bb4213e350d3b5a499fed54b96d334e6, type: 3}
 --- !u!212 &1477921881421254243
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  target: {fileID: 0}
+  target: {fileID: 2440944539561715812, guid: bb4213e350d3b5a499fed54b96d334e6, type: 3}
 --- !u!61 &1477921881421254271
 BoxCollider2D:
   m_ObjectHideFlags: 0

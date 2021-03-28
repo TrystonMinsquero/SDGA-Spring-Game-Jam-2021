@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    public static LevelManager levelManager;
+    [Header("Stats")]
+    public int startDifficulty = 2;
+    public int scale = 2;
+    public int round = 1;
 
+    [Header("Draggables")]
     public GameObject SpawnPoints;
     public List<GameObject> enemyTypes;
 
-    Transform[] spawnPoints;
+    public static List<Enemy> enemies;
+    public static Transform[] spawnPoints;
+
+    private void Awake()
+    {
+        if (LevelManager.levelManager == null)
+            LevelManager.levelManager = this;
+        else
+            Destroy(this);
+    }
 
     private void Start()
     {
         spawnPoints = SpawnPoints.GetComponentsInChildren<Transform>();
+        enemies = new List<Enemy>();
+        SpawnEnemiesDiff(startDifficulty);
     }
 
     public void Spawnenemies(int numOfEnemies)
@@ -27,7 +44,16 @@ public class LevelManager : MonoBehaviour
         {
             GameObject enemyType = enemyTypes[Random.Range(0, enemyTypes.Count)];
             difficulty -= enemyType.GetComponent<Enemy>().difficulty;
-            Instantiate(enemyType, spawnPoints[Random.Range(0, spawnPoints.Length)].transform);
+            enemies.Add(Instantiate(enemyType, spawnPoints[Random.Range(0, spawnPoints.Length)].transform).GetComponent<Enemy>());
+        }
+    }
+
+    public void Update()
+    {
+        while (enemies.Count <= 0)
+        {
+            round++;
+            SpawnEnemiesDiff(startDifficulty + scale * round);
         }
     }
 }
