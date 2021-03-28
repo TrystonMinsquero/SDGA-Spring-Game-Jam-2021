@@ -3323,7 +3323,7 @@ SpriteRenderer:
   m_SortingLayerID: -1006551155
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 925504fc65795344485eaee2434ca115, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4e107f11c9d9dc74b9d959d140bb4a4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3383,7 +3383,7 @@ MonoBehaviour:
   glowLight: {fileID: 2082383448}
   sunModeBloom: {r: 2.1185474, g: 0.98717654, b: 0.0776431, a: 0}
   moonModeBloom: {r: 2.0298123, g: 0.13310245, b: 2.1185474, a: 0}
-  starModeBloom: {r: 0.23693624, g: 1.7746961, b: 3.2282567, a: 0}
+  starModeBloom: {r: 0.023015138, g: 0.7752232, b: 1.6264061, a: 0}
 --- !u!50 &1472982246
 Rigidbody2D:
   serializedVersion: 4
@@ -4137,6 +4137,51 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 6.0013313}
   m_EdgeRadius: 0
+--- !u!1 &1642851809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1642851811}
+  - component: {fileID: 1642851810}
+  m_Layer: 0
+  m_Name: Level Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1642851810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1642851809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0cc164cb7d47947938422f96097359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoints: []
+  enemyTypes: []
+--- !u!4 &1642851811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1642851809}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.3942667, y: -5.916936, z: -60.005577}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1675226831
 GameObject:
   m_ObjectHideFlags: 0
