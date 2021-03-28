@@ -28,11 +28,9 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("StartRan");
         rb = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         target = GameObject.Find("Player").transform;
-        Debug.Log(target);
         gameObject.GetComponent<AIDestinationSetter>().target = target;
         healthBarPos = healthBarSpot.position - transform.position;
         Destroy(healthBarSpot.gameObject);
@@ -82,18 +80,14 @@ public class Enemy : MonoBehaviour
 
     private void AttackCheck() 
     {
-        Debug.Log("ran attack check");
         switch (type)
         {
             case EnemyType.CHARGE:
                 {
                     if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 5)
                     {
-                        Debug.Log("charging");
                         lastAttack = Time.time;
                         Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 15f;
-                        Debug.Log(transform);
-                        Debug.Log(targetPos);
                         transform.DOMove(targetPos, 3);
                     }
                     break;
