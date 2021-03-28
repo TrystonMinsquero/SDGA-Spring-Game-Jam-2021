@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     public BoxCollider2D hitbox;
     public GameObject healthBarPrefab;
     public Transform healthBarSpot;
+    public GameObject DeathParticle;
     
     private Transform target;
     private Rigidbody2D rb;
@@ -105,7 +106,8 @@ public class Enemy : MonoBehaviour
         currentHP -= damage * weaknesses[(int)weapon];
 
         //Check for death
-        if (currentHP <= 0) {
+        if (currentHP <= 0)
+        {
             Die();
             return;
         }
@@ -141,6 +143,8 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        GameObject deathParticle = Instantiate(DeathParticle, transform.position, Quaternion.identity) as GameObject;
+        deathParticle.GetComponent<ParticleHandler>().emit(15, 1);
         LevelManager.enemies.Remove(this);
         Destroy(healthBar);
         Destroy(gameObject);
