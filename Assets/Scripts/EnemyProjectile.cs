@@ -5,9 +5,10 @@ using DG.Tweening;
 
 public class EnemyProjectile : MonoBehaviour
 {   
-    public void move(Vector3 startPos, Vector3 endPos, float moveTime) {
-        transform.position = startPos;
+    public void move(Transform startEnemy, Vector3 endPos, float moveTime) {
+        transform.position = startEnemy.position;
         transform.DOMove(endPos, moveTime);
+        transform.rotation = startPos.rotation;
         StartCoroutine(DestroyObject(moveTime));
     }
 
