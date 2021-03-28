@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     public float updateRate = 0.1f;
     public float attackCooldown;
     public Rigidbody2D target;
+    public HealthBar healthbar;
     
     
     // Start is called before the first frame update
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         InvokeRepeating("AttackCheck",1.0f, updateRate);
+        healthbar.gameObject.SetActive(false);
     }
 
 
@@ -59,6 +61,13 @@ public class Enemy : MonoBehaviour
             DOTween.Kill(transform);
             Destroy(this.gameObject);
         }
+
+        if (healthbar != null && currentHP != maximumHP && currentHP > 0)
+        {
+            healthbar.gameObject.SetActive(true);
+            healthbar.SetHealth(currentHP / maximumHP);
+        }
+        
     }
 
     private void AttackCheck() 
