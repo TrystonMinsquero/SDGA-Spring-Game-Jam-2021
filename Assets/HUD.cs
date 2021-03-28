@@ -11,11 +11,16 @@ public class HUD : MonoBehaviour
 
     public Sprite heart;
     public Sprite brokenHeart;
+    public Text enemies;
+    public Text round;
 
-    public static Sprite HEART;
-    public static Sprite BROKENHEART;
+    private static Sprite HEART;
+    private static Sprite BROKENHEART;
+    private static Text ENEMIESTEXT;
+    private static Text ROUNDTEXT;
 
     private static Image[] hearts;
+    private static float lingerTime;
 
     private void Awake()
     {
@@ -31,6 +36,34 @@ public class HUD : MonoBehaviour
         hearts = Hearts.GetComponentsInChildren<Image>();
         HEART = heart;
         BROKENHEART = brokenHeart;
+        ENEMIESTEXT = enemies;
+        ROUNDTEXT = round;
+        ROUNDTEXT.gameObject.SetActive(false);
+    }
+
+    public static void updateEnemies(int numEnemies)
+    {
+        ENEMIESTEXT.text = "Enemies: " + numEnemies;
+    }
+
+    public static void displayRound(int round, float linger = 3)
+    {
+        ROUNDTEXT.text = "Round " + round;
+        ROUNDTEXT.gameObject.SetActive(true);
+        lingerTime = Time.time + linger;
+        
+
+    }
+
+    private void Update()
+    {
+        if (Time.time > lingerTime)
+            ROUNDTEXT.gameObject.SetActive(false);
+    }
+
+    private static void hideRound()
+    {
+        ROUNDTEXT.gameObject.SetActive(false);
     }
 
     public static void updateHearts(int health)

@@ -38,13 +38,20 @@ public class LevelManager : MonoBehaviour
 
     public void Spawnenemies(int numOfEnemies)
     {
-        for(int i = 0; i < numOfEnemies; i++)
-            Instantiate(enemyTypes[Random.Range(0, enemyTypes.Count)], spawnPoints[Random.Range(0, spawnPoints.Length)].transform);
+        HUD.displayRound(round);
+        for (int i = 0; i < numOfEnemies; i++)
+        {
+            Enemy enemy = Instantiate(enemyTypes[Random.Range(0, enemyTypes.Count)]).GetComponent<Enemy>();
+            enemy.transform.position = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
+            enemies.Add(enemy);
+        }
+        HUD.updateEnemies(enemies.Count);
     }
 
     public void SpawnEnemiesDiff(int difficulty)
     {
-        while(difficulty > 0)
+        HUD.displayRound(round);
+        while (difficulty > 0)
         {
             GameObject enemyType = enemyTypes[Random.Range(0, enemyTypes.Count)];
             difficulty -= enemyType.GetComponent<Enemy>().difficulty;
@@ -52,6 +59,7 @@ public class LevelManager : MonoBehaviour
             enemy.transform.position = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
             enemies.Add(enemy);
         }
+        HUD.updateEnemies(enemies.Count);
     }
 
     public void Update()
