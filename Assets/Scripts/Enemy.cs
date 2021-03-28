@@ -97,8 +97,10 @@ public class Enemy : MonoBehaviour
         DOTween.Kill(transform);
         currentHP -= damage * weaknesses[(int)weapon];
 
-        if (currentHP <= 0)
+        if (currentHP <= 0) {
             Die();
+            return;
+        }
 
         if (healthbar.gameObject != null && !healthbar.gameObject.activeSelf)
         {
@@ -125,7 +127,6 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
-        DOTween.Kill(transform);
         LevelManager.enemies.Remove(this);
         Destroy(gameObject);
     }
