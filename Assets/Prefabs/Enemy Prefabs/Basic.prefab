@@ -60,7 +60,7 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  rangedProjectile: {fileID: 0}
+  rangedProjectile: {fileID: 5238940586210522699, guid: a80941abb2ea0784699ddfcdcc060521, type: 3}
   hitbox: {fileID: 5920634578952837848}
   healthBarPrefab: {fileID: 3032800716150909103, guid: c26813da0f119b743997d426fce63b30, type: 3}
   healthBarSpot: {fileID: 7420155289126167259}
@@ -174,7 +174,7 @@ MonoBehaviour:
   rotationSpeed: 360
   slowdownDistance: 0
   pickNextWaypointDist: 2
-  endReachedDistance: 1.3
+  endReachedDistance: 0.5
   alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0

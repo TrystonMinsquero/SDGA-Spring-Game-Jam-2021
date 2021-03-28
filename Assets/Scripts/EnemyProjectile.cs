@@ -8,7 +8,7 @@ public class EnemyProjectile : MonoBehaviour
     public void move(Transform startEnemy, Vector3 endPos, float moveTime) {
         transform.position = startEnemy.position;
         transform.DOMove(endPos, moveTime);
-        transform.rotation = startEnemy.rotation;
+        transform.up = -1* (startEnemy.position - endPos).normalized;
         StartCoroutine(DestroyObject(moveTime));
     }
 
@@ -16,8 +16,6 @@ public class EnemyProjectile : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             col.gameObject.GetComponent<Player>().takeDamage();
-            DOTween.Kill(transform);
-            Destroy(this.gameObject);
         }
         if (col.gameObject.tag == "Wall") {
             DOTween.Kill(transform);
