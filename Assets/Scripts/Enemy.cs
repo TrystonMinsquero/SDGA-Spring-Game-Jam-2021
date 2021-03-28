@@ -124,9 +124,9 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
-        DOTween.Kill(gameObject);
+        DOTween.Kill(transform);
         LevelManager.enemies.Remove(this);
-        Destroy(this);
+        Destroy(gameObject);
     }
 }
 
