@@ -70,6 +70,7 @@ public class Player : MonoBehaviour
 
 
         current_health = max_health;
+        HUD.updateHearts(current_health);
 
 
         changeWeapon(0);
@@ -97,6 +98,7 @@ public class Player : MonoBehaviour
     public void takeDamage()
     {
         current_health--;
+        HUD.updateHearts(current_health);
         if (current_health <= 0)
             Die();
     }
@@ -275,8 +277,6 @@ public class Player : MonoBehaviour
 
         changeAnimationState();
     }
-
-
 
     private void changeDirection()
     {
