@@ -8,7 +8,7 @@ public class EnemyProjectile : MonoBehaviour
     public void move(Transform startEnemy, Vector3 endPos, float moveTime) {
         transform.position = startEnemy.position;
         transform.DOMove(endPos, moveTime);
-        transform.rotation = startPos.rotation;
+        transform.rotation = startEnemy.rotation;
         StartCoroutine(DestroyObject(moveTime));
     }
 

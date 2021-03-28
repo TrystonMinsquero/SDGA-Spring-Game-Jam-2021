@@ -92,7 +92,7 @@ public class Enemy : MonoBehaviour
                     lastAttack = Time.time;
                     GameObject projectileClone = Instantiate(type3Projectile, transform.position, Quaternion.identity) as GameObject;
                     Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 40f;
-                    projectileClone.GetComponent<EnemyProjectile>().move(transform.position, targetPos, 10);
+                    projectileClone.GetComponent<EnemyProjectile>().move(transform, targetPos, 10);
                 }
                 break;
         }
