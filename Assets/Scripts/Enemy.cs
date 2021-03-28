@@ -47,27 +47,9 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Player")
+        if (type == EnemyType.CHARGE && col.gameObject.tag == "Player")
         {
-            switch (type)
-            {
-                case EnemyType.MELEE:
-                    {
-                        if ((Time.time - lastAttack) > attackCooldown)
-                        {
-                            lastAttack = Time.time;
-                            col.gameObject.GetComponent<Player>().takeDamage();
-                            Vector3 targetPos = transform.position + (col.gameObject.transform.position - transform.position).normalized * 2f;
-                            transform.DOMove(targetPos, 2f);
-                        }
-                        break;
-                    }
-                case EnemyType.CHARGE:
-                    {
-                        col.gameObject.GetComponent<Player>().takeDamage();
-                        break;
-                    }
-            } 
+            col.gameObject.GetComponent<Player>().takeDamage();
         }
         else if (col.gameObject.tag == "Wall" || col.gameObject.tag == "Enemy") {
             DOTween.Kill(transform);
@@ -82,6 +64,17 @@ public class Enemy : MonoBehaviour
     {
         switch (type)
         {
+            case EnemyType.MELEE:
+                {
+                    if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 0.8)
+                    {
+                        lastAttack = Time.time;
+                        GameObject projectileClone = Instantiate(rangedProjectile, transform.position, Quaternion.identity) as GameObject;
+                        Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 1f;
+                        projectileClone.GetComponent<EnemyProjectile>().move(transform, targetPos, 0.3f);
+                    }
+                    break;  
+                }
             case EnemyType.CHARGE:
                 {
                     if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 5)
