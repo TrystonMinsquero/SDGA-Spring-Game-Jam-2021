@@ -4628,8 +4628,8 @@ MonoBehaviour:
   type: 2
   currentHP: 50
   maximumHP: 50
-  updateRate: 0.1
-  attackCooldown: 1
+  updateRate: 0.02
+  attackCooldown: 5
   target: {fileID: 1472982246}
   healthbar: {fileID: 298744836}
 --- !u!224 &1956243872 stripped
