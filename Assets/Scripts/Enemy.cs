@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using Pathfinding;
 
 public class Enemy : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class Enemy : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        target = GameObject.Find("Player").transform;
+        gameObject.GetComponent<AIDestinationSetter>().target = target;
         InvokeRepeating("AttackCheck",1.0f, updateRate);
         if(healthbar != null)
             healthbar.gameObject.SetActive(false);

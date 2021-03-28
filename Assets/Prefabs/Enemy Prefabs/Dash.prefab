@@ -59,7 +59,7 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  type3Projectile: {fileID: 0}
+  rangedProjectile: {fileID: 2626693997081740996, guid: dfad1d37f4ebb054a88ac45eb9271dc3, type: 3}
   hitbox: {fileID: 1477921881421254271}
   healthbar: {fileID: 2244028765174706747}
   target: {fileID: 2440944539561715812, guid: bb4213e350d3b5a499fed54b96d334e6, type: 3}
