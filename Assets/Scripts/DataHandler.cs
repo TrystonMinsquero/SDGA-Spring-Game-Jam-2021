@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DataHandler : MonoBehaviour
 {
-    public int startingDifficulty; // 1 : Easy, 2 : Medium, 3 : Hard
+    public Difficulty startingDifficulty; // 1 : Easy, 2 : Medium, 3 : Hard
     public int totalScore;
     public int enemiesKilled;
     public string playerName;
@@ -13,4 +13,11 @@ public class DataHandler : MonoBehaviour
     {
         DontDestroyOnLoad(this.gameObject);
     }
+}
+
+public enum Difficulty
+{
+    EASY = 1,
+    HARD = 2,
+    HARDCORE = 3
 }

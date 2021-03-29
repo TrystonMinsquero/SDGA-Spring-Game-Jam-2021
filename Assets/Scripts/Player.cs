@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour
     public int moveSpeed;
     public float attackDelay = 1f;
     public Weapon_Type weaponSelected;
+    public float stunDelay;
     private float attackRange;
 
     [Header("Sword")]
@@ -50,6 +52,8 @@ public class Player : MonoBehaviour
 
     Direction facing = Direction.DOWN;
     private bool moving;
+    private bool flashing;
+    private float timeForStun;
 
     Material material;
     Rigidbody2D rb;
@@ -97,10 +101,17 @@ public class Player : MonoBehaviour
 
     public void takeDamage()
     {
-        current_health--;
-        HUD.updateHearts(current_health);
-        if (current_health <= 0)
-            Die();
+        if(Time.time > timeForStun)
+        {
+            Debug.Log("Flashing");
+            InvokeRepeating("Flash", stunDelay, stunDelay);
+            flashing = true;
+            current_health--;
+            HUD.updateHearts(current_health);
+            if (current_health <= 0)
+                Die();
+            timeForStun = Time.time + stunDelay;
+        }
     }
 
     private void Die()
@@ -241,6 +252,11 @@ public class Player : MonoBehaviour
         changeWeapon(0);
     }
 
+    private void Flash()
+    {
+        gameObject.GetComponent<SpriteRenderer>().enabled = !gameObject.GetComponent<SpriteRenderer>().enabled;
+    }
+
     private void Update()
     {
 
@@ -261,6 +277,13 @@ public class Player : MonoBehaviour
         moving = direction.magnitude > 0;
         rb.velocity = Vector2.zero;
         Direction dir = facing;
+
+        if ( flashing && Time.time <= timeForStun)
+        {
+            CancelInvoke("Flash");
+            flashing = false;
+            gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        }
 
         //update direction
         if (direction.y > 0)

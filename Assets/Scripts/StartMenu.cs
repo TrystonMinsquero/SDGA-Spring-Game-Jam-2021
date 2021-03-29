@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class StartMenu : MonoBehaviour
 {
-    public int difficulty;
+    public Difficulty difficulty = Difficulty.EASY;
     public DataHandler data;
 
     private GameObject startPanel;
@@ -59,21 +59,21 @@ public class StartMenu : MonoBehaviour
 
     private void easySelected()
     {
-        data.startingDifficulty = 1;
+        data.startingDifficulty = Difficulty.EASY;
         difficultyPanel.SetActive(false);
         startPanel.SetActive(true);
     }
 
     private void mediumSelected()
     {
-        data.startingDifficulty = 2;
+        data.startingDifficulty = Difficulty.HARD;
         difficultyPanel.SetActive(false);
         startPanel.SetActive(true);
     }
 
     private void hardSelected()
     {
-        data.startingDifficulty = 3;
+        data.startingDifficulty = Difficulty.HARDCORE;
         difficultyPanel.SetActive(false);
         startPanel.SetActive(true);
     }

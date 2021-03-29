@@ -67,7 +67,6 @@ public class LevelManager : MonoBehaviour
         HUD.displayRound(round);
         while (difficulty > 0)
         {
-            Debug.Log(enemyTypes.Count);
             GameObject enemyType = enemyTypes[Random.Range(0, enemyTypes.Count)];
             difficulty -= enemyType.GetComponent<Enemy>().difficulty;
             Enemy enemy = Instantiate(enemyType).GetComponent<Enemy>();

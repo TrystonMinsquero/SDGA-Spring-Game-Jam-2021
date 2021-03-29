@@ -1031,7 +1031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 028b19f319b4845428cb336af78b018e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingDifficulty: 0
+  startingDifficulty: 1
   totalScore: 0
   enemiesKilled: 0
   playerName: 
@@ -1185,7 +1185,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Hard
+  m_Text: Hardcore
 --- !u!222 &987745348
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1264,7 +1264,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Medium
+  m_Text: Hard
 --- !u!222 &1236065795
 CanvasRenderer:
   m_ObjectHideFlags: 0

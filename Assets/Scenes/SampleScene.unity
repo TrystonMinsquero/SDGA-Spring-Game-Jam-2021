@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 225243536}
   - component: {fileID: 225243540}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3310,6 +3310,14 @@ PrefabInstance:
     - target: {fileID: 2440944539561715813, guid: bb4213e350d3b5a499fed54b96d334e6, type: 3}
       propertyPath: moveSpeed
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440944539561715813, guid: bb4213e350d3b5a499fed54b96d334e6, type: 3}
+      propertyPath: stunDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440944539561715813, guid: bb4213e350d3b5a499fed54b96d334e6, type: 3}
+      propertyPath: attackDelay
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb4213e350d3b5a499fed54b96d334e6, type: 3}
