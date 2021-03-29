@@ -1,7 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class HUD : MonoBehaviour
 {
@@ -48,11 +48,23 @@ public class HUD : MonoBehaviour
 
     public static void displayRound(int round, float linger = 3)
     {
+        ROUNDTEXT.color = ROUNDTEXT.color + Color.black;
         ROUNDTEXT.text = "Round " + round;
         ROUNDTEXT.gameObject.SetActive(true);
         lingerTime = Time.time + linger;
-        
+        ROUNDTEXT.DOFade(0, 3f);
 
+    }
+
+    static IEnumerator FadeText(Text text, float seconds = 1)
+    {
+        // loop over 1 second backwards
+        for (float i = seconds; i >= 0; i -= Time.deltaTime)
+        {
+            // set color with i as alpha
+            text.color = new Color(1, 1, 1, i);
+            yield return null;
+        }
     }
 
     private void Update()
