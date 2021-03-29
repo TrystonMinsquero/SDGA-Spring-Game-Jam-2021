@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class StartMenu : MonoBehaviour
 {
     public Difficulty difficulty = Difficulty.EASY;
     public DataHandler data;
+
+    public LevelLoader levelLoader;
 
     private GameObject startPanel;
     private Button startButton;
@@ -18,6 +21,8 @@ public class StartMenu : MonoBehaviour
     private Button easyButton;
     private Button mediumButton;
     private Button hardButton;
+
+    private RectTransform blackScreen;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,13 +41,13 @@ public class StartMenu : MonoBehaviour
         easyButton.onClick.AddListener(easySelected);
         mediumButton.onClick.AddListener(mediumSelected);
         hardButton.onClick.AddListener(hardSelected);
-
+        
         difficultyPanel.SetActive(false);
     }
 
     private void onStart()
     {
-        SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        levelLoader.LoadNextLevel();
     }
 
     private void onDifficultyButtonClick()
