@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
     Direction facing = Direction.DOWN;
     private bool moving;
     private float timeForStun;
+    private float attackTime;
 
     Material material;
     Rigidbody2D rb;
@@ -78,18 +79,19 @@ public class Player : MonoBehaviour
         HUD.updateHearts(current_health);
     }
 
-    public void Attack()
+    public void Attack(Direction attackDirection)
     {
+        attackTime = Time.time + attackDelay;
         switch (weaponSelected)
         {
             case Weapon_Type.SWORD:
-                SwordAttack();
+                SwordAttack(attackDirection);
                 break;
             case Weapon_Type.BLUNT:
-                BluntAttack();
+                BluntAttack(attackDirection);
                 break;
             case Weapon_Type.DISCUS:
-                DiscusAttack();
+                DiscusAttack(attackDirection);
                 break;
         }
     }
@@ -135,15 +137,12 @@ public class Player : MonoBehaviour
         {
             case Weapon_Type.SWORD:
                 changeToSword();
-                //Debug.Log("changed to SWORD!");
                 break;
             case Weapon_Type.BLUNT:
                 changeToBlunt();
-                //Debug.Log("changed to BLUNT!");
                 break;
             case Weapon_Type.DISCUS:
                 changeToDiscus();
-                //Debug.Log("changed to DISCUS!");
                 break;
         }
 
@@ -154,23 +153,7 @@ public class Player : MonoBehaviour
         material.color = sunModeBloom;
         weaponSelected = Weapon_Type.SWORD;
         attackRange = swordRange;
-        float distance = swordDistance;
-        switch (facing)
-        {
-            case Direction.UP:
-                attackPoint.position = transform.position + new Vector3(0, distance, 0);
-                break;
-            case Direction.DOWN:
-                attackPoint.position = transform.position + new Vector3(0, -distance, 0);
-                break;
-            case Direction.LEFT:
-                attackPoint.position = transform.position + new Vector3(-distance, 0, 0);
-                break;
-            case Direction.RIGHT:
-                attackPoint.position = transform.position + new Vector3(distance, 0, 0);
-                break;
-        }
-
+        
         //update animation
     }
 
@@ -179,22 +162,6 @@ public class Player : MonoBehaviour
         material.color = moonModeBloom;
         weaponSelected = Weapon_Type.BLUNT;
         attackRange = bluntRange;
-        float distance = bluntDistance;
-        switch (facing)
-        {
-            case Direction.UP:
-                attackPoint.position = transform.position + new Vector3(0, distance, 0);
-                break;
-            case Direction.DOWN:
-                attackPoint.position = transform.position + new Vector3(0, -distance, 0);
-                break;
-            case Direction.LEFT:
-                attackPoint.position = transform.position + new Vector3(-distance, 0, 0);
-                break;
-            case Direction.RIGHT:
-                attackPoint.position = transform.position + new Vector3(distance, 0, 0);
-                break;
-        }
 
         //update animation
 
@@ -205,9 +172,43 @@ public class Player : MonoBehaviour
         material.color = starModeBloom;
         weaponSelected = Weapon_Type.DISCUS;
         attackRange = discusRadius;
-        float distance = .5f;
 
-        switch (facing)
+        //update animation
+    }
+
+    private void SwordAttack(Direction attackDirection)
+    {
+
+        float distance = swordDistance;
+        switch (attackDirection)
+        {
+            case Direction.UP:
+                attackPoint.position = transform.position + new Vector3(0, distance, 0);
+                break;
+            case Direction.DOWN:
+                attackPoint.position = transform.position + new Vector3(0, -distance, 0);
+                break;
+            case Direction.LEFT:
+                attackPoint.position = transform.position + new Vector3(-distance, 0, 0);
+                break;
+            case Direction.RIGHT:
+                attackPoint.position = transform.position + new Vector3(distance, 0, 0);
+                break;
+        }
+        
+        //Play Attack animation
+
+        Collider2D[] collidersHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+
+        foreach (Collider2D enemy in collidersHit)
+            if (enemy == enemy.GetComponent<Enemy>().hitbox)
+                enemy.GetComponent<Enemy>().takeDamage(weaponSelected, swordDamage);
+    }
+
+    private void BluntAttack(Direction attackDirection)
+    {
+        float distance = bluntDistance;
+        switch (attackDirection)
         {
             case Direction.UP:
                 attackPoint.position = transform.position + new Vector3(0, distance, 0);
@@ -223,20 +224,8 @@ public class Player : MonoBehaviour
                 break;
         }
 
-        //update animation
-    }
+        //Play Moon Attack Animation
 
-    private void SwordAttack()
-    {
-        Collider2D[] collidersHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
-
-        foreach(Collider2D enemy in collidersHit)
-            if(enemy == enemy.GetComponent<Enemy>().hitbox)
-                enemy.GetComponent<Enemy>().takeDamage(weaponSelected, swordDamage);
-    }
-
-    private void BluntAttack()
-    {
         Collider2D[] collidersHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
         
         foreach (Collider2D enemy in collidersHit)
@@ -244,10 +233,30 @@ public class Player : MonoBehaviour
                 enemy.GetComponent<Enemy>().takeDamage(weaponSelected, bluntDamage);
     }
     
-    private void DiscusAttack()
+    private void DiscusAttack(Direction attackDirection)
     {
 
-        disc = Discus.create(this, facing);
+        float distance = .5f;
+
+        switch (attackDirection)
+        {
+            case Direction.UP:
+                attackPoint.position = transform.position + new Vector3(0, distance, 0);
+                break;
+            case Direction.DOWN:
+                attackPoint.position = transform.position + new Vector3(0, -distance, 0);
+                break;
+            case Direction.LEFT:
+                attackPoint.position = transform.position + new Vector3(-distance, 0, 0);
+                break;
+            case Direction.RIGHT:
+                attackPoint.position = transform.position + new Vector3(distance, 0, 0);
+                break;
+        }
+
+        //Play Star Attack animation
+
+        disc = Discus.create(this, attackDirection);
         disc.throwDisc();
     }
 
@@ -265,8 +274,18 @@ public class Player : MonoBehaviour
     private void Update()
     {
 
-        if (controls.Gameplay.Attack.triggered && disc==null)
-            Attack();
+        if (Time.time > attackTime && disc == null && controls.Gameplay.Attack.ReadValue<Vector2>() != Vector2.zero)
+        {
+            Vector2 direction = controls.Gameplay.Attack.ReadValue<Vector2>();
+            if (direction.y > 0)
+                Attack(Direction.UP);
+            else if (direction.y < 0)
+                Attack(Direction.DOWN);
+            else if (direction.x < 0)
+                Attack(Direction.LEFT);
+            else if (direction.x > 0)
+                Attack(Direction.RIGHT);
+        }
 
         if (controls.Gameplay.SwitchWeapon.triggered && disc==null)
         {
@@ -282,14 +301,7 @@ public class Player : MonoBehaviour
         moving = direction.magnitude > 0;
         rb.velocity = Vector2.zero;
         Direction dir = facing;
-        /*
-        if ( flashing && Time.time >= timeForStun)
-        {
-            CancelInvoke("Flash");
-            flashing = false;
-            gameObject.GetComponent<SpriteRenderer>().enabled = true;
-            Debug.Log("Flash");
-        }*/
+        
 
         //update direction
         if (direction.y > 0)
