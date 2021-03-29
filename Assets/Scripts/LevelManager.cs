@@ -23,6 +23,7 @@ public class LevelManager : MonoBehaviour
     private static int startDifficulty;
     private static int scale;
     private static int round;
+    private static int enemiesKilled;
 
     private void Awake()
     {
@@ -79,6 +80,7 @@ public class LevelManager : MonoBehaviour
     public static void RemoveEnemy(Enemy enemy)
     {
         enemies.Remove(enemy);
+        enemiesKilled++;
         CheckEnemies();
     }
 
@@ -86,7 +88,6 @@ public class LevelManager : MonoBehaviour
     {
         foreach (Enemy enemy in enemies)
             enemy.Die();
-
     }
 
     public static void NextRound()
@@ -109,6 +110,5 @@ public class LevelManager : MonoBehaviour
         HUD.updateEnemies(enemies.Count);
         if (enemies.Count <= 0)
             NextRound();
-
     }
 }
