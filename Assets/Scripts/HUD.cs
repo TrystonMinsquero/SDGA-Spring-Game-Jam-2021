@@ -29,16 +29,17 @@ public class HUD : MonoBehaviour
         else
             instance = this;
 
+        hearts = Hearts.GetComponentsInChildren<Image>();
     }
 
     public void Start()
     {
-        hearts = Hearts.GetComponentsInChildren<Image>();
         HEART = heart;
         BROKENHEART = brokenHeart;
         ENEMIESTEXT = enemies;
         ROUNDTEXT = round;
         ROUNDTEXT.gameObject.SetActive(false);
+        HUD.updateHearts(3);
     }
 
     public static void updateEnemies(int numEnemies)
@@ -54,28 +55,6 @@ public class HUD : MonoBehaviour
         lingerTime = Time.time + linger;
         ROUNDTEXT.DOFade(0, 3f);
 
-    }
-
-    static IEnumerator FadeText(Text text, float seconds = 1)
-    {
-        // loop over 1 second backwards
-        for (float i = seconds; i >= 0; i -= Time.deltaTime)
-        {
-            // set color with i as alpha
-            text.color = new Color(1, 1, 1, i);
-            yield return null;
-        }
-    }
-
-    private void Update()
-    {
-        if (Time.time > lingerTime)
-            ROUNDTEXT.gameObject.SetActive(false);
-    }
-
-    private static void hideRound()
-    {
-        ROUNDTEXT.gameObject.SetActive(false);
     }
 
     public static void updateHearts(int health)

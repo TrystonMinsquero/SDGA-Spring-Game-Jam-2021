@@ -52,7 +52,6 @@ public class Player : MonoBehaviour
 
     Direction facing = Direction.DOWN;
     private bool moving;
-    private bool flashing;
     private float timeForStun;
 
     Material material;
@@ -74,10 +73,9 @@ public class Player : MonoBehaviour
 
 
         current_health = max_health;
-        HUD.updateHearts(current_health);
-
 
         changeWeapon(0);
+        HUD.updateHearts(current_health);
     }
 
     public void Attack()
@@ -97,21 +95,30 @@ public class Player : MonoBehaviour
     }
 
 
-
-
     public void takeDamage()
     {
         if(Time.time > timeForStun)
         {
             Debug.Log("Flashing");
-            InvokeRepeating("Flash", stunDelay, stunDelay);
-            flashing = true;
+            StartCoroutine(Flash(stunDelay));
             current_health--;
             HUD.updateHearts(current_health);
             if (current_health <= 0)
                 Die();
             timeForStun = Time.time + stunDelay;
         }
+    }
+
+    private IEnumerator Flash(float duration, float stunInterval = .2f)
+    {
+        float timeUntilFlash = Time.time;
+        for(float i = duration; i >= 0; i -= Time.deltaTime)
+        {
+            gameObject.GetComponent<SpriteRenderer>().enabled = !gameObject.GetComponent<SpriteRenderer>().enabled;
+            yield return null;
+        }
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        Debug.Log("Stop Flashing");
     }
 
     private void Die()
@@ -277,13 +284,14 @@ public class Player : MonoBehaviour
         moving = direction.magnitude > 0;
         rb.velocity = Vector2.zero;
         Direction dir = facing;
-
-        if ( flashing && Time.time <= timeForStun)
+        /*
+        if ( flashing && Time.time >= timeForStun)
         {
             CancelInvoke("Flash");
             flashing = false;
             gameObject.GetComponent<SpriteRenderer>().enabled = true;
-        }
+            Debug.Log("Flash");
+        }*/
 
         //update direction
         if (direction.y > 0)
