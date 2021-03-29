@@ -99,7 +99,6 @@ public class Player : MonoBehaviour
     {
         if(Time.time > timeForStun)
         {
-            Debug.Log("Flashing");
             StartCoroutine(Flash(stunDelay));
             current_health--;
             HUD.updateHearts(current_health);
@@ -118,7 +117,6 @@ public class Player : MonoBehaviour
             yield return null;
         }
         gameObject.GetComponent<SpriteRenderer>().enabled = true;
-        Debug.Log("Stop Flashing");
     }
 
     private void Die()
