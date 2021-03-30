@@ -2,6 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using Pathfinding;
 
+
 public class Enemy : MonoBehaviour
 {
     [Header("Stats")]
@@ -25,10 +26,13 @@ public class Enemy : MonoBehaviour
     private Vector3 healthBarPos;
     private float currentHP;
     private float lastAttack;
+    private Direction FACING;
+    private AIPath ai;
     
     // Start is called before the first frame update
     void Start()
     {
+        ai = gameObject.GetComponent<AIPath>();
         rb = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         target = GameObject.Find("Player").transform;
@@ -63,11 +67,12 @@ public class Enemy : MonoBehaviour
 
     private void AttackCheck() 
     {
+        updateDirection();
         switch (type)
         {
             case EnemyType.MELEE:
                 {
-                    if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 0.8)
+                    if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 1.2)
                     {
                         lastAttack = Time.time;
                         GameObject projectileClone = Instantiate(rangedProjectile, transform.position, Quaternion.identity) as GameObject;
@@ -148,6 +153,49 @@ public class Enemy : MonoBehaviour
         LevelManager.RemoveEnemy(this);
         Destroy(healthBar);
         Destroy(gameObject);
+    }
+
+    private void updateDirection()
+    {
+        Vector3 velocity = ai.velocity;
+        Debug.Log(ai.velocity.x);
+        Debug.Log(ai.velocity.y);
+        if (Mathf.Abs(velocity.x) > Mathf.Abs(velocity.y)) {
+            if (velocity.x > 0f) {
+                transform.rotation = Quaternion.Euler(0,0,90);
+                FACING = Direction.RIGHT;
+            } else if (velocity.x < 0) {
+                transform.rotation = Quaternion.Euler(0,0,-90);
+                FACING = Direction.LEFT;
+            }
+        } else if (Mathf.Abs(velocity.y) > Mathf.Abs(velocity.x)) {
+            if (velocity.y > 0f) {
+                transform.rotation = Quaternion.Euler(0,0,180);
+                FACING = Direction.UP;
+            } else if (velocity.y < 0) {
+                transform.rotation = Quaternion.Euler(0,0,0);
+                FACING = Direction.DOWN;
+            }
+        }
+    }
+
+    private void changeAnimationState()
+    {
+        switch (FACING)
+        {
+            case Direction.UP:
+
+                break;
+            case Direction.DOWN:
+               
+                break;
+            case Direction.LEFT:
+                gameObject.GetComponent<SpriteRenderer>().flipX = false;
+                break;
+            case Direction.RIGHT:
+                gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                break;
+        }
     }
 }
 
