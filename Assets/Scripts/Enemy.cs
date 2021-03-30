@@ -155,34 +155,47 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void updateDirection()
+    private void updateDirection()
     {
-        //rb.constraints = RigidbodyConstraints2D.None;
         Vector3 velocity = ai.velocity;
         Debug.Log(ai.velocity.x);
         Debug.Log(ai.velocity.y);
         if (Mathf.Abs(velocity.x) > Mathf.Abs(velocity.y)) {
             if (velocity.x > 0f) {
-                Debug.Log("rightRot");
                 transform.rotation = Quaternion.Euler(0,0,90);
                 FACING = Direction.RIGHT;
             } else if (velocity.x < 0) {
-                Debug.Log("leftRot");
                 transform.rotation = Quaternion.Euler(0,0,-90);
                 FACING = Direction.LEFT;
             }
-        } else {//if (Mathf.Abs(velocity.y) > Mathf.Abs(velocity.x)) {
+        } else if (Mathf.Abs(velocity.y) > Mathf.Abs(velocity.x)) {
             if (velocity.y > 0f) {
-                Debug.Log("upRot");
                 transform.rotation = Quaternion.Euler(0,0,180);
                 FACING = Direction.UP;
             } else if (velocity.y < 0) {
-                Debug.Log("downRot");
                 transform.rotation = Quaternion.Euler(0,0,0);
                 FACING = Direction.DOWN;
             }
         }
-        //rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    private void changeAnimationState()
+    {
+        switch (FACING)
+        {
+            case Direction.UP:
+
+                break;
+            case Direction.DOWN:
+               
+                break;
+            case Direction.LEFT:
+                gameObject.GetComponent<SpriteRenderer>().flipX = false;
+                break;
+            case Direction.RIGHT:
+                gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                break;
+        }
     }
 }
 
