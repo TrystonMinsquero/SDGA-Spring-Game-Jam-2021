@@ -12,7 +12,6 @@ public class StartMenu : MonoBehaviour
     public LevelLoader levelLoader;
 
     private GameObject startPanel;
-    private InputField nameInput;
     private Button startButton;
     private Button difficultyButton;
     private Button controlsButton;
@@ -26,7 +25,6 @@ public class StartMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nameInput = GameObject.Find("NameInput").GetComponent<InputField>();
         startPanel = GameObject.Find("StartPanel");
         difficultyPanel = GameObject.Find("DifficultySelection");
         startButton = GameObject.Find("Start").GetComponent<Button>();
@@ -48,7 +46,6 @@ public class StartMenu : MonoBehaviour
 
     private void onStart()
     {
-        DataHandler.playerName = nameInput.text;
         levelLoader.LoadNextLevel();
     }
 

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager levelManager;
+    public static LevelManager instance;
     [Header("Stats")]
     public int StartDifficulty = 2;
     public int Scale = 1;
@@ -27,10 +27,10 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        if (LevelManager.levelManager == null)
-            LevelManager.levelManager = this;
+        if (instance != null)
+            Destroy(this.gameObject);
         else
-            Destroy(this);
+            instance = this;
     }
 
     private void Start()
@@ -97,7 +97,15 @@ public class LevelManager : MonoBehaviour
         DataHandler.round = round;
         ClearEnemies();
         SpawnEnemiesDiff(startDifficulty + (scale * round));
-        player.current_health = player.max_health;
+        switch (DataHandler.startingDifficulty)
+        {
+            case Difficulty.EASY:
+                player.current_health = player.max_health;
+                break;
+            case Difficulty.HARD:
+                player.current_health = player.current_health < player.max_health ? player.current_health + 1 : player.current_health;
+                break;
+        }
         HUD.updateHearts(player.current_health);
 
     }

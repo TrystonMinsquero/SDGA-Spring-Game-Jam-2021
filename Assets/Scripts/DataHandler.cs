@@ -6,15 +6,14 @@ public class DataHandler : MonoBehaviour
 {
     public static DataHandler instance;
 
-    public static Difficulty startingDifficulty; // 1 : Easy, 2 : Medium, 3 : Hard
-    public static int round;
+    public static Difficulty startingDifficulty = Difficulty.EASY; // 1 : Easy, 2 : Medium, 3 : Hard
+    public static int round = 1;
     public static int enemiesKilled;
-    public static string playerName;
 
     private void Awake()
     {
         if (instance != null)
-            Destroy(this);
+            Destroy(this.gameObject);
         else
             instance = this;
     }
