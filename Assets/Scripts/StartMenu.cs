@@ -8,7 +8,6 @@ using DG.Tweening;
 public class StartMenu : MonoBehaviour
 {
     public Difficulty difficulty = Difficulty.EASY;
-    public DataHandler data;
 
     public LevelLoader levelLoader;
 
@@ -64,21 +63,21 @@ public class StartMenu : MonoBehaviour
 
     private void easySelected()
     {
-        data.startingDifficulty = Difficulty.EASY;
+        DataHandler.startingDifficulty = Difficulty.EASY;
         difficultyPanel.SetActive(false);
         startPanel.SetActive(true);
     }
 
     private void mediumSelected()
     {
-        data.startingDifficulty = Difficulty.HARD;
+        DataHandler.startingDifficulty = Difficulty.HARD;
         difficultyPanel.SetActive(false);
         startPanel.SetActive(true);
     }
 
     private void hardSelected()
     {
-        data.startingDifficulty = Difficulty.HARDCORE;
+        DataHandler.startingDifficulty = Difficulty.HARDCORE;
         difficultyPanel.SetActive(false);
         startPanel.SetActive(true);
     }

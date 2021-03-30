@@ -81,6 +81,7 @@ public class LevelManager : MonoBehaviour
     {
         enemies.Remove(enemy);
         enemiesKilled++;
+        DataHandler.enemiesKilled = enemiesKilled;
         CheckEnemies();
     }
 
@@ -93,6 +94,7 @@ public class LevelManager : MonoBehaviour
     public static void NextRound()
     {
         round++;
+        DataHandler.round = round;
         ClearEnemies();
         SpawnEnemiesDiff(startDifficulty + (scale * round));
         player.current_health = player.max_health;
@@ -103,6 +105,10 @@ public class LevelManager : MonoBehaviour
     public static void StartOver()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public static void End()
+    {
+        SceneManager.LoadScene("End");
     }
 
     public static void CheckEnemies()

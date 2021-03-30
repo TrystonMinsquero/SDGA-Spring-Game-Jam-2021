@@ -13,75 +13,58 @@ public class HighScores : MonoBehaviour
     const string webURL = "http://dreamlo.com/lb/";
 
     private List<Score> highScores;
-
-    [Header("Canvases")]
-    public GameObject victoryCanvas;
-    public GameObject highScoreCanvas;
-    [Header("Text Boxes")]
-    public Text[] userTextBoxes;
-    public Text[] timeTextBoxes;
-    [Header("Buttons")]
-    public UnityEngine.UI.Button nextPage;
-    public UnityEngine.UI.Button prevPage;
+    public bool highscoresLoaded;
 
     public int pageIndex = 0;
     public int maxPageIndex;
+    public int maxScoresPerPage = 10;
 
 
     public void Awake()
     {
 
-        /*
-        //Set Up Canvases
-        victoryCanvas.SetActive(true);
-        highScoreCanvas.SetActive(false);
-
         //Instaitate and add score
         highScores = new List<Score>();
 
-        DataHandler data = S
+        if(DataHandler.playerName != null)
+        {
+            AddNewHighScore(new Score(DataHandler.playerName, DataHandler.startingDifficulty, DataHandler.round));
+        }
 
 
-
-        Debug.Log(.username + ": " + formatFloatToInt(Data.totalTime));
-        AddNewHighScore(Data.username, formatFloatToInt(Data.totalTime));
-
-
-        prevPage.interactable = false;
-        */
+        //prevPage.interactable = false;
+        
 
     }
 
     public void displayHighScores()
     {
         //Switch Canvases
-        victoryCanvas.SetActive(false);
-        highScoreCanvas.SetActive(true);
+        //victoryCanvas.SetActive(false);
+        //highScoreCanvas.SetActive(true);
 
 
         //Clear text boxes
-        for(int j = 0; j < 10; j++)
+        for(int j = 0; j < maxScoresPerPage; j++)
         {
-            userTextBoxes[j].text = "";
-            timeTextBoxes[j].text = "";
+            //userTextBoxes[j].text = "";
+            //timeTextBoxes[j].text = "";
         }
 
 
         //Print to Screen
-        for (int i = 0; i < 10; ++i)
+        for (int i = 0; i < maxScoresPerPage; ++i)
         {
             if(i + (10 * pageIndex) < highScores.Count)
             {
-                userTextBoxes[i].text = (i + (10 * pageIndex) + 1) + ". " + highScores[i + (10 * pageIndex)].username;
-                timeTextBoxes[i].text = formatFloatToTime(formatIntToFloat(highScores.ElementAt<Score>(i + (10 * pageIndex)).time));
             }
         }
 
     }
 
-    public void AddNewHighScore(string username, int score)
+    public void AddNewHighScore(Score newScore)
     {
-        StartCoroutine(UploadNewHighscore(username, score));
+        StartCoroutine(UploadNewHighscore(newScore));
     }
     public void DownloadHighScores()
     {
@@ -89,9 +72,9 @@ public class HighScores : MonoBehaviour
         StartCoroutine(DownloadHighScoresCoroutine());
     }
 
-    IEnumerator UploadNewHighscore(string username, int score)
+    IEnumerator UploadNewHighscore(Score newScore)
     {
-        UnityWebRequest www = UnityWebRequest.Get(webURL + privateCode + "/add/" + UnityWebRequest.EscapeURL(username) + "/" + score);
+        UnityWebRequest www = UnityWebRequest.Get(webURL + privateCode + "/add/" + UnityWebRequest.EscapeURL(newScore.username) + "/" + ScoreToInt(newScore));
         yield return www.SendWebRequest();
 
         if (string.IsNullOrEmpty(www.error))
@@ -114,8 +97,9 @@ public class HighScores : MonoBehaviour
         {
             Debug.Log("Downloaded");
             Debug.Log(www.downloadHandler.text);
+            highscoresLoaded = true;
             FormatHighScores(www.downloadHandler.text);
-            maxPageIndex = (highScores.Count - 1) / 10;
+            maxPageIndex = (highScores.Count - 1) / maxScoresPerPage;
         }
         else
             print("Error Downloading: " + www.error);
@@ -130,60 +114,32 @@ public class HighScores : MonoBehaviour
         for (int i = 0; i < entries.Length; ++i)
         {
             string[] entryInfo = entries[i].Split(new char[] { '|' });
-            highScores.Add(new Score(entryInfo[0], int.Parse(entryInfo[1])));
-            Debug.Log(highScores.ElementAt<Score>(i).username + ": " + highScores.ElementAt<Score>(i).time);
-        }
-        highScores.Reverse();
-    }
-
-    public struct Score
-    {
-        public string username;
-        public int time;
-
-        public Score(string user, int tim)
-        {
-            username = user;
-            time = tim;
+            highScores.Add(formatToScore(entryInfo[0],entryInfo[1]));
+            Debug.Log(highScores.ElementAt<Score>(i).username + ": " + highScores.ElementAt<Score>(i).round);
         }
     }
 
-    public string formatFloatToTime(float time)
+    public string ScoreToInt(Score score)
     {
-        string deci = ".";
-        string sec = "";
-        string min = "";
-        if ((int)((time - (int)time) * 100) < 10)
-            deci += "0";
-        deci += +(int)((time - (int)time) * 100);
-        if (time < 60)
-        {
-            if (time < 10)
-                sec += "0";
-            sec += (int)(time);
-            return "00:" + sec + deci;
-        }
-        else
-        {
-            if (time % 60 < 10)
-                sec += "0";
-            if ((int)(time % 60) == 0)
-                sec += "0";
-            sec += (int)(time % 60);
-
-            min = "" + (int)(time) / 60;
-            return min + ":" + sec + deci;
-        }
-
+        return "" + (int)DataHandler.startingDifficulty + DataHandler.round;
     }
 
-    public int formatFloatToInt(float seconds)
+    public Score formatToScore(string name, string score)
     {
-        return (int)(seconds * 100);
+        return new Score(name, (Difficulty)int.Parse(score.Substring(0,1)), int.Parse(score.Substring(1)));
     }
 
-    public float formatIntToFloat(int seconds)
+}
+public struct Score
+{
+    public string username;
+    Difficulty difficulty;
+    public int round;
+
+    public Score(string user, Difficulty diff, int ro)
     {
-        return seconds / 100 + (seconds % 100)/100.0f;
+        username = user;
+        difficulty = diff;
+        round = ro;
     }
 }
