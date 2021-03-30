@@ -11112,18 +11112,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2440944539561715811, guid: bb4213e350d3b5a499fed54b96d334e6, type: 3}
-      propertyPath: m_Size.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2440944539561715811, guid: bb4213e350d3b5a499fed54b96d334e6, type: 3}
-      propertyPath: m_Size.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2440944539561715811, guid: bb4213e350d3b5a499fed54b96d334e6, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2440944539561715812, guid: bb4213e350d3b5a499fed54b96d334e6, type: 3}
       propertyPath: m_RootOrder
       value: 4

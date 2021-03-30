@@ -1,0 +1,23 @@
+EASY
+	Link:
+	   http://dreamlo.com/lb/aA3-WA7yKUqiewP48VBaeA5GORZ0h0h0WSb8dh8BkU3A
+	Private Code:
+	   aA3-WA7yKUqiewP48VBaeA5GORZ0h0h0WSb8dh8BkU3A
+	Public Code:
+	   5f978c2beb371809c4b44a91
+
+HARD
+	Link:
+	   http://dreamlo.com/lb/S4L0jrfwvEKO7Lw1H8-8bQGX5SWkv_m0WtONtMMUfgSg
+	Private Code:
+	   S4L0jrfwvEKO7Lw1H8-8bQGX5SWkv_m0WtONtMMUfgSg
+	Public Code:
+	   6062b91a8f421366b0565c98
+HARDCORE
+	Link:
+	   http://dreamlo.com/lb/iVtwqVB4XUiDAqusP3uyTg03yr5yQBykmNcNeBf4yUMw
+	Private Code:
+	   iVtwqVB4XUiDAqusP3uyTg03yr5yQBykmNcNeBf4yUMw
+	Public Code:
+	   6062b9818f421366b0565ce9
+
