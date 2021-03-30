@@ -41,8 +41,95 @@ public class Enemy : MonoBehaviour
         Destroy(healthBarSpot.gameObject);
         InvokeRepeating("AttackCheck",1.0f, updateRate);
         currentHP = maximumHP;
+        int type = Random.Range(1,4);
+        switch(difficulty) {
+            case 1:
+            {
+                switch(type) {
+                    case 1:
+                    {
+                        SetSunColor();
+                        weaknesses = new float[3] {1f,0.75f,1.75f};
+                        break;
+                    }
+                    case 2:
+                    {
+                        SetMoonColor();
+                        weaknesses = new float[3]{1.75f,1f,0.75f};
+                        break;
+                    }
+                    case 3:
+                    {
+                        SetStarColor();
+                        weaknesses = new float[3]{0.75f,1.75f,1f};
+                        break;
+                    }
+                }
+                break;
+            }
+            case 2:
+            {
+                switch(type) {
+                    case 1:
+                    {
+                        SetSunColor();
+                        weaknesses = new float[3] {0.8f,0.4f,1.4f};
+                        break;
+                    }
+                    case 2:
+                    {
+                        SetMoonColor();
+                        weaknesses = new float[3]{1.4f,0.8f,0.4f};
+                        break;
+                    }
+                    case 3:
+                    {
+                        SetStarColor();
+                        weaknesses = new float[3]{0.4f,1.4f,0.8f};
+                        break;
+                    }
+                }
+                break;
+            }
+            case 3:
+            {
+                switch(type) {
+                    case 1:
+                    {
+                        SetSunColor();
+                        weaknesses = new float[3] {0.5f,0.25f,1.25f};
+                        break;
+                    }
+                    case 2:
+                    {
+                        SetMoonColor();
+                        weaknesses = new float[3]{1.25f,0.25f,0.5f};
+                        break;
+                    }
+                    case 3:
+                    {
+                        SetStarColor();
+                        weaknesses = new float[3]{0.25f,1.25f,0.8f};
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        
     }
 
+    private void SetSunColor() {
+        spriteRenderer.color  = new Color(191f,89f,7f);
+    }
+
+    private void SetMoonColor() {
+        spriteRenderer.color  = new Color(183f,12f,191f);
+    }
+
+    private void SetStarColor() {
+        spriteRenderer.color  = new Color(3f,92f,191f);
+    }
 
     private void FixedUpdate()
     {

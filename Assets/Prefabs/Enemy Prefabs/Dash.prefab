@@ -53,10 +53,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  maximumHP: 50
+  maximumHP: 80
   updateRate: 0.1
   attackCooldown: 5
-  difficulty: 1
+  difficulty: 3
   weaknesses:
   - 1
   - 1
