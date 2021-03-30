@@ -120,15 +120,15 @@ public class Enemy : MonoBehaviour
     }
 
     private void SetSunColor() {
-        spriteRenderer.color  = new Color(191f,89f,7f);
+        spriteRenderer.color  = new Color(191f/255f,89f/255f,7f/255f);
     }
 
     private void SetMoonColor() {
-        spriteRenderer.color  = new Color(183f,12f,191f);
+        spriteRenderer.color  = new Color(183f/255f,12f/255f,191f/255f);
     }
 
     private void SetStarColor() {
-        spriteRenderer.color  = new Color(3f,92f,191f);
+        spriteRenderer.color  = new Color(3f/255f,92f/255f,191f/255f);
     }
 
     private void FixedUpdate()
@@ -245,8 +245,6 @@ public class Enemy : MonoBehaviour
     private void updateDirection()
     {
         Vector3 velocity = ai.velocity;
-        Debug.Log(ai.velocity.x);
-        Debug.Log(ai.velocity.y);
         if (Mathf.Abs(velocity.x) > Mathf.Abs(velocity.y)) {
             if (velocity.x > 0f) {
                 transform.rotation = Quaternion.Euler(0,0,90);
