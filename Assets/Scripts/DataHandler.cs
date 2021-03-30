@@ -4,10 +4,20 @@ using UnityEngine;
 
 public class DataHandler : MonoBehaviour
 {
-    public Difficulty startingDifficulty; // 1 : Easy, 2 : Medium, 3 : Hard
-    public int totalScore;
-    public int enemiesKilled;
-    public string playerName;
+    public static DataHandler instance;
+
+    public static Difficulty startingDifficulty; // 1 : Easy, 2 : Medium, 3 : Hard
+    public static int round;
+    public static int enemiesKilled;
+    public static string playerName;
+
+    private void Awake()
+    {
+        if (instance != null)
+            Destroy(this);
+        else
+            instance = this;
+    }
 
     void Start()
     {

@@ -123,7 +123,7 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        LevelManager.StartOver();
+        LevelManager.End();
     }
 
     public void changeWeapon(int change)
