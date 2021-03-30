@@ -21,12 +21,17 @@ public class StartMenu : MonoBehaviour
     private Button mediumButton;
     private Button hardButton;
 
+    private GameObject controlsPanel;
+    private Button controlExitButton;
+
     private RectTransform blackScreen;
     // Start is called before the first frame update
     void Start()
     {
         startPanel = GameObject.Find("StartPanel");
         difficultyPanel = GameObject.Find("DifficultySelection");
+        controlsPanel = GameObject.Find("ControlsPanel");
+        controlExitButton = GameObject.Find("ControlExitButton").GetComponent<Button>();
         startButton = GameObject.Find("Start").GetComponent<Button>();
         difficultyButton = GameObject.Find("Difficulty").GetComponent<Button>();
         controlsButton = GameObject.Find("Controls").GetComponent<Button>();
@@ -40,8 +45,11 @@ public class StartMenu : MonoBehaviour
         easyButton.onClick.AddListener(easySelected);
         mediumButton.onClick.AddListener(mediumSelected);
         hardButton.onClick.AddListener(hardSelected);
+        controlExitButton.onClick.AddListener(onControlsExitButtonClick);
         
         difficultyPanel.SetActive(false);
+        controlsPanel.SetActive(false);
+        controlsPanel.GetComponent<CanvasGroup>().alpha = 1;
     }
 
     private void onStart()
@@ -58,7 +66,13 @@ public class StartMenu : MonoBehaviour
 
     private void onControlsButtonClick()
     {
-        
+        controlsPanel.SetActive(true);
+    }
+
+    private void onControlsExitButtonClick()
+    {
+
+        controlsPanel.SetActive(false);
     }
 
     private void easySelected()
