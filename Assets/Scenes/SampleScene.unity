@@ -10556,8 +10556,14 @@ MonoBehaviour:
   SpawnPoints: {fileID: 323419500}
   EnemyTypes:
   - {fileID: 5920634578952837852, guid: c083305a2bb1179459f7323b730cacd3, type: 3}
+  - {fileID: 8754869485978090491, guid: bef9ad631da61f84b9c551abb7800b43, type: 3}
+  - {fileID: 2186827088995625483, guid: 4e0b17e38a798e94895223286a19cc5f, type: 3}
   - {fileID: 351535587388242984, guid: 3ae6d564a86bb8148b0263e4459ae972, type: 3}
+  - {fileID: 7054999270570939484, guid: aed0514bcaba0d547bb59079c4d9b7ab, type: 3}
+  - {fileID: 385793331517274538, guid: 6d83ff247b609ac4b896880509c49f31, type: 3}
   - {fileID: 1830502170071489590, guid: 124a4c5467d79ee4fbda8adb997f216f, type: 3}
+  - {fileID: 7351441446741304613, guid: 8d0f823d6f827aa4e9c587e8d8326d1d, type: 3}
+  - {fileID: 6471045653733775377, guid: f79341ea02784cb47a9fd187732f29d5, type: 3}
 --- !u!4 &1642851811
 Transform:
   m_ObjectHideFlags: 0
