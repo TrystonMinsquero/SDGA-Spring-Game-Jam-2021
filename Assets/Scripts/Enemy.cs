@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using Pathfinding;
-
+using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     public GameObject healthBarPrefab;
     public Transform healthBarSpot;
     public GameObject DeathParticle;
+    public AudioSource chargingSound;
     
     private Transform target;
     private Rigidbody2D rb;
@@ -179,8 +180,7 @@ public class Enemy : MonoBehaviour
                     if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 5)
                     {
                         lastAttack = Time.time;
-                        Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 15f;
-                        transform.DOMove(targetPos, 3);
+                        StartCoroutine(doChargeAttack());
                     }
                     break;
                 }
@@ -196,6 +196,13 @@ public class Enemy : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    IEnumerator doChargeAttack() {
+        chargingSound.Play();
+        yield return new WaitForSeconds(1.5f);
+        Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 15f;
+        transform.DOMove(targetPos, 3);
     }
 
     public void takeDamage(Weapon_Type weapon, int damage)
