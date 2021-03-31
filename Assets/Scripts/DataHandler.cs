@@ -16,6 +16,9 @@ public class DataHandler : MonoBehaviour
             Destroy(this.gameObject);
         else
             instance = this;
+
+        Screen.SetResolution(1920, 1200, true);
+
     }
 
     void Start()
