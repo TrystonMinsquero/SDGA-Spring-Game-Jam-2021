@@ -172,6 +172,7 @@ public class Enemy : MonoBehaviour
                 {
                     if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 1.2)
                     {
+                        meleeProjectile.Play();
                         lastAttack = Time.time;
                         GameObject projectileClone = Instantiate(rangedProjectile, transform.position, Quaternion.identity) as GameObject;
                         Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 1f;
