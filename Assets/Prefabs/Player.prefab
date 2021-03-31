@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 2440944539561715815}
   - component: {fileID: 2440944539561715816}
   - component: {fileID: 2440944539561715817}
+  - component: {fileID: 3652044776462990243}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -176,12 +177,12 @@ MonoBehaviour:
   swordRange: 1
   swordDistance: 0.5
   bluntDamage: 35
-  bluntRange: 0.6
+  bluntRange: 0.73
   bluntDistance: 0.65
   discusPrefab: {fileID: 8388145215925351127, guid: 5bfede004371e5649b159e8452bfa550, type: 3}
   discusDamage: 20
   discusRadius: 1
-  discusDistance: 5
+  discusDistance: 4
   discusAcceleration: 40
   enemyLayer:
     serializedVersion: 2
@@ -190,6 +191,10 @@ MonoBehaviour:
   sunModeBloom: {r: 2.9056604, g: 0.30637604, b: 0.17817737, a: 0}
   moonModeBloom: {r: 0.6571997, g: 0.07653969, b: 3.2452831, a: 0}
   starModeBloom: {r: 0.35137057, g: 1.8642744, b: 3.5471697, a: 0}
+  swordSlash: {fileID: 8300000, guid: c93d7e54af0a7a4429530ffb644afad9, type: 3}
+  hammerSmash: {fileID: 8300000, guid: 73553a87ee3df0441884673cabad2724, type: 3}
+  discThrow: {fileID: 8300000, guid: cd2529f3aa0b7fc47b51664bc0c30d71, type: 3}
+  modeChange: {fileID: 8300000, guid: 54baac239a3a7104aae99bc8de91c991, type: 3}
 --- !u!50 &2440944539561715814
 Rigidbody2D:
   serializedVersion: 4
@@ -249,7 +254,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1006551155
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4e107f11c9d9dc74b9d959d140bb4a4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -337,6 +342,102 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!82 &3652044776462990243
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2440944539561715810}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2440944540263391958
 GameObject:
   m_ObjectHideFlags: 0
