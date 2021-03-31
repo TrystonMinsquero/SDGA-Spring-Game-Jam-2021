@@ -515,7 +515,7 @@ public class Player : MonoBehaviour
 
     private void onRestartClicked()
     {
-        LevelManager.toStart();
+        LevelManager.StartOver();
     }
 
     private void onHelpClicked()
@@ -525,7 +525,7 @@ public class Player : MonoBehaviour
 
     private void onExitClicked()
     {
-        //Environment.Exit(0);
+        Environment.Exit(0);
     }
 }
 
