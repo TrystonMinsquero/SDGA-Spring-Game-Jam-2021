@@ -56,7 +56,7 @@ MonoBehaviour:
   type: 2
   maximumHP: 40
   updateRate: 0.1
-  attackCooldown: 7
+  attackCooldown: 6
   difficulty: 1
   weaknesses:
   - 1
