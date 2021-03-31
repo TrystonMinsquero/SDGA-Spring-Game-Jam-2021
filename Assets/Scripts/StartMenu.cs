@@ -26,6 +26,11 @@ public class StartMenu : MonoBehaviour
     private Button controlExitButton;
 
     private RectTransform blackScreen;
+
+    private int xMin = 316;
+    private int xMax = 365;
+    private int yMin = 200;
+    private int yMax = 225;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,8 +58,15 @@ public class StartMenu : MonoBehaviour
         difficultyPanel.SetActive(false);
         controlsPanel.SetActive(false);
         controlsPanel.GetComponent<CanvasGroup>().alpha = 1;
+        int randX = Random.Range(xMin,xMax);
+        int randY = Random.Range(yMin,yMax);
+        Vector3 newCamPos = new Vector3(randX, randY, 0);
+        Camera.main.transform.position = newCamPos;
         StartCoroutine(titleColorRotation());
         StartCoroutine(titleBounce());
+        
+
+
     }
 
     IEnumerator titleColorRotation() {
@@ -68,16 +80,15 @@ public class StartMenu : MonoBehaviour
     }
 
     IEnumerator titleBounce() {
-        int xMin = 316;
-        int xMax = 365;
-        int yMin = 190;
-        int yMax = 212;
         while (true) {
             int randX = Random.Range(xMin,xMax);
             int randY = Random.Range(yMin,yMax);
             Debug.Log(randX);
             Debug.Log(randY);
             Vector3 newCamPos = new Vector3(randX, randY, 0);
+            if ((Camera.main.transform.position - newCamPos).magnitude < 5) {
+                continue;
+            }
             Camera.main.transform.DOMove(newCamPos,(Camera.main.transform.position - newCamPos).magnitude/2.5f).SetEase(Ease.Linear);
             yield return new WaitForSeconds((Camera.main.transform.position - newCamPos).magnitude/2.5f);
         }
