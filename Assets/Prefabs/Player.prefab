@@ -106,7 +106,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -169,7 +169,7 @@ MonoBehaviour:
   max_health: 3
   current_health: 0
   moveSpeed: 6
-  attackDelay: 1
+  attackDelay: 0.517
   weaponSelected: 0
   stunDelay: 2
   swordDamage: 30
@@ -187,9 +187,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   glowLight: {fileID: 2440944540263391960}
-  sunModeBloom: {r: 2.1185474, g: 0.98717654, b: 0.0776431, a: 0}
-  moonModeBloom: {r: 2.0298123, g: 0.13310245, b: 2.1185474, a: 0}
-  starModeBloom: {r: 0.023015138, g: 0.7752232, b: 1.6264061, a: 0}
+  sunModeBloom: {r: 2.9056604, g: 0.30637604, b: 0.17817737, a: 0}
+  moonModeBloom: {r: 0.6571997, g: 0.07653969, b: 3.2452831, a: 0}
+  starModeBloom: {r: 0.35137057, g: 1.8642744, b: 3.5471697, a: 0}
 --- !u!50 &2440944539561715814
 Rigidbody2D:
   serializedVersion: 4
@@ -328,7 +328,7 @@ Animator:
   m_GameObject: {fileID: 2440944539561715810}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9ac73ac8905c77f44a65e9af483bb932, type: 2}
+  m_Controller: {fileID: 9100000, guid: 18a7c0bf46870e648a9fc0f33bbaab86, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
