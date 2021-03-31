@@ -28,11 +28,15 @@ public class HighScores : MonoBehaviour
     public GameObject usernamesParent;
     public GameObject scoresParent;
 
+    public Sprite HighScoreImage;
+    public Sprite LoadingImage;
+
     public Button easyButton;
     public Button hardButton;
     public Button hardcoreButton;
     public Button PageUpButton;
     public Button PageDownButton;
+
 
     public static Button pageUp;
     public static Button pageDown;
@@ -40,9 +44,11 @@ public class HighScores : MonoBehaviour
     public static Text[] scores;
 
 
-
+    public static Sprite highScoreImage;
+    public static Sprite loadingImage;
     public static Button highScoresButton;
 
+    private static Difficulty diffSelected;
     private static bool[] downloaded = { false, false, false };
     private static int[] pageIndex = { 0, 0, 0 };
     private static int[] maxPageIndex = { 0, 0, 0 };
@@ -50,14 +56,21 @@ public class HighScores : MonoBehaviour
 
     public void Awake()
     {
-        highScoresButton = HighScoresButton;
-
-        ToggleHSButton(false);
-
         if (instance != null)
             Destroy(this.gameObject);
         else
             instance = this;
+
+        highScoresButton = HighScoresButton;
+
+        pageUp = PageUpButton;
+        pageDown = PageDownButton;
+
+        highScoreImage = HighScoreImage;
+        loadingImage = LoadingImage;
+
+        ToggleHSButton(false);
+
 
 
         //Instaitate and add score
@@ -66,9 +79,6 @@ public class HighScores : MonoBehaviour
         highScores[0] = new List<Score>();
         highScores[1] = new List<Score>();
         highScores[2] = new List<Score>();
-
-        pageUp = PageUpButton;
-        pageDown = PageDownButton;
 
         DownloadHighScores();
 
@@ -113,7 +123,6 @@ public class HighScores : MonoBehaviour
     public void DownloadHighScores()
     {
         ToggleHSButton(false);
-        Debug.Log("Intiate Download");
         StartCoroutine(DownloadHighScoresCoroutine(Difficulty.EASY));
         StartCoroutine(DownloadHighScoresCoroutine(Difficulty.HARD));
         StartCoroutine(DownloadHighScoresCoroutine(Difficulty.HARDCORE));
@@ -137,7 +146,6 @@ public class HighScores : MonoBehaviour
 
     IEnumerator DownloadHighScoresCoroutine(Difficulty diff)
     {
-        Debug.Log("Downloading");
         UnityWebRequest www = UnityWebRequest.Get(webURL + publicCode[((int)diff) - 1] + "/pipe");
         yield return www.SendWebRequest();
 
@@ -163,13 +171,13 @@ public class HighScores : MonoBehaviour
         {
             string[] entryInfo = entries[i].Split(new char[] { '|' });
             highScores[((int)diff) - 1].Add(new Score(entryInfo[0], diff, int.Parse(entryInfo[1])));
-            Debug.Log(highScores[((int)diff) - 1].ElementAt<Score>(i).username + ": " + highScores[((int)diff) - 1].ElementAt<Score>(i).difficulty + " - " + highScores[((int)diff) - 1].ElementAt<Score>(i).round);
+            //Debug.Log(highScores[((int)diff) - 1].ElementAt<Score>(i).username + ": " + highScores[((int)diff) - 1].ElementAt<Score>(i).difficulty + " - " + highScores[((int)diff) - 1].ElementAt<Score>(i).round);
         }
     }
 
     public static void ToggleHSButton(bool loaded)
     {
-        highScoresButton.GetComponentInChildren<Text>().text = loaded ? "High Scores" : "Loading...";
+        highScoresButton.GetComponent<Image>().sprite = loaded ? highScoreImage : loadingImage;
         highScoresButton.enabled = loaded;
     }
 
@@ -188,6 +196,7 @@ public class HighScores : MonoBehaviour
         easyButton.interactable = false;
         hardButton.interactable = true;
         hardcoreButton.interactable = true;
+        diffSelected = Difficulty.EASY;
         displayHighScores(Difficulty.EASY);
     }
 
@@ -196,6 +205,7 @@ public class HighScores : MonoBehaviour
         easyButton.interactable = true;
         hardButton.interactable = false;
         hardcoreButton.interactable = true;
+        diffSelected = Difficulty.HARD;
         displayHighScores(Difficulty.HARD);
     }
 
@@ -204,6 +214,7 @@ public class HighScores : MonoBehaviour
         easyButton.interactable = true;
         hardButton.interactable = true;
         hardcoreButton.interactable = false;
+        diffSelected = Difficulty.HARDCORE;
         displayHighScores(Difficulty.HARDCORE);
     }
 
@@ -217,6 +228,8 @@ public class HighScores : MonoBehaviour
             pageIndex[2] = pageIndex[2] - 1;
         else
             pageDown.interactable = false;
+
+        displayHighScores(diffSelected);
     }
 
     public void PageUp()
@@ -229,6 +242,8 @@ public class HighScores : MonoBehaviour
             pageIndex[2] = pageIndex[2] + 1;
         else
             pageUp.interactable = false;
+
+        displayHighScores(diffSelected);
     }
 
 }
