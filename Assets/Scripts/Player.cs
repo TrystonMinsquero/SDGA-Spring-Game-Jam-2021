@@ -515,18 +515,17 @@ public class Player : MonoBehaviour
 
     private void onRestartClicked()
     {
-        DataHandler.reset();
-        SceneManager.LoadScene(0);
+        LevelManager.toStart();
     }
 
     private void onHelpClicked()
     {
-
+        
     }
 
     private void onExitClicked()
     {
-        Environment.Exit(0);
+        //Environment.Exit(0);
     }
 }
 
