@@ -70,6 +70,8 @@ public class Player : MonoBehaviour
     private Button restartButton;
     private Button helpButton;
     private Button exitButton;
+    private GameObject helpMenu;
+    private Button helpExit;
 
 
     Material material;
@@ -78,11 +80,13 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        helpMenu = GameObject.Find("HelpPanel");
         pauseMenu = GameObject.Find("PauseMenu");
         resumeButton = GameObject.Find("Resume").GetComponent<Button>();
         restartButton = GameObject.Find("Restart").GetComponent<Button>();
         helpButton = GameObject.Find("Help").GetComponent<Button>();
         exitButton = GameObject.Find("Exit").GetComponent<Button>();
+        helpExit = GameObject.Find("HelpButton").GetComponent<Button>();
         rb = this.GetComponent<Rigidbody2D>();
         anim = this.GetComponent<Animator>();
         material = this.GetComponent<SpriteRenderer>().material;
@@ -100,6 +104,7 @@ public class Player : MonoBehaviour
         restartButton.onClick.AddListener(onRestartClicked);
         helpButton.onClick.AddListener(onHelpClicked);
         exitButton.onClick.AddListener(onExitClicked);
+        helpExit.onClick.AddListener(onHelpExitClicked);
 
         current_health = max_health;
 
@@ -107,6 +112,7 @@ public class Player : MonoBehaviour
         HUD.updateHearts(current_health);
         pauseMenu.GetComponent<CanvasGroup>().alpha = 1;
         pauseMenu.SetActive(false);
+        helpMenu.SetActive(false);
     }
 
     public void Attack(Direction attackDirection)
@@ -520,7 +526,12 @@ public class Player : MonoBehaviour
 
     private void onHelpClicked()
     {
-        
+        helpMenu.SetActive(true);
+    }
+
+    private void onHelpExitClicked()
+    {
+        helpMenu.SetActive(false);
     }
 
     private void onExitClicked()
