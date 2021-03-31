@@ -6936,7 +6936,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 97, y: -269}
+  m_AnchoredPosition: {x: 40.077, y: -269}
   m_SizeDelta: {x: 52.72685, y: 43.297}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &767775774
@@ -6985,7 +6985,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844605931}
         m_TargetAssemblyTypeName: HighScores, Assembly-CSharp
-        m_MethodName: PageUp
+        m_MethodName: PageDown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7693,7 +7693,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 23.637, y: -269}
+  m_AnchoredPosition: {x: 115.08, y: -269}
   m_SizeDelta: {x: 52.72685, y: 43.297}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1143868037
@@ -7742,7 +7742,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844605931}
         m_TargetAssemblyTypeName: HighScores, Assembly-CSharp
-        m_MethodName: PageDown
+        m_MethodName: PageUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -88418,7 +88418,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 960, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -88495,8 +88495,8 @@ MonoBehaviour:
   easyButton: {fileID: 690725100}
   hardButton: {fileID: 1715672253}
   hardcoreButton: {fileID: 196280484}
-  PageUpButton: {fileID: 767775774}
-  PageDownButton: {fileID: 1143868037}
+  PageUpButton: {fileID: 1143868037}
+  PageDownButton: {fileID: 767775774}
 --- !u!1 &1879018766
 GameObject:
   m_ObjectHideFlags: 0
