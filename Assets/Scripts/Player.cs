@@ -525,7 +525,7 @@ public class Player : MonoBehaviour
 
     private void onExitClicked()
     {
-        Environment.Exit(0);
+        Application.Quit();
     }
 }
 
