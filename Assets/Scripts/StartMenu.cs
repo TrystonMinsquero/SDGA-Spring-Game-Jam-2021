@@ -54,20 +54,39 @@ public class StartMenu : MonoBehaviour
         controlsPanel.SetActive(false);
         controlsPanel.GetComponent<CanvasGroup>().alpha = 1;
         StartCoroutine(titleColorRotation());
+        StartCoroutine(titleBounce());
     }
 
     IEnumerator titleColorRotation() {
         while (true) {
             BGText.DOColor(new Color(191f/255f,89f/255f,7f/255f),3);
             yield return new WaitForSeconds(3);
-            BGText.DOColor(new Color(183f/255f,12f/255f,191f/255f),3);
-            yield return new WaitForSeconds(3);
             BGText.DOColor(new Color(3f/255f,92f/255f,191f/255f),3);
+            yield return new WaitForSeconds(3);
+            BGText.DOColor(new Color(183f/255f,12f/255f,191f/255f),3);
         }
+    }
+
+    IEnumerator titleBounce() {
+        int xMin = 316;
+        int xMax = 365;
+        int yMin = 190;
+        int yMax = 212;
+        while (true) {
+            int randX = Random.Range(xMin,xMax);
+            int randY = Random.Range(yMin,yMax);
+            Debug.Log(randX);
+            Debug.Log(randY);
+            Vector3 newCamPos = new Vector3(randX, randY, 0);
+            Camera.main.transform.DOMove(newCamPos,(Camera.main.transform.position - newCamPos).magnitude/2.5f).SetEase(Ease.Linear);
+            yield return new WaitForSeconds((Camera.main.transform.position - newCamPos).magnitude/2.5f);
+        }
+        
     }
 
     private void onStart()
     {
+        DOTween.Kill(Camera.main.transform);
         levelLoader.LoadNextLevel();
     }
 
