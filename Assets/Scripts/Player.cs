@@ -521,7 +521,7 @@ public class Player : MonoBehaviour
 
     private void onRestartClicked()
     {
-        LevelManager.StartOver();
+        //LevelManager.StartOver();
     }
 
     private void onHelpClicked()
