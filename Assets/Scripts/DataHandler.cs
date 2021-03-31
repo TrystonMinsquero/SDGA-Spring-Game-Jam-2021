@@ -22,6 +22,13 @@ public class DataHandler : MonoBehaviour
     {
         DontDestroyOnLoad(this.gameObject);
     }
+
+    public static void reset()
+    {
+        startingDifficulty = Difficulty.EASY;
+        round = 1;
+        enemiesKilled = 0;
+    }
 }
 
 public enum Difficulty

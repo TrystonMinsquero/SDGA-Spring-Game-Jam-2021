@@ -47,13 +47,21 @@ public class Player : MonoBehaviour
     [ColorUsageAttribute(true, true)]
     public Color starModeBloom;
 
+    [Header("Sounds")]
+    public AudioClip swordSlash;
+    public AudioClip hammerSmash;
+    public AudioClip discThrow;
+    public AudioClip modeChange;
+
     Transform attackPoint;
     Animator anim;
+    AudioSource sound;
 
     Direction facing = Direction.DOWN;
     private bool moving;
     private float timeForStun;
     private float attackTime;
+    
 
     Material material;
     Rigidbody2D rb;
@@ -64,6 +72,7 @@ public class Player : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
         anim = this.GetComponent<Animator>();
         material = this.GetComponent<SpriteRenderer>().material;
+        sound = this.GetComponent<AudioSource>();
         controls = new Controls();
         controls.Enable();
 
@@ -131,6 +140,8 @@ public class Player : MonoBehaviour
     public void changeWeapon(int change)
     {
         weaponSelected += change;
+        if(change != 0)
+            playSound(modeChange);
         if ((int)weaponSelected > 2)
             weaponSelected = (Weapon_Type)0;
         else if ((int)weaponSelected < 0)
@@ -180,7 +191,7 @@ public class Player : MonoBehaviour
 
     private void SwordAttack(Direction attackDirection)
     {
-
+        playSound(swordSlash);
         float distance = swordDistance;
         switch (attackDirection)
         {
@@ -209,6 +220,7 @@ public class Player : MonoBehaviour
 
     private void BluntAttack(Direction attackDirection)
     {
+        playSound(hammerSmash);
         float distance = bluntDistance;
         switch (attackDirection)
         {
@@ -237,7 +249,7 @@ public class Player : MonoBehaviour
     
     private void DiscusAttack(Direction attackDirection)
     {
-
+        playSound(discThrow);
         float distance = .5f;
 
         switch (attackDirection)
@@ -266,11 +278,6 @@ public class Player : MonoBehaviour
     {
         disc = null;
         changeWeapon(0);
-    }
-
-    private void Flash()
-    {
-        gameObject.GetComponent<SpriteRenderer>().enabled = !gameObject.GetComponent<SpriteRenderer>().enabled;
     }
 
     private void Update()
@@ -444,6 +451,12 @@ public class Player : MonoBehaviour
                 Debug.Log("RIGHT");
                 break;
         }
+    }
+
+    public void playSound(AudioClip audio)
+    {
+        sound.clip = audio;
+        sound.Play();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

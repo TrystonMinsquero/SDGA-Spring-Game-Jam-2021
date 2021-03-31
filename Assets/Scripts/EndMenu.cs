@@ -69,6 +69,7 @@ public class EndMenu : MonoBehaviour
 
     public void PlayAgain()
     {
+        DataHandler.reset();
         SceneManager.LoadScene("StartMenu");
     }
 }
