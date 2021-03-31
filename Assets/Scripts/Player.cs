@@ -94,6 +94,8 @@ public class Player : MonoBehaviour
                 DiscusAttack(attackDirection);
                 break;
         }
+
+        playAttackAnimation(attackDirection);
     }
 
 
@@ -336,58 +338,77 @@ public class Player : MonoBehaviour
 
     }
 
-    private void changeAnimationState()
+    private void playAttackAnimation(Direction attackDirection)
     {
+        string state = "";
         switch (weaponSelected)
         {
             case Weapon_Type.SWORD:
-                switch (facing)
-                {
-                    case Direction.UP:
-                        break;
-                    case Direction.DOWN:
-                        if (moving) anim.Play("SwordWalkDown"); else anim.Play("SwordIdleDown");
-                        break;
-                    case Direction.LEFT:
-                        gameObject.GetComponent<SpriteRenderer>().flipX = false;
-                        break;
-                    case Direction.RIGHT:
-                        gameObject.GetComponent<SpriteRenderer>().flipX = true;
-                        break;
-                }
+                state += "Sun";
                 break;
             case Weapon_Type.BLUNT:
-                switch (facing)
-                {
-                    case Direction.UP:
-                        break;
-                    case Direction.DOWN:
-                        if (moving) anim.Play("HammerWalkDown"); else anim.Play("HammerIdleDown");
-                        break;
-                    case Direction.LEFT:
-                        gameObject.GetComponent<SpriteRenderer>().flipX = false;
-                        break;
-                    case Direction.RIGHT:
-                        gameObject.GetComponent<SpriteRenderer>().flipX = true;
-                        break;
-                }
+                state += "Moon";
                 break;
             case Weapon_Type.DISCUS:
-                switch (facing)
-                {
-                    case Direction.UP:
-                        break;
-                    case Direction.DOWN:
-                        if (moving) anim.Play("DiscWalkDown"); else anim.Play("DiscIdleDown");
-                        break;
-                    case Direction.LEFT:
-                        gameObject.GetComponent<SpriteRenderer>().flipX = false;
-                        break;
-                    case Direction.RIGHT:
-                        gameObject.GetComponent<SpriteRenderer>().flipX = true;
-                        break;
-                }
+                state += "Star";
                 break;
+        }
+        switch (attackDirection)
+        {
+            case Direction.UP:
+                state += "Up";
+                break;
+            case Direction.DOWN:
+                state += "Down";
+                break;
+            case Direction.LEFT:
+                state += "Left";
+                break;
+            case Direction.RIGHT:
+                state += "Right";
+                break;
+        }
+
+        anim.Play(state + "Attack");
+    }
+
+    private void changeAnimationState()
+    {
+        string state = "";
+        switch (weaponSelected)
+        {
+            case Weapon_Type.SWORD:
+                state += "Sun";
+                break;
+            case Weapon_Type.BLUNT:
+                state += "Moon";
+                break;
+            case Weapon_Type.DISCUS:
+                state += "Star";
+                break;
+        }
+
+        switch (facing)
+        {
+            case Direction.UP:
+                state += "Up";
+                break;
+            case Direction.DOWN:
+                state += "Down";
+                break;
+            case Direction.LEFT:
+                state += "Left";
+                break;
+            case Direction.RIGHT:
+                state += "Right";
+                break;
+        }
+
+        state += moving ? "Moving" : "Idle";
+
+        if (Time.time <= attackTime)
+        {
+            anim.Play(state);
         }
     }
 
