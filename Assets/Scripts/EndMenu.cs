@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class EndMenu : MonoBehaviour
 {
@@ -13,6 +14,16 @@ public class EndMenu : MonoBehaviour
     public InputField nameInput;
     public GameObject destroyAfterSubmit;
     public Button highScoreButton;
+
+
+    public Text bgText1;
+    public Text bgText2;
+    public Text bgText3;
+    public Text bgText4;
+    private int xMin = 316;
+    private int xMax = 365;
+    private int yMin = 200;
+    private int yMax = 225;
 
 
     public void Start()
@@ -37,9 +48,17 @@ public class EndMenu : MonoBehaviour
                 break;
             case Difficulty.HARDCORE:
                 foreach (Text text in diffTexts)
-                    text.text = "HARDCORE";
+                    text.text = "HELL";
                 break;
         }
+
+        //Background code
+        int randX = Random.Range(xMin, xMax);
+        int randY = Random.Range(yMin, yMax);
+        Vector3 newCamPos = new Vector3(randX, randY, 0);
+        Camera.main.transform.position = newCamPos;
+        StartCoroutine(titleColorRotation());
+        StartCoroutine(titleBounce());
 
 
     }
@@ -72,4 +91,46 @@ public class EndMenu : MonoBehaviour
         DataHandler.reset();
         SceneManager.LoadScene("StartMenu");
     }
+
+
+    IEnumerator titleColorRotation()
+    {
+        while (true)
+        {
+            bgText1.DOColor(new Color(191f / 255f, 89f / 255f, 7f / 255f), 3);
+            bgText2.DOColor(new Color(191f / 255f, 89f / 255f, 7f / 255f), 3);
+            bgText3.DOColor(new Color(191f / 255f, 89f / 255f, 7f / 255f), 3);
+            bgText4.DOColor(new Color(191f / 255f, 89f / 255f, 7f / 255f), 3);
+            yield return new WaitForSeconds(3);
+            bgText1.DOColor(new Color(3f / 255f, 92f / 255f, 191f / 255f), 3);
+            bgText2.DOColor(new Color(3f / 255f, 92f / 255f, 191f / 255f), 3);
+            bgText3.DOColor(new Color(3f / 255f, 92f / 255f, 191f / 255f), 3);
+            bgText4.DOColor(new Color(3f / 255f, 92f / 255f, 191f / 255f), 3);
+            yield return new WaitForSeconds(3);
+            bgText1.DOColor(new Color(183f / 255f, 12f / 255f, 191f / 255f), 3);
+            bgText2.DOColor(new Color(183f / 255f, 12f / 255f, 191f / 255f), 3);
+            bgText3.DOColor(new Color(183f / 255f, 12f / 255f, 191f / 255f), 3);
+            bgText4.DOColor(new Color(183f / 255f, 12f / 255f, 191f / 255f), 3);
+        }
+    }
+
+    IEnumerator titleBounce()
+    {
+        while (true)
+        {
+            int randX = Random.Range(xMin, xMax);
+            int randY = Random.Range(yMin, yMax);
+            Debug.Log(randX);
+            Debug.Log(randY);
+            Vector3 newCamPos = new Vector3(randX, randY, 0);
+            if ((Camera.main.transform.position - newCamPos).magnitude < 5)
+            {
+                continue;
+            }
+            Camera.main.transform.DOMove(newCamPos, (Camera.main.transform.position - newCamPos).magnitude / 2.5f).SetEase(Ease.Linear);
+            yield return new WaitForSeconds((Camera.main.transform.position - newCamPos).magnitude / 2.5f);
+        }
+
+    }
+
 }
