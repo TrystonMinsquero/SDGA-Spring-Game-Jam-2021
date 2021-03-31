@@ -169,7 +169,7 @@ MonoBehaviour:
   max_health: 3
   current_health: 0
   moveSpeed: 6
-  attackDelay: 0.517
+  attackDelay: 0.413
   weaponSelected: 0
   stunDelay: 2
   swordDamage: 30
