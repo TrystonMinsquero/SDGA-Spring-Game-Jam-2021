@@ -182,6 +182,7 @@ public class Enemy : MonoBehaviour
                         changeAnimationState(true);
                         lastAttack = Time.time;
                         GameObject projectileClone = Instantiate(rangedProjectile, transform.position, Quaternion.identity) as GameObject;
+                        projectileClone.GetComponent<SpriteRenderer>().color = spriteRenderer.color;
                         Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 1f;
                         projectileClone.GetComponent<EnemyProjectile>().move(transform, targetPos, 0.3f);
                     }
@@ -204,6 +205,7 @@ public class Enemy : MonoBehaviour
                         changeAnimationState(true);
                         lastAttack = Time.time;
                         GameObject projectileClone = Instantiate(rangedProjectile, transform.position, Quaternion.identity) as GameObject;
+                        projectileClone.GetComponent<SpriteRenderer>().color = spriteRenderer.color;
                         Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 40f;
                         projectileClone.GetComponent<EnemyProjectile>().move(transform, targetPos, 10);
                     }

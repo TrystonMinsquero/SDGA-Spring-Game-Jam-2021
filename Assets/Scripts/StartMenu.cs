@@ -119,12 +119,13 @@ public class StartMenu : MonoBehaviour
 
     private void onControlsButtonClick()
     {
+        startPanel.SetActive(false);
         controlsPanel.SetActive(true);
     }
 
     private void onControlsExitButtonClick()
     {
-
+        startPanel.SetActive(true);
         controlsPanel.SetActive(false);
     }
 
