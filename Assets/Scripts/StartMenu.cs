@@ -27,6 +27,8 @@ public class StartMenu : MonoBehaviour
 
     private RectTransform blackScreen;
 
+    private Button exitButton;
+
     private int xMin = 316;
     private int xMax = 365;
     private int yMin = 200;
@@ -45,6 +47,7 @@ public class StartMenu : MonoBehaviour
         mediumButton = GameObject.Find("Medium").GetComponent<Button>();
         hardButton = GameObject.Find("Hard").GetComponent<Button>();
         BGText = GameObject.Find("BGtext").GetComponent<Text>();
+        exitButton = GameObject.Find("Exit").GetComponent<Button>();
 
         startButton.onClick.AddListener(onStart);
         difficultyButton.onClick.AddListener(onDifficultyButtonClick);
@@ -53,6 +56,7 @@ public class StartMenu : MonoBehaviour
         mediumButton.onClick.AddListener(mediumSelected);
         hardButton.onClick.AddListener(hardSelected);
         controlExitButton.onClick.AddListener(onControlsExitButtonClick);
+        exitButton.onClick.AddListener(onExitButton);
         
         
         difficultyPanel.SetActive(false);
@@ -93,6 +97,11 @@ public class StartMenu : MonoBehaviour
             yield return new WaitForSeconds((Camera.main.transform.position - newCamPos).magnitude/2.5f);
         }
         
+    }
+
+
+    private void onExitButton() {
+        Application.Quit();
     }
 
     private void onStart()
