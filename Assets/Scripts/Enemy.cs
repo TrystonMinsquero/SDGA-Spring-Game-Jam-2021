@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour
     public GameObject DeathParticle;
     public AudioSource chargingSound;
     public AudioSource chargingAttackSound;
+    public AudioSource rangedProjectileSound;
+    public AudioSource meleeProjectile;
     
     private Transform target;
     private Rigidbody2D rb;
@@ -189,6 +191,7 @@ public class Enemy : MonoBehaviour
                 {
                     if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 15 && (transform.position - target.position).magnitude > 3)
                     {
+                        rangedProjectileSound.Play();
                         lastAttack = Time.time;
                         GameObject projectileClone = Instantiate(rangedProjectile, transform.position, Quaternion.identity) as GameObject;
                         Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 40f;
