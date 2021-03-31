@@ -317,8 +317,8 @@ public class Player : MonoBehaviour
 
         if (dir != facing)
             changeDirection();
-
-        changeAnimationState();
+        if(Time.time > attackTime)
+            changeAnimationState();
     }
 
     public void addHealth(int change)
@@ -407,6 +407,7 @@ public class Player : MonoBehaviour
         state += moving ? "Moving" : "Idle";
 
         anim.Play(state);
+
     }
 
     private void showWeapon()
