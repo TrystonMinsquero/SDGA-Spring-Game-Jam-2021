@@ -156,6 +156,7 @@ public class Enemy : MonoBehaviour
             Vector3 targetPos = transform.position + (col.gameObject.transform.position - transform.position).normalized * -3f;
             transform.DOMove(targetPos, 2f);
         } else if (col.gameObject.tag == "Enemy" && type == EnemyType.CHARGE) {
+            DOTween.Kill(transform);
             Vector3 targetPos = transform.position + (col.gameObject.transform.position - transform.position).normalized * -3f;
             transform.DOMove(targetPos, 2f);
         }
@@ -204,7 +205,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator doChargeAttack() {
         chargingSound.Play();
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.75f);
         chargingAttackSound.Play();
         Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 15f;
         transform.DOMove(targetPos, 3);
