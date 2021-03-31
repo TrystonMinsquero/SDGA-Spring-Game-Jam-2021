@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -61,7 +64,13 @@ public class Player : MonoBehaviour
     private bool moving;
     private float timeForStun;
     private float attackTime;
-    
+    private bool paused;
+    private GameObject pauseMenu;
+    private Button resumeButton;
+    private Button restartButton;
+    private Button helpButton;
+    private Button exitButton;
+
 
     Material material;
     Rigidbody2D rb;
@@ -69,10 +78,16 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pauseMenu = GameObject.Find("PauseMenu");
+        resumeButton = GameObject.Find("Resume").GetComponent<Button>();
+        restartButton = GameObject.Find("Restart").GetComponent<Button>();
+        helpButton = GameObject.Find("Help").GetComponent<Button>();
+        exitButton = GameObject.Find("Exit").GetComponent<Button>();
         rb = this.GetComponent<Rigidbody2D>();
         anim = this.GetComponent<Animator>();
         material = this.GetComponent<SpriteRenderer>().material;
         sound = this.GetComponent<AudioSource>();
+        paused = false;
         controls = new Controls();
         controls.Enable();
 
@@ -81,11 +96,17 @@ public class Player : MonoBehaviour
         atkPoint.transform.parent = this.transform;
         attackPoint = atkPoint.transform;
 
+        resumeButton.onClick.AddListener(onResumeClicked);
+        restartButton.onClick.AddListener(onRestartClicked);
+        helpButton.onClick.AddListener(onHelpClicked);
+        exitButton.onClick.AddListener(onExitClicked);
 
         current_health = max_health;
 
         changeWeapon(0);
         HUD.updateHearts(current_health);
+        pauseMenu.GetComponent<CanvasGroup>().alpha = 1;
+        pauseMenu.SetActive(false);
     }
 
     public void Attack(Direction attackDirection)
@@ -300,6 +321,10 @@ public class Player : MonoBehaviour
         {
             changeWeapon((int)controls.Gameplay.SwitchWeapon.ReadValue<float>());
         }
+        if (controls.Gameplay.Pause.triggered)
+        {
+            togglePause();
+        }
     }
 
     // Update is called once per frame
@@ -468,6 +493,40 @@ public class Player : MonoBehaviour
     {
         if (attackPoint != null)
             Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
+    private void togglePause()
+    {
+        paused = !paused;
+        if (paused)
+        {
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0;
+        } else {
+            pauseMenu.SetActive(false);
+            Time.timeScale = 1;
+        }
+    }
+    
+    private void onResumeClicked()
+    {
+        togglePause();
+    }
+
+    private void onRestartClicked()
+    {
+        DataHandler.reset();
+        SceneManager.LoadScene(0);
+    }
+
+    private void onHelpClicked()
+    {
+
+    }
+
+    private void onExitClicked()
+    {
+        Environment.Exit(0);
     }
 }
 
