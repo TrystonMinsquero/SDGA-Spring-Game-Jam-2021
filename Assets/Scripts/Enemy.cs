@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     public Transform healthBarSpot;
     public GameObject DeathParticle;
     public AudioSource chargingSound;
+    public AudioSource chargingAttackSound;
     
     private Transform target;
     private Rigidbody2D rb;
@@ -201,6 +202,7 @@ public class Enemy : MonoBehaviour
     IEnumerator doChargeAttack() {
         chargingSound.Play();
         yield return new WaitForSeconds(1.5f);
+        chargingAttackSound.Play();
         Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 15f;
         transform.DOMove(targetPos, 3);
     }

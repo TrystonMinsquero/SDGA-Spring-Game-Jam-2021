@@ -70,6 +70,7 @@ MonoBehaviour:
   healthBarSpot: {fileID: 7420155289126167259}
   DeathParticle: {fileID: 3114130161364283688, guid: 3bbf9aafcff138f4e8eb954381e8d480, type: 3}
   chargingSound: {fileID: -7555375170235304919}
+  chargingAttackSound: {fileID: 0}
 --- !u!212 &5920634578952837860
 SpriteRenderer:
   m_ObjectHideFlags: 0
