@@ -66,8 +66,7 @@ public class EndMenu : MonoBehaviour
 
     public void Submit()
     {
-        Debug.Log(nameInput.text);
-        if(nameInput.text != null)
+        if(nameInput.text != null || nameInput.text != "")
         {
             HighScores.instance.AddNewHighScore(new Score(nameInput.text.Replace(" ","_"), DataHandler.startingDifficulty, DataHandler.round));
             Destroy(destroyAfterSubmit);
@@ -93,6 +92,10 @@ public class EndMenu : MonoBehaviour
         SceneManager.LoadScene("StartMenu");
     }
 
+    public void Exit()
+    {
+        Application.Quit();
+    }
 
     IEnumerator titleColorRotation()
     {
@@ -124,8 +127,6 @@ public class EndMenu : MonoBehaviour
         {
             int randX = Random.Range(xMin, xMax);
             int randY = Random.Range(yMin, yMax);
-            Debug.Log(randX);
-            Debug.Log(randY);
             Vector3 newCamPos = new Vector3(randX, randY, 0);
             if ((Camera.main.transform.position - newCamPos).magnitude < 5)
             {
@@ -136,5 +137,7 @@ public class EndMenu : MonoBehaviour
         }
 
     }
+
+
 
 }
