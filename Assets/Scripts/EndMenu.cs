@@ -20,6 +20,7 @@ public class EndMenu : MonoBehaviour
     public Text bgText2;
     public Text bgText3;
     public Text bgText4;
+    public Text bgText5;
     private int xMin = 316;
     private int xMax = 365;
     private int yMin = 200;
@@ -101,16 +102,19 @@ public class EndMenu : MonoBehaviour
             bgText2.DOColor(new Color(191f / 255f, 89f / 255f, 7f / 255f), 3);
             bgText3.DOColor(new Color(191f / 255f, 89f / 255f, 7f / 255f), 3);
             bgText4.DOColor(new Color(191f / 255f, 89f / 255f, 7f / 255f), 3);
+            bgText5.DOColor(new Color(191f / 255f, 89f / 255f, 7f / 255f), 3);
             yield return new WaitForSeconds(3);
             bgText1.DOColor(new Color(3f / 255f, 92f / 255f, 191f / 255f), 3);
             bgText2.DOColor(new Color(3f / 255f, 92f / 255f, 191f / 255f), 3);
             bgText3.DOColor(new Color(3f / 255f, 92f / 255f, 191f / 255f), 3);
             bgText4.DOColor(new Color(3f / 255f, 92f / 255f, 191f / 255f), 3);
+            bgText5.DOColor(new Color(3f / 255f, 92f / 255f, 191f / 255f), 3);
             yield return new WaitForSeconds(3);
             bgText1.DOColor(new Color(183f / 255f, 12f / 255f, 191f / 255f), 3);
             bgText2.DOColor(new Color(183f / 255f, 12f / 255f, 191f / 255f), 3);
             bgText3.DOColor(new Color(183f / 255f, 12f / 255f, 191f / 255f), 3);
             bgText4.DOColor(new Color(183f / 255f, 12f / 255f, 191f / 255f), 3);
+            bgText5.DOColor(new Color(183f / 255f, 12f / 255f, 191f / 255f), 3);
         }
     }
 
