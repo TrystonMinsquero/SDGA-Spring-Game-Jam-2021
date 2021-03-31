@@ -141,6 +141,7 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         if (healthBar != null)
             healthBar.transform.position = transform.position + healthBarPos;
     }
