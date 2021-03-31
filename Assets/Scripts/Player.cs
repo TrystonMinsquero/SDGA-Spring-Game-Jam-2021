@@ -406,10 +406,7 @@ public class Player : MonoBehaviour
 
         state += moving ? "Moving" : "Idle";
 
-        if (Time.time <= attackTime)
-        {
-            anim.Play(state);
-        }
+        anim.Play(state);
     }
 
     private void showWeapon()
