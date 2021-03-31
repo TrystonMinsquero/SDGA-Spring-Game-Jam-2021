@@ -57,7 +57,7 @@ MonoBehaviour:
   type: 2
   maximumHP: 40
   updateRate: 0.1
-  attackCooldown: 6
+  attackCooldown: 7
   difficulty: 1
   weaknesses:
   - 1
@@ -70,6 +70,8 @@ MonoBehaviour:
   DeathParticle: {fileID: 3114130161364283688, guid: 3bbf9aafcff138f4e8eb954381e8d480, type: 3}
   chargingSound: {fileID: -1605705756180287130}
   chargingAttackSound: {fileID: -2461759921662587189}
+  rangedProjectileSound: {fileID: 0}
+  meleeProjectile: {fileID: 0}
 --- !u!212 &351535587388242999
 SpriteRenderer:
   m_ObjectHideFlags: 0
