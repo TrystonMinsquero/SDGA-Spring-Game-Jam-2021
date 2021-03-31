@@ -51,9 +51,12 @@ TagManager:
   - name: Wall
     uniqueID: 2971900411
     locked: 0
+  - name: Enemy
+    uniqueID: 2971799369
+    locked: 0
   - name: Player
     uniqueID: 3288416141
     locked: 0
-  - name: Enemy
-    uniqueID: 2971799369
+  - name: Props
+    uniqueID: 3411601075
     locked: 0
