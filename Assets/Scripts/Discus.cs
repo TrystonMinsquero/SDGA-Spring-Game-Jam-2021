@@ -98,6 +98,7 @@ public class Discus : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             collision.gameObject.GetComponent<Enemy>().takeDamage(Weapon_Type.DISCUS, player.discusDamage);
+            rb.velocity = Vector2.zero;
         }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
