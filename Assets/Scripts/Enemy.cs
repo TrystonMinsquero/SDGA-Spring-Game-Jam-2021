@@ -27,9 +27,11 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private GameObject healthBar;
+    private Animator anim;
     private Vector3 healthBarPos;
     private float currentHP;
     private float lastAttack;
+
     private Direction FACING;
     private AIPath ai;
     
@@ -40,6 +42,7 @@ public class Enemy : MonoBehaviour
         ai = gameObject.GetComponent<AIPath>();
         rb = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        anim = gameObject.GetComponent<Animator>();
         target = GameObject.Find("Player").transform;
         gameObject.GetComponent<AIDestinationSetter>().target = target;
         healthBarPos = healthBarSpot.position - transform.position;
@@ -141,9 +144,11 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         if (healthBar != null)
             healthBar.transform.position = transform.position + healthBarPos;
+
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -174,6 +179,7 @@ public class Enemy : MonoBehaviour
                     if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 1.2)
                     {
                         meleeProjectile.Play();
+                        changeAnimationState(true);
                         lastAttack = Time.time;
                         GameObject projectileClone = Instantiate(rangedProjectile, transform.position, Quaternion.identity) as GameObject;
                         Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 1f;
@@ -195,6 +201,7 @@ public class Enemy : MonoBehaviour
                     if ((Time.time - lastAttack) > attackCooldown && (transform.position - target.position).magnitude < 15 && (transform.position - target.position).magnitude > 3)
                     {
                         rangedProjectileSound.Play();
+                        changeAnimationState(true);
                         lastAttack = Time.time;
                         GameObject projectileClone = Instantiate(rangedProjectile, transform.position, Quaternion.identity) as GameObject;
                         Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 40f;
@@ -209,6 +216,7 @@ public class Enemy : MonoBehaviour
         chargingSound.Play();
         yield return new WaitForSeconds(0.75f);
         chargingAttackSound.Play();
+        changeAnimationState(true);
         Vector3 targetPos = transform.position + (target.position - transform.position).normalized * 15f;
         transform.DOMove(targetPos, 3);
     }
@@ -269,40 +277,49 @@ public class Enemy : MonoBehaviour
         Vector3 velocity = ai.velocity;
         if (Mathf.Abs(velocity.x) > Mathf.Abs(velocity.y)) {
             if (velocity.x > 0f) {
-                transform.rotation = Quaternion.Euler(0,0,90);
+                //transform.rotation = Quaternion.Euler(0,0,90);
                 FACING = Direction.RIGHT;
             } else if (velocity.x < 0) {
-                transform.rotation = Quaternion.Euler(0,0,-90);
+                //transform.rotation = Quaternion.Euler(0,0,-90);
                 FACING = Direction.LEFT;
             }
         } else if (Mathf.Abs(velocity.y) > Mathf.Abs(velocity.x)) {
             if (velocity.y > 0f) {
-                transform.rotation = Quaternion.Euler(0,0,180);
+                //transform.rotation = Quaternion.Euler(0,0,180);
                 FACING = Direction.UP;
             } else if (velocity.y < 0) {
-                transform.rotation = Quaternion.Euler(0,0,0);
+                //transform.rotation = Quaternion.Euler(0,0,0);
                 FACING = Direction.DOWN;
             }
         }
+
+        changeAnimationState();
     }
 
-    private void changeAnimationState()
+    private void changeAnimationState(bool attacking = false)
     {
-        switch (FACING)
+        if(Time.time > lastAttack + .517) //if attack animation is done
         {
-            case Direction.UP:
+            string state = attacking ? "Attack" : "Walk";
+            switch (FACING)
+            {
+                case Direction.UP:
+                    state += "Up";
+                    break;
+                case Direction.DOWN:
+                    state += "Down";
+                    break;
+                case Direction.LEFT:
+                    state += "Left";
+                    break;
+                case Direction.RIGHT:
+                    state += "Right";
+                    break;
+            }
 
-                break;
-            case Direction.DOWN:
-               
-                break;
-            case Direction.LEFT:
-                gameObject.GetComponent<SpriteRenderer>().flipX = false;
-                break;
-            case Direction.RIGHT:
-                gameObject.GetComponent<SpriteRenderer>().flipX = true;
-                break;
+            anim.Play(state);
         }
+        
     }
 }
 
