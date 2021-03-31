@@ -110,6 +110,12 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    public static void toStart()
+    {
+        DataHandler.reset();
+        SceneManager.LoadScene("StartMenu");
+    }
+
     public static void StartOver()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

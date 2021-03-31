@@ -13824,8 +13824,9 @@ GameObject:
   - component: {fileID: 613790851}
   - component: {fileID: 613790853}
   - component: {fileID: 613790852}
+  - component: {fileID: 613790854}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: PauseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13893,6 +13894,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 613790850}
   m_CullTransparentMesh: 1
+--- !u!225 &613790854
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613790850}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &626880144
 GameObject:
   m_ObjectHideFlags: 0
