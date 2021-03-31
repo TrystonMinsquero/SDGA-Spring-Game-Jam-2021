@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 7801416502590197410}
   - component: {fileID: -1196098396660866166}
   - component: {fileID: 4173866797051026050}
+  - component: {fileID: 5772716563014219341}
   m_Layer: 7
   m_Name: Dash
   m_TagString: Enemy
@@ -110,9 +111,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1323167927
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 73f3eded2c2ddb2469910f1ac9294667, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1685a3994ffe29a4382245afc331a7a1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -218,7 +219,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.71, y: 0.75}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 6.4, y: 3.37}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -287,7 +288,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1323167927
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 2
@@ -5213,6 +5214,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &5772716563014219341
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385793331517274538}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 141eeaab686fbcd43aa05bb8e743847d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7548905210508053078
 GameObject:
   m_ObjectHideFlags: 0
