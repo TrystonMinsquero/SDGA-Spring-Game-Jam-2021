@@ -22,6 +22,7 @@ public class StartMenu : MonoBehaviour
     private Button hardButton;
 
     private GameObject controlsPanel;
+    private Text BGText;
     private Button controlExitButton;
 
     private RectTransform blackScreen;
@@ -38,6 +39,7 @@ public class StartMenu : MonoBehaviour
         easyButton = GameObject.Find("Easy").GetComponent<Button>();
         mediumButton = GameObject.Find("Medium").GetComponent<Button>();
         hardButton = GameObject.Find("Hard").GetComponent<Button>();
+        BGText = GameObject.Find("BGtext").GetComponent<Text>();
 
         startButton.onClick.AddListener(onStart);
         difficultyButton.onClick.AddListener(onDifficultyButtonClick);
@@ -47,9 +49,21 @@ public class StartMenu : MonoBehaviour
         hardButton.onClick.AddListener(hardSelected);
         controlExitButton.onClick.AddListener(onControlsExitButtonClick);
         
+        
         difficultyPanel.SetActive(false);
         controlsPanel.SetActive(false);
         controlsPanel.GetComponent<CanvasGroup>().alpha = 1;
+        StartCoroutine(titleColorRotation());
+    }
+
+    IEnumerator titleColorRotation() {
+        while (true) {
+            BGText.DOColor(new Color(191f/255f,89f/255f,7f/255f),3);
+            yield return new WaitForSeconds(3);
+            BGText.DOColor(new Color(183f/255f,12f/255f,191f/255f),3);
+            yield return new WaitForSeconds(3);
+            BGText.DOColor(new Color(3f/255f,92f/255f,191f/255f),3);
+        }
     }
 
     private void onStart()
