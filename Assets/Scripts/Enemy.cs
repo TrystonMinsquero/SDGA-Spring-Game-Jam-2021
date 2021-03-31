@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        LevelManager lm = GameObject.Find("Level Manager").GetComponent<LevelManager>();
         ai = gameObject.GetComponent<AIPath>();
         rb = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -41,6 +42,9 @@ public class Enemy : MonoBehaviour
         Destroy(healthBarSpot.gameObject);
         InvokeRepeating("AttackCheck",1.0f, updateRate);
         currentHP = maximumHP;
+        if (lm.StartDifficulty > 1) {
+            ai.speed = ai.speed * 1.5f;
+        }
         int type = Random.Range(1,4);
         switch(difficulty) {
             case 1:
@@ -143,14 +147,16 @@ public class Enemy : MonoBehaviour
         {
             col.gameObject.GetComponent<Player>().takeDamage();
         }
-        else if (col.gameObject.tag == "Wall" || col.gameObject.tag == "Enemy") {
+        else if (col.gameObject.tag == "Wall") {
             DOTween.Kill(transform);
-            if (type == EnemyType.CHARGE) {
-                Vector3 targetPos = transform.position + (col.gameObject.transform.position - transform.position).normalized * -3f;
-                transform.DOMove(targetPos, 2f);
-            }
+            Vector3 targetPos = transform.position + (col.gameObject.transform.position - transform.position).normalized * -3f;
+            transform.DOMove(targetPos, 2f);
+        } else if (col.gameObject.tag == "Enemy" && type == EnemyType.CHARGE) {
+            Vector3 targetPos = transform.position + (col.gameObject.transform.position - transform.position).normalized * -3f;
+            transform.DOMove(targetPos, 2f);
         }
     }
+
 
     private void AttackCheck() 
     {
@@ -194,7 +200,7 @@ public class Enemy : MonoBehaviour
 
     public void takeDamage(Weapon_Type weapon, int damage)
     {
-        DOTween.Kill(transform);
+        
         currentHP -= damage * weaknesses[(int)weapon];
 
         //Check for death
@@ -219,22 +225,23 @@ public class Enemy : MonoBehaviour
         switch (weapon)
         {
             case Weapon_Type.SWORD:
-                Vector3 targetPos = transform.position + (target.position - transform.position).normalized * -5f;
+                DOTween.Kill(transform);
+                Vector3 targetPos = transform.position + (target.position - transform.position).normalized * (damage / -10f);
                 transform.DOMove(targetPos, 2f);
                 break;
             case Weapon_Type.BLUNT:
-                Vector3 targetPos2 = transform.position + (target.position - transform.position).normalized * -10f;
+                DOTween.Kill(transform);
+                Vector3 targetPos2 = transform.position + (target.position - transform.position).normalized * (damage / -5f);
                 transform.DOMove(targetPos2, 2f);
                 break;
             default:
-                Vector3 targetPos3 = transform.position + (target.position - transform.position).normalized * -2f;
-                transform.DOMove(targetPos3, 2f);
                 break;
         }
     }
 
     public void Die()
     {
+        DOTween.Kill(transform);
         GameObject deathParticle = Instantiate(DeathParticle, transform.position, Quaternion.identity) as GameObject;
         deathParticle.GetComponent<ParticleHandler>().emit(15, 1);
         LevelManager.RemoveEnemy(this);
