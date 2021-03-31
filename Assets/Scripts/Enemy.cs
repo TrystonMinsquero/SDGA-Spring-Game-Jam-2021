@@ -105,19 +105,19 @@ public class Enemy : MonoBehaviour
                     case 1:
                     {
                         SetSunColor();
-                        weaknesses = new float[3] {0.5f,0.25f,1.25f};
+                        weaknesses = new float[3] {0.5f,0f,1.25f};
                         break;
                     }
                     case 2:
                     {
                         SetMoonColor();
-                        weaknesses = new float[3]{1.25f,0.25f,0.5f};
+                        weaknesses = new float[3]{1.25f,0.5f,0f};
                         break;
                     }
                     case 3:
                     {
                         SetStarColor();
-                        weaknesses = new float[3]{0.25f,1.25f,0.8f};
+                        weaknesses = new float[3]{0f,1.25f,0.5f};
                         break;
                     }
                 }
